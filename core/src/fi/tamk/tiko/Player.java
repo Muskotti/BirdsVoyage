@@ -218,7 +218,7 @@ public class Player implements MapProperties, PlayerProperties{
         return collision;
     }
 
-    public void changeSpeed(ArrayList<Enemy> enemies, ArrayList<StormCloud> clouds) {
+    public void changeSpeed(ArrayList<Enemy> enemies, StormCloud cloud) {
         // Enemy collision
         for (int i = 0; i<enemies.size(); i++) {
             Enemy enemy = enemies.get(i);
@@ -237,11 +237,8 @@ public class Player implements MapProperties, PlayerProperties{
         }
 
         // Cloud collision
-        for (int i = 0; i<clouds.size(); i++) {
-            StormCloud cloud = clouds.get(i);
-            if (player.getBoundingRectangle().overlaps(cloud.getCloudBoundingRectangle())) {
-                collision(cloud.getCloudBoundingRectangle());
-            }
+        if (player.getBoundingRectangle().overlaps(cloud.getCloudBoundingRectangle())){
+            collision(cloud.getCloudBoundingRectangle());
         }
 
         // Trees collision

@@ -8,23 +8,15 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class StormCloud implements StormCloudProperties {
     private Sprite stormCloud;
-    float speed = 2.5f;
-    float reverseSpeed = -0.5f;
-    boolean goBack = false;
     boolean moveStop;
-    boolean despawnReady;
+    boolean compliteMove = false;
+    boolean moveBack = false;
 
     // Storm Cloud constructor
     public StormCloud() {
         moveStop = true;
-        despawnReady = false;
         stormCloud = new Sprite(new Texture(Gdx.files.internal("cloud.png")));
-    }
-
-    public void spawn(float x, float y) {
-        x = x - stormCloud.getWidth()/2;
-
-        stormCloud.setPosition(x,y);
+        stormCloud.setPosition(0, -600);
     }
 
     public void draw(SpriteBatch b) {
@@ -32,31 +24,23 @@ public class StormCloud implements StormCloudProperties {
     }
 
     public void move(Camera camera) {
-        if (moveStop) {
-            if (stormCloud.getY()<camera.getPositionY() && !goBack) {
-                stormCloud.translateY(speed);
-            }
-            if (stormCloud.getY()>=(camera.getPositionY()-(stormCloud.getHeight())) && !goBack) {
-                goBack = true;
-                despawnReady = true;
-            }
-            if (goBack) {
-                stormCloud.translateY(reverseSpeed);
-            }
-        }
+        stormCloud.setPosition(0, camera.getPositionY() - 800);
     }
 
-    public float getCloudWidth() {
-        return cloudWidth;
-    }
-    public float getCloudHeight() {
-        return cloudHeight;
-    }
-    public float getCloudYpos() {
-        return stormCloud.getY();
-    }
-    public float getCloudXpos() {
-        return stormCloud.getX();
+    public void moveUp(Camera camera) {
+
+        if (stormCloud.getY() <= camera.getPositionY() && moveBack == false){
+            stormCloud.translateY(2.5f);
+            if (stormCloud.getY() >= camera.getPositionY()){
+                moveBack = true;
+            }
+        }
+        if (moveBack){
+            stormCloud.translateY(-2.5f);
+            if (stormCloud.getY() <= camera.getPositionY() - 800){
+                compliteMove = true;
+            }
+        }
     }
 
     public Rectangle getCloudBoundingRectangle() {

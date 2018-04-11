@@ -42,7 +42,6 @@ public class gameScreen implements Screen {
     Vector3 touch;
 
     int enemyNumber = 0;
-    int cloudNumber = 0;
     int clockNumber = 0;
 
     private float time;
@@ -51,16 +50,20 @@ public class gameScreen implements Screen {
     boolean gamePause = false;
     boolean mapWin = false;
     boolean mapStart = true;
+    boolean cloudMove = false;
 
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-    ArrayList<StormCloud> clouds = new ArrayList<StormCloud>();
     ArrayList<clockPickUp> clocks = new ArrayList<clockPickUp>();
+
+    StormCloud cloud;
 
     public gameScreen(BirdsVoyage host){
         font = new BitmapFont();
 
         this.host = host;
         touch = new Vector3(0,0,0);
+
+        cloud = new StormCloud();
 
         pauseButton = new Texture(Gdx.files.internal("Pause.png"));
         popUp = new Texture(Gdx.files.internal("Pausebox.png"));
@@ -116,7 +119,7 @@ public class gameScreen implements Screen {
         host.player.fixPosition(host.camera.getCamera());
         host.map.checkCollision(host.player);
         mapWin = host.map.checkFinish(host.player);
-        host.player.changeSpeed(enemies, clouds);
+        host.player.changeSpeed(enemies, cloud);
         host.camera.cameraMove();
         pauseRect.setPosition(host.camera.getPositionX() + (host.getCameraWidth()/2) - pauseButton.getWidth() - 5,host.camera.getPositionY() - (host.getCameraHeight()/2));
 
@@ -128,10 +131,7 @@ public class gameScreen implements Screen {
                 Enemy enemy = enemies.get(i);
                 enemy.stop();
             }
-            for (int i = 0; i<clouds.size(); i++) {
-                StormCloud cloud = clouds.get(i);
-                cloud.stop();
-            }
+            cloud.stop();
             time += Gdx.graphics.getRawDeltaTime();
             if(time >= 0.9f){
                 time = 0;
@@ -157,10 +157,7 @@ public class gameScreen implements Screen {
                     Enemy enemy = enemies.get(i);
                     enemy.resume();
                 }
-                for (int i = 0; i<clouds.size(); i++) {
-                    StormCloud cloud = clouds.get(i);
-                    cloud.resume();
-                }
+                cloud.resume();
             }
         }
 
@@ -172,10 +169,7 @@ public class gameScreen implements Screen {
                 Enemy enemy = enemies.get(i);
                 enemy.stop();
             }
-            for (int i = 0; i<clouds.size(); i++) {
-                StormCloud cloud = clouds.get(i);
-                cloud.stop();
-            }
+            cloud.stop();
             host.lastScreen = "game";
             host.batch.begin();
             host.fontMedium.draw(host.batch,"voitto", host.camera.getPositionX(),host.camera.getPositionY());
@@ -234,20 +228,6 @@ public class gameScreen implements Screen {
             }
         }
 
-        // spawns cloud if cameras rectangle hits cloudspawn rectangle
-        if (host.map.cloudSpawn(host.camera)) {
-            clouds.add(new StormCloud());
-
-            StormCloud cloud = clouds.get(cloudNumber);
-            cloud.spawn(host.camera.getPositionX(),host.camera.getPositionY() - (cloud.getCloudHeight()*2));
-
-            for (int i=0; i<clouds.size(); i++) {
-                if (clouds.get(i) == null) {
-                    cloudNumber = i;
-                }
-            }
-        }
-
         // spawns clock if cameras rectangle hits clockSpawn rectangle
         if (host.map.clockSpawn(host.camera)) {
             clocks.add(new clockPickUp());
@@ -277,18 +257,18 @@ public class gameScreen implements Screen {
             }
         }
 
-        // Moves clouds
-        for (int i = 0; i<clouds.size(); i++) {
-            StormCloud cloud = clouds.get(i);
-            cloud.move(host.camera);
-            cloud.draw(host.batch);
-
-            // Deletes cloud if it goes out of bounds
-            if (cloud.getCloudYpos()>host.camera.getPositionY()+((host.getMapWidth()/2) + cloud.getCloudHeight())
-                    && cloud.despawnReady) {
-                clouds.remove(i);
-            }
+        //Moves cloud to the screen
+        if (host.map.cloudSpawn(host.camera)) {
+            cloudMove = true;
         }
+
+        if (cloudMove){
+            cloud.moveUp(host.camera);
+            cloudMove = cloud.compliteMove;
+        } else {
+            cloud.move(host.camera);
+        }
+        cloud.draw(host.batch);
 
         host.player.draw(host.batch);
 
@@ -357,10 +337,7 @@ public class gameScreen implements Screen {
             Enemy enemy = enemies.get(i);
             enemy.stop();
         }
-        for (int i = 0; i<clouds.size(); i++) {
-            StormCloud cloud = clouds.get(i);
-            cloud.stop();
-        }
+        cloud.stop();
     }
 
     @Override
@@ -373,10 +350,7 @@ public class gameScreen implements Screen {
             Enemy enemy = enemies.get(i);
             enemy.resume();
         }
-        for (int i = 0; i<clouds.size(); i++) {
-            StormCloud cloud = clouds.get(i);
-            cloud.resume();
-        }
+        cloud.resume();
     }
 
     @Override
