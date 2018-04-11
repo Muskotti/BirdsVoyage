@@ -3,7 +3,10 @@ package fi.tamk.tiko;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class BirdsVoyage extends Game implements MapProperties{
 
@@ -22,6 +25,10 @@ public class BirdsVoyage extends Game implements MapProperties{
 
 	Music levelTheme;
 	Music mainMenuTheme;
+
+    FreeTypeFontGenerator textFont;
+    BitmapFont fontBig;
+    BitmapFont fontMedium;
 
 	// saved position of the camera after going to setting
 	float cameraPosX;
@@ -48,6 +55,20 @@ public class BirdsVoyage extends Game implements MapProperties{
 		time = new GameTimer();
 		menu = new menuScreen(this);
 		map = new Map();
+
+		textFont = new FreeTypeFontGenerator(Gdx.files.internal("Bord-Regular.ttf"));
+
+		FreeTypeFontGenerator.FreeTypeFontParameter parameterBig = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameterBig.size = 180;
+		parameterBig.borderColor = Color.BLACK;
+		parameterBig.borderWidth = 3;
+		fontBig = textFont.generateFont(parameterBig);
+
+        FreeTypeFontGenerator.FreeTypeFontParameter parameterMedium = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameterMedium.size = 42;
+        parameterMedium.borderColor = Color.BLACK;
+        parameterMedium.borderWidth = 3;
+        fontMedium = textFont.generateFont(parameterMedium);
 
 		levelTheme = Gdx.audio.newMusic(Gdx.files.internal("LevelTheme.ogg"));
 		mainMenuTheme = Gdx.audio.newMusic(Gdx.files.internal("MainMenuTheme.ogg"));

@@ -2,25 +2,28 @@ package fi.tamk.tiko;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class GameTimer {
 
     private float time;
+
     private int sec;
     private int min;
+
     private String secText;
     private String minText;
     private String text;
-    private BitmapFont timeText;
+
     private boolean timeStop;
 
     public GameTimer(){
         time = 0;
         sec = 0;
         min = 0;
-        timeText = new BitmapFont();
         timeStop = true;
     }
 
@@ -56,8 +59,8 @@ public class GameTimer {
     }
 
     // draws the time text
-    public void drawText(SpriteBatch batch, Camera camera, float width, float height) {
-        timeText.draw(batch, text, camera.getPositionX() - (width/2) + 5,camera.getPositionY() - (height/2) + 15);
+    public void drawText(SpriteBatch batch, Camera camera, int cameraWidth, int cameraHeight, BitmapFont fontMedium) {
+        fontMedium.draw(batch, text, camera.getPositionX() - (cameraWidth/2) + 5,camera.getPositionY() + (cameraHeight/2) - 5);
     }
 
     public void removeTime() {

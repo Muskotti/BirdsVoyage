@@ -3,10 +3,12 @@ package fi.tamk.tiko;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
@@ -41,13 +43,11 @@ public class gameScreen implements Screen {
     int cloudNumber = 0;
 
     private float time;
-    private int sec = 3;
+    private int sec = 5;
 
     boolean gamePause = false;
     boolean mapWin = false;
     boolean mapStart = true;
-
-    BitmapFont timeText;
 
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     ArrayList<StormCloud> clouds = new ArrayList<StormCloud>();
@@ -56,8 +56,6 @@ public class gameScreen implements Screen {
     public gameScreen(BirdsVoyage host){
         this.host = host;
         touch = new Vector3(0,0,0);
-
-        timeText = new BitmapFont();
 
         pauseButton = new Texture(Gdx.files.internal("Pause.png"));
         popUp = new Texture(Gdx.files.internal("Pausebox.png"));
@@ -134,9 +132,6 @@ public class gameScreen implements Screen {
                 time = 0;
                 sec--;
             }
-            host.batch.begin();
-            timeText.draw(host.batch, "" + sec, host.camera.getPositionX(),host.camera.getPositionY());
-            host.batch.end();
             if (sec == 0){
                 host.player.defaultPositionX = Gdx.input.getAccelerometerY();
                 host.player.defaultPositionY = Gdx.input.getAccelerometerZ();
@@ -267,8 +262,6 @@ public class gameScreen implements Screen {
         }
 
         host.player.draw(host.batch);
-        // draws the time text
-        host.time.drawText(host.batch,host.camera, host.getCameraWidth(), host.getCameraHeight());
 
         // draws clock
         for (int i = 0; i<clocks.size(); i++) {
@@ -283,7 +276,7 @@ public class gameScreen implements Screen {
         }
 
         // draws the time text
-        host.time.drawText(host.batch,host.camera, host.getCameraWidth(), host.getCameraHeight());
+        host.time.drawText(host.batch,host.camera, host.getCameraWidth(), host.getCameraHeight(), host.fontMedium);
 
         // draws the pause button
         host.batch.draw(pauseButton, pauseRect.getX(),pauseRect.getY());
@@ -303,6 +296,14 @@ public class gameScreen implements Screen {
                 host.batch.draw(resumeFIN, resumeRect.getX(), resumeRect.getY());
                 host.batch.draw(menuFIN, menuRect.getX(), menuRect.getY());
                 host.batch.draw(settingsFIN, settingsRect.getX(), settingsRect.getY());
+            }
+        }
+        if (sec > 0){
+            host.fontBig.draw(host.batch, "" + sec, host.camera.getPositionX() - 45,host.camera.getPositionY() + 90);
+            if (host.currentLang.equals("eng")) {
+                host.fontMedium.draw(host.batch, "Dodge trees and other objects", host.camera.getPositionX() - 350,host.camera.getPositionY() - 80);
+            } else {
+                host.fontMedium.draw(host.batch, "Väistä puita ja muita esineitä", host.camera.getPositionX() - 350,host.camera.getPositionY() - 80);
             }
         }
         host.batch.end();
