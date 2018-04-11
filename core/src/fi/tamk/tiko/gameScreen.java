@@ -152,11 +152,27 @@ public class gameScreen implements Screen {
         }
 
         if (mapWin){
+            host.time.stop();
+            host.player.stop();
+            host.camera.stop();
+            for (int i = 0; i<enemies.size(); i++) {
+                Enemy enemy = enemies.get(i);
+                enemy.stop();
+            }
+            for (int i = 0; i<clouds.size(); i++) {
+                StormCloud cloud = clouds.get(i);
+                cloud.stop();
+            }
             host.lastScreen = "game";
-            host.setScreen(new menuScreen(host));
+            host.batch.begin();
+            host.fontMedium.draw(host.batch,"voitto", host.camera.getPositionX(),host.camera.getPositionY());
+            host.batch.end();
+            if (Gdx.input.justTouched()){
+                host.setScreen(new menuScreen(host));
+            }
         }
 
-        if (Gdx.input.justTouched()){
+        if (Gdx.input.justTouched() && !mapStart){
             touch.set(Gdx.input.getX(),Gdx.input.getY(),0);
             host.camera.unproject(touch);
         }
