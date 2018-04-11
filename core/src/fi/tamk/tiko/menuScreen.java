@@ -124,7 +124,6 @@ public class menuScreen implements Screen{
         if (Gdx.input.justTouched()){
             touch.set(Gdx.input.getX(),Gdx.input.getY(),0);
             host.camera.unproject(touch);
-            host.setScreen(new gameScreen(host));
         }
 
         // draws language buttons

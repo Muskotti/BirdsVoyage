@@ -17,6 +17,8 @@ import java.util.ArrayList;
 public class gameScreen implements Screen {
     BirdsVoyage host;
 
+    BitmapFont font;
+
     // general buttons
     private Texture pauseButton;
     private Texture popUp;
@@ -41,6 +43,7 @@ public class gameScreen implements Screen {
 
     int enemyNumber = 0;
     int cloudNumber = 0;
+    int clockNumber = 0;
 
     private float time;
     private int sec = 5;
@@ -54,6 +57,8 @@ public class gameScreen implements Screen {
     ArrayList<clockPickUp> clocks = new ArrayList<clockPickUp>();
 
     public gameScreen(BirdsVoyage host){
+        font = new BitmapFont();
+
         this.host = host;
         touch = new Vector3(0,0,0);
 
@@ -135,6 +140,14 @@ public class gameScreen implements Screen {
             if (sec == 0){
                 host.player.defaultPositionX = Gdx.input.getAccelerometerY();
                 host.player.defaultPositionY = Gdx.input.getAccelerometerZ();
+
+                if (host.player.defaultPositionX < 0) {
+                    host.player.defaultPositionX =- Math.abs(host.player.defaultPositionX);
+                }
+
+                if (host.player.defaultPositionY < 0) {
+                    host.player.defaultPositionY =- Math.abs(host.player.defaultPositionY);
+                }
 
                 mapStart = false;
                 host.time.resume();
@@ -239,12 +252,12 @@ public class gameScreen implements Screen {
         if (host.map.clockSpawn(host.camera)) {
             clocks.add(new clockPickUp());
 
-            clockPickUp clock = clocks.get(cloudNumber);
+            clockPickUp clock = clocks.get(clockNumber);
             clock.spawn(host.map.getClockRecLocX(),host.map.getClockRecLocY());
 
             for (int i=0; i<clocks.size(); i++) {
                 if (clocks.get(i) == null) {
-                    cloudNumber = i;
+                    clockNumber = i;
                 }
             }
         }
@@ -322,6 +335,10 @@ public class gameScreen implements Screen {
                 host.fontMedium.draw(host.batch, "Väistä puita ja muita esineitä", host.camera.getPositionX() - 350,host.camera.getPositionY() - 80);
             }
         }
+
+        // Poista myöhemmin. Tässä anturiarvot
+        font.draw(host.batch, "X = " + Gdx.input.getAccelerometerY(), host.camera.getPositionX() + 420, host.camera.getPositionY() + 350);
+        font.draw(host.batch, "Y = " + Gdx.input.getAccelerometerZ(), host.camera.getPositionX() + 420, host.camera.getPositionY() + 300);
         host.batch.end();
     }
 

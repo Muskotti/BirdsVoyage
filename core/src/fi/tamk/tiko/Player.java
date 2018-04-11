@@ -95,94 +95,94 @@ public class Player implements MapProperties, PlayerProperties{
             if (!Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
                 float x = 0, y = 0;
 
-                x = Math.abs(defaultPositionX) - Gdx.input.getAccelerometerY();
-                y = Math.abs(defaultPositionY) - Gdx.input.getAccelerometerZ();
-                if (x > 1) {
+                x = defaultPositionX - Gdx.input.getAccelerometerY();
+                y = defaultPositionY - Gdx.input.getAccelerometerZ();
+                if (x > 0.5) {
                     if (notCollided() && slowdownTimer == 0) {
                         moveSpeedX = moveSpeedXog;
                     } else {
                         moveSpeedX = moveSpeedXog / 3;
                     }
-                    /*if (x > defaultPositionX + 2) {
+                    if (x > 1.5) {
                         if (notCollided() && slowdownTimer == 0) {
                             moveSpeedX = 300f;
                         } else {
                             moveSpeedX = 50f;
                         }
-                        if (x > defaultPositionX + 3) {
+                        if (x > 2.5) {
                             if (notCollided() && slowdownTimer == 0) {
                                 moveSpeedX = 400f;
                             } else {
                                 moveSpeedX = 100f;
                             }
                         }
-                    }*/
+                    }
                     player.setX(player.getX() - (moveSpeedX - x) * delta);
                 }
-                if (x < -1) {
+                if (x < -0.5) {
                     if (notCollided() && slowdownTimer == 0) {
                         moveSpeedX = moveSpeedXog;
                     } else {
                         moveSpeedX = moveSpeedXog / 3;
                     }
-                    /*if (x < defaultPositionX - 2) {
+                    if (x < -1.5) {
                         if (notCollided() && slowdownTimer == 0) {
                             moveSpeedX = 300f;
                         } else {
                             moveSpeedX = 50f;
                         }
-                        if (x < defaultPositionX - 3) {
+                        if (x < -2.5) {
                             if (notCollided() && slowdownTimer == 0) {
                                 moveSpeedX = 400f;
                             } else {
                                 moveSpeedX = 100f;
                             }
                         }
-                    }*/
+                    }
                     player.setX(player.getX() + (moveSpeedX - x) * delta);
                 }
-                if (y < - 1) {
+                if (y < - 0.5) {
                     if (notCollided() && slowdownTimer == 0) {
                         moveSpeedY = moveSpeedYog;
                     } else {
                         moveSpeedY = moveSpeedYog / 3;
                     }
-                    /*if (y < defaultPositionY - 5) {
+                    if (y < -1.5) {
                         if (notCollided() && slowdownTimer == 0) {
                             moveSpeedY = 300f;
                         } else {
                             moveSpeedY = 50f;
                         }
-                        if (y < defaultPositionY - 6) {
+                        if (y < -2.5) {
                             if (notCollided() && slowdownTimer == 0) {
                                 moveSpeedY = 400f;
                             } else {
                                 moveSpeedY = 100f;
                             }
                         }
-                    }*/
+                    }
                     player.setY(player.getY() + (moveSpeedY - y) * delta);
                 }
-                if (y > 1) {
+                if (y > 0.5) {
                     if (notCollided() && slowdownTimer == 0) {
                         moveSpeedY = moveSpeedYog;
                     } else {
                         moveSpeedY = moveSpeedYog / 3;
                     }
-                    /*if (y > defaultPositionY) {
+                    if (y > 1.5) {
                         if (notCollided() && slowdownTimer == 0) {
                             moveSpeedY = 300f;
                         } else {
                             moveSpeedY = 50f;
                         }
-                        if (y > defaultPositionY + 1) {
+                        if (y > 2.5) {
                             if (notCollided() && slowdownTimer == 0) {
                                 moveSpeedY = 400f;
                             } else {
                                 moveSpeedY = 100f;
                             }
                         }
-                    }*/
+                    }
                     player.setY(player.getY() - (moveSpeedY - y) * delta);
                 }
             }
