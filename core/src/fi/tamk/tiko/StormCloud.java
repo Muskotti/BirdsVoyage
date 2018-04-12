@@ -16,29 +16,31 @@ public class StormCloud implements StormCloudProperties {
     public StormCloud() {
         moveStop = true;
         stormCloud = new Sprite(new Texture(Gdx.files.internal("cloud.png")));
-        stormCloud.setPosition(0, -600);
+        stormCloud.setPosition(0, -stormCloud.getHeight() * 2);
     }
 
     public void draw(SpriteBatch b) {
         stormCloud.draw(b);
+        Gdx.app.log("asd","asd " + stormCloud.getY());
     }
 
     public void move(Camera camera) {
-        stormCloud.setPosition(0, camera.getPositionY() - 800);
+        stormCloud.setPosition(0, camera.getPositionY() - stormCloud.getHeight() * 2);
     }
 
     public void moveUp(Camera camera) {
-
-        if (stormCloud.getY() <= camera.getPositionY() && moveBack == false){
-            stormCloud.translateY(2.5f);
-            if (stormCloud.getY() >= camera.getPositionY()){
+        if (moveStop) {
+            if (stormCloud.getY() < camera.getPositionY() - stormCloud.getHeight() && !moveBack) {
+                stormCloud.translateY(2.5f);
+            } else {
                 moveBack = true;
             }
-        }
-        if (moveBack){
-            stormCloud.translateY(-2.5f);
-            if (stormCloud.getY() <= camera.getPositionY() - 800){
-                compliteMove = true;
+            if (moveBack) {
+                stormCloud.translateY(-.5f);
+                if (stormCloud.getY() < camera.getPositionY() - stormCloud.getHeight() * 2) {
+                    moveBack = false;
+                    compliteMove = true;
+                }
             }
         }
     }
