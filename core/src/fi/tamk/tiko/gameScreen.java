@@ -273,7 +273,7 @@ public class gameScreen implements Screen {
         }
         cloud.draw(host.batch);
 
-        host.player.draw(host.batch);
+        host.player.animate(host.batch);
 
         // draws clock
         for (int i = 0; i<clocks.size(); i++) {
@@ -292,7 +292,6 @@ public class gameScreen implements Screen {
 
         // draws the pause button
         host.batch.draw(pauseButton, pauseRect.getX(),pauseRect.getY());
-        host.player.draw(host.batch);
 
         // pause menu
         if (gamePause){

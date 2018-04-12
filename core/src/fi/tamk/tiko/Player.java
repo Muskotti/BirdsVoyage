@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
@@ -13,7 +15,11 @@ import java.util.ArrayList;
 public class Player implements MapProperties, PlayerProperties{
 
     private Sprite player;
+    private Animation<TextureRegion> flyingAnimation;
+    private Texture flyingSheet;
     private Rectangle boundingRectangle;
+
+    float stateTime;
 
     float moveSpeedX = moveSpeedXog;
     float moveSpeedY = moveSpeedYog;
@@ -27,11 +33,25 @@ public class Player implements MapProperties, PlayerProperties{
     float playerRestTop;
     float transTime;
     float slowdownTimer;
+
     boolean stopMove;
 
     // player constructor
     public Player(){
-        player = new Sprite(new Texture(Gdx.files.internal("player.png")));
+        flyingSheet = new Texture(Gdx.files.internal("player.png"));
+        TextureRegion[][] tmp = TextureRegion.split(flyingSheet,
+                flyingSheet.getWidth() / 4,
+                flyingSheet.getHeight() / 1);
+        TextureRegion[] flyingFrames = new TextureRegion[4 * 1];
+        int index = 0;
+        for (int i = 0; i < 1; i++){
+            for (int j = 0; j < 4; j++){
+                flyingFrames[index++] = tmp[i][j];
+            }
+        }
+        flyingAnimation = new Animation<TextureRegion>(1 / 10f, flyingFrames);
+        stateTime = 0f;
+        player = new Sprite(new Texture(Gdx.files.internal("rectangle.png")));
         boundingRectangle = new Rectangle();
         playerRestTop = cameraHeight;
         slowdownTimer = 0;
@@ -58,10 +78,6 @@ public class Player implements MapProperties, PlayerProperties{
         if (player.getY() < camera.position.y - (cameraHeight/2)){
             player.setY(camera.position.y - (cameraHeight/2));
         }
-    }
-
-    public void draw(SpriteBatch b) {
-        player.draw(b);
     }
 
     public float getX() {
@@ -289,5 +305,12 @@ public class Player implements MapProperties, PlayerProperties{
 
     public void setStart() {
         player.setPosition(startX,startY);
+    }
+
+    public void animate(SpriteBatch b) {
+        stateTime += Gdx.graphics.getDeltaTime();
+        TextureRegion currentFrame = flyingAnimation.getKeyFrame(stateTime, true);
+        b.draw(player.getTexture(), player.getX(), player.getY());
+        b.draw(currentFrame, player.getX(), player.getY());
     }
 }
