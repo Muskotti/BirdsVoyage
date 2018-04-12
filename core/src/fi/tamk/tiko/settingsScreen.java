@@ -27,7 +27,7 @@ public class settingsScreen implements Screen{
     private Texture muteButtonTex;
     private Texture unmuteButtonTex;
 
-    // Texture fot menu button
+    // Texture for menu button
     private Texture menuButtonTex;
 
     // Texture for language buttons
@@ -45,7 +45,6 @@ public class settingsScreen implements Screen{
 
     // players touch input
     private Vector3 touch;
-    // asd
 
     public settingsScreen(BirdsVoyage host){
         this.host = host;
@@ -169,6 +168,7 @@ public class settingsScreen implements Screen{
         // checks if the buttons are touched
         if (zeroButtonRec.contains(touch.x,touch.y)){
             Gdx.app.log("tag","zero");
+            host.setScreen(new calibrationScreen(host));
         }
         if (sensButtonRec.contains(touch.x,touch.y)){
             Gdx.app.log("tag","sens");
