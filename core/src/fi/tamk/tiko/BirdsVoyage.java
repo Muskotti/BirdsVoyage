@@ -25,6 +25,7 @@ public class BirdsVoyage extends Game implements MapProperties{
 
 	Music levelTheme;
 	Music mainMenuTheme;
+	Boolean mute;
 
     FreeTypeFontGenerator textFont;
     BitmapFont fontBig;
@@ -55,6 +56,8 @@ public class BirdsVoyage extends Game implements MapProperties{
 		time = new GameTimer();
 		menu = new menuScreen(this);
 		map = new Map();
+
+		mute = false;
 
 		textFont = new FreeTypeFontGenerator(Gdx.files.internal("Bord-Regular.ttf"));
 
