@@ -18,6 +18,7 @@ public class Player implements MapProperties, PlayerProperties{
     private Animation<TextureRegion> flyingAnimation;
     private Texture flyingSheet;
     private Rectangle boundingRectangle;
+    private Rectangle playerRectangle;
 
     float stateTime;
 
@@ -51,15 +52,12 @@ public class Player implements MapProperties, PlayerProperties{
         }
         flyingAnimation = new Animation<TextureRegion>(1 / 10f, flyingFrames);
         stateTime = 0f;
-        player = new Sprite(new Texture(Gdx.files.internal("rectangle.png")));
+        player = new Sprite();
+        playerRectangle = new Rectangle(player.getX(),player.getY(),128, 64);
         boundingRectangle = new Rectangle();
         playerRestTop = cameraHeight;
         slowdownTimer = 0;
         stopMove = true;
-    }
-
-    public void setPosition(float x, float y) {
-        player.translate(x,y);
     }
 
     public void fixPosition(OrthographicCamera camera) {
@@ -221,7 +219,7 @@ public class Player implements MapProperties, PlayerProperties{
     }
 
     public void collision(Rectangle rectangle) {
-        if (player.getBoundingRectangle().overlaps(rectangle)) {
+        if (playerRectangle.overlaps(rectangle)) {
             boundingRectangle = rectangle;
         }
     }
@@ -238,7 +236,7 @@ public class Player implements MapProperties, PlayerProperties{
         // Enemy collision
         for (int i = 0; i<enemies.size(); i++) {
             Enemy enemy = enemies.get(i);
-            if (player.getBoundingRectangle().overlaps(enemy.getEnemyBoundingRectangle())) {
+            if (playerRectangle.overlaps(enemy.getEnemyBoundingRectangle())) {
                 collision(enemy.getEnemyBoundingRectangle());
                 slowdownTimer += Gdx.graphics.getRawDeltaTime();
             }
@@ -253,12 +251,12 @@ public class Player implements MapProperties, PlayerProperties{
         }
 
         // Cloud collision
-        if (player.getBoundingRectangle().overlaps(cloud.getCloudBoundingRectangle())){
+        if (playerRectangle.overlaps(cloud.getCloudBoundingRectangle())){
             collision(cloud.getCloudBoundingRectangle());
         }
 
         // Trees collision
-        if (player.getBoundingRectangle().overlaps(boundingRectangle)) {
+        if (playerRectangle.overlaps(boundingRectangle)) {
             speedY = halfSpeed;
             speedX = halfSpeed;
             changeTrans();
@@ -292,7 +290,7 @@ public class Player implements MapProperties, PlayerProperties{
     }
 
     public Rectangle getRectangle() {
-        return player.getBoundingRectangle();
+        return playerRectangle;
     }
 
     public void stop() {
@@ -309,8 +307,8 @@ public class Player implements MapProperties, PlayerProperties{
 
     public void animate(SpriteBatch b) {
         stateTime += Gdx.graphics.getDeltaTime();
+        playerRectangle.setPosition(player.getX(), player.getY());
         TextureRegion currentFrame = flyingAnimation.getKeyFrame(stateTime, true);
-        b.draw(player.getTexture(), player.getX(), player.getY());
         b.draw(currentFrame, player.getX(), player.getY());
     }
 }

@@ -22,7 +22,7 @@ public class Map {
     float clockRecLocY;
 
     public Map(){
-        tiledMap = new TmxMapLoader().load("tutorial1.tmx");
+        tiledMap = new TmxMapLoader().load("map2-1.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
     }
 
