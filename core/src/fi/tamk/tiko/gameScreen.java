@@ -260,7 +260,9 @@ public class gameScreen implements Screen {
         //Moves cloud to the screen
         if (host.map.cloudSpawn(host.camera)) {
             cloudMove = true;
+            cloud.compliteMove = false;
         }
+        Gdx.app.log("asd","asd " + cloudMove);
         if (cloudMove){
             cloud.moveUp(host.camera);
         } else {
