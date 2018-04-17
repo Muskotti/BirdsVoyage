@@ -13,7 +13,7 @@ import java.awt.TextArea;
  * Created by Jimi on 12.4.2018.
  */
 
-public class calibrationScreen implements Screen {
+public class sensitivityScreen implements Screen {
 
     BirdsVoyage host;
 
@@ -33,7 +33,7 @@ public class calibrationScreen implements Screen {
     private Rectangle fiFIButtonRec;
     private Rectangle menuButtonRec;
 
-    public calibrationScreen(BirdsVoyage host) {
+    public sensitivityScreen(BirdsVoyage host) {
         touch = new Vector3(0,0,0);
         this.host = host;
         background = new Texture(Gdx.files.internal("menuBack.png"));

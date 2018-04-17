@@ -38,6 +38,12 @@ public class Player implements MapProperties, PlayerProperties{
     float defaultPositionX;
     float defaultPositionY;
 
+    // Sensitivities for each leaning direction
+    double upSens;
+    double downSens;
+    double rightSens;
+    double leftSens;
+
     float playerRestTop;
     float transTime;
     float slowdownTimer;
@@ -54,6 +60,14 @@ public class Player implements MapProperties, PlayerProperties{
         playerRestTop = cameraHeight;
         slowdownTimer = 0;
         stopMove = true;
+
+        // default sensitivities
+        // Got to be positive
+        downSens = 0.8;
+        leftSens = 0.8;
+        // Got to be negative
+        upSens = -0.8;
+        rightSens = -0.8;
     }
 
     private void featherAnim() {
@@ -139,19 +153,20 @@ public class Player implements MapProperties, PlayerProperties{
 
                 x = defaultPositionX - Gdx.input.getAccelerometerY();
                 y = defaultPositionY - Gdx.input.getAccelerometerZ();
-                if (x > 0.5) {
+                // Move left
+                if (x > leftSens) {
                     if (notCollided() && slowdownTimer == 0) {
                         moveSpeedX = moveSpeedXog;
                     } else {
                         moveSpeedX = moveSpeedXog / 3;
                     }
-                    if (x > 1.5) {
+                    if (x > leftSens*2) {
                         if (notCollided() && slowdownTimer == 0) {
                             moveSpeedX = 300f;
                         } else {
                             moveSpeedX = 50f;
                         }
-                        if (x > 2.5) {
+                        if (x > leftSens*3) {
                             if (notCollided() && slowdownTimer == 0) {
                                 moveSpeedX = 400f;
                             } else {
@@ -161,19 +176,21 @@ public class Player implements MapProperties, PlayerProperties{
                     }
                     player.setX(player.getX() - (moveSpeedX - x) * delta);
                 }
-                if (x < -0.5) {
+
+                // Move right
+                if (x < rightSens) {
                     if (notCollided() && slowdownTimer == 0) {
                         moveSpeedX = moveSpeedXog;
                     } else {
                         moveSpeedX = moveSpeedXog / 3;
                     }
-                    if (x < -1.5) {
+                    if (x < rightSens*2) {
                         if (notCollided() && slowdownTimer == 0) {
                             moveSpeedX = 300f;
                         } else {
                             moveSpeedX = 50f;
                         }
-                        if (x < -2.5) {
+                        if (x < rightSens*3) {
                             if (notCollided() && slowdownTimer == 0) {
                                 moveSpeedX = 400f;
                             } else {
@@ -183,19 +200,21 @@ public class Player implements MapProperties, PlayerProperties{
                     }
                     player.setX(player.getX() + (moveSpeedX - x) * delta);
                 }
-                if (y < - 0.5) {
+
+                // Move up
+                if (y < upSens) {
                     if (notCollided() && slowdownTimer == 0) {
                         moveSpeedY = moveSpeedYog;
                     } else {
                         moveSpeedY = moveSpeedYog / 3;
                     }
-                    if (y < -1.5) {
+                    if (y < upSens*2) {
                         if (notCollided() && slowdownTimer == 0) {
                             moveSpeedY = 300f;
                         } else {
                             moveSpeedY = 50f;
                         }
-                        if (y < -2.5) {
+                        if (y < upSens*3) {
                             if (notCollided() && slowdownTimer == 0) {
                                 moveSpeedY = 400f;
                             } else {
@@ -205,19 +224,21 @@ public class Player implements MapProperties, PlayerProperties{
                     }
                     player.setY(player.getY() + (moveSpeedY - y) * delta);
                 }
-                if (y > 0.5) {
+
+                // Move down
+                if (y > downSens) {
                     if (notCollided() && slowdownTimer == 0) {
                         moveSpeedY = moveSpeedYog;
                     } else {
                         moveSpeedY = moveSpeedYog / 3;
                     }
-                    if (y > 1.5) {
+                    if (y > downSens*2) {
                         if (notCollided() && slowdownTimer == 0) {
                             moveSpeedY = 300f;
                         } else {
                             moveSpeedY = 50f;
                         }
-                        if (y > 2.5) {
+                        if (y > downSens*3) {
                             if (notCollided() && slowdownTimer == 0) {
                                 moveSpeedY = 400f;
                             } else {

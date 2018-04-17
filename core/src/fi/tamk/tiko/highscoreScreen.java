@@ -13,7 +13,7 @@ import java.awt.TextArea;
  * Created by Jimi on 12.4.2018.
  */
 
-public class calibrationScreen implements Screen {
+public class highscoreScreen implements Screen {
 
     BirdsVoyage host;
 
@@ -33,7 +33,7 @@ public class calibrationScreen implements Screen {
     private Rectangle fiFIButtonRec;
     private Rectangle menuButtonRec;
 
-    public calibrationScreen(BirdsVoyage host) {
+    public highscoreScreen(BirdsVoyage host) {
         touch = new Vector3(0,0,0);
         this.host = host;
         background = new Texture(Gdx.files.internal("menuBack.png"));
@@ -91,13 +91,15 @@ public class calibrationScreen implements Screen {
         host.batch.draw(enGBButtonTex, enGBButtonRec.getX(), enGBButtonRec.getY());
         host.batch.draw(fiFIButtonTex, fiFIButtonRec.getX(), fiFIButtonRec.getY());
 
+        // Draws back button
         if (!host.gameRun){
             host.batch.draw(menuButtonTex, menuButtonRec.getX(), menuButtonRec.getY());
         }
         host.batch.end();
 
+        // GOes back to main menu
         if (menuButtonRec.contains(touch.x,touch.y)){
-            host.setScreen(new settingsScreen(host));
+            host.setScreen(new menuScreen(host));
         }
 
         // changes the language

@@ -143,6 +143,9 @@ public class menuScreen implements Screen{
             host.lastScreen = "menu";
             host.setScreen(new settingsScreen(host));
         }
+        if (highButtonRec.contains(touch.x, touch.y)) {
+            host.setScreen(new highscoreScreen(host));
+        }
         if (exitButtonRec.contains(touch.x,touch.y)){
             Gdx.app.exit();
         }

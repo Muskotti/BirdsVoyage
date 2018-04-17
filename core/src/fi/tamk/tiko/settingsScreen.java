@@ -172,6 +172,7 @@ public class settingsScreen implements Screen{
         }
         if (sensButtonRec.contains(touch.x,touch.y)){
             Gdx.app.log("tag","sens");
+            host.setScreen(new sensitivityScreen(host));
         }
         if (muteButtonRec.contains(touch.x,touch.y)){
             Gdx.app.log("tag","mute");
