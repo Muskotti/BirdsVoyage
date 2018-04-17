@@ -21,7 +21,6 @@ public class StormCloud implements StormCloudProperties {
 
     public void draw(SpriteBatch b) {
         stormCloud.draw(b);
-        //Gdx.app.log("asd","asd " + stormCloud.getY());
     }
 
     public void move(Camera camera) {

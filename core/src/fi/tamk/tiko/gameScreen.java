@@ -119,7 +119,6 @@ public class gameScreen implements Screen {
         host.player.fixPosition(host.camera.getCamera());
         host.map.checkCollision(host.player);
         mapWin = host.map.checkFinish(host.player);
-        host.player.changeSpeed(enemies, cloud, host.batch);
         host.camera.cameraMove();
         pauseRect.setPosition(host.camera.getPositionX() + (host.getCameraWidth()/2) - pauseButton.getWidth() - 5,host.camera.getPositionY() - (host.getCameraHeight()/2));
 
@@ -271,7 +270,7 @@ public class gameScreen implements Screen {
             cloudMove = false;
         }
         cloud.draw(host.batch);
-
+        host.player.changeSpeed(enemies, cloud, host.batch);
         host.player.animate(host.batch);
 
         // draws clock
