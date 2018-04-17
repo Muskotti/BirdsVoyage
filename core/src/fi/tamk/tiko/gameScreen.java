@@ -269,7 +269,7 @@ public class gameScreen implements Screen {
         if (cloud.compliteMove){
             cloudMove = false;
         }
-        cloud.draw(host.batch);
+        cloud.draw(host);
         host.player.changeSpeed(enemies, cloud, host.batch);
         host.player.animate(host.batch);
 

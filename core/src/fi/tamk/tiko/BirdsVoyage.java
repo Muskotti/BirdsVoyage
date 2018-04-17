@@ -41,10 +41,15 @@ public class BirdsVoyage extends Game implements MapProperties{
 	// boolean to check if game is running
 	boolean gameRun = false;
 
+	//enemy animation
     Animation<TextureRegion> flyingAnimation;
     private Texture flyingSheet;
-
     float stateTime;
+
+    //cloud animation
+    Animation<TextureRegion> cloudAnimation;
+    private Texture cloudSheet;
+    float cloudTime;
 
 	public int getCameraHeight() {
 		return cameraHeight;
@@ -82,6 +87,7 @@ public class BirdsVoyage extends Game implements MapProperties{
         fontMedium = textFont.generateFont(parameterMedium);
 
         makeEnemyAnim();
+        makeCloudAnim();
 
 		levelTheme = Gdx.audio.newMusic(Gdx.files.internal("LevelTheme.ogg"));
 		mainMenuTheme = Gdx.audio.newMusic(Gdx.files.internal("MainMenuTheme.ogg"));
@@ -89,6 +95,22 @@ public class BirdsVoyage extends Game implements MapProperties{
 		camera.cameraMove();
 		setScreen(menu);
 	}
+
+    private void makeCloudAnim() {
+        cloudSheet = new Texture(Gdx.files.internal("pilvi.png"));
+        TextureRegion[][] tmp = TextureRegion.split(cloudSheet,
+                cloudSheet.getWidth() / 3,
+                cloudSheet.getHeight() / 1);
+        TextureRegion[] flyingFrames = new TextureRegion[3 * 1];
+        int index = 0;
+        for (int i = 0; i < 1; i++){
+            for (int j = 0; j < 3; j++){
+                flyingFrames[index++] = tmp[i][j];
+            }
+        }
+        cloudAnimation = new Animation<TextureRegion>(1 / 10f, flyingFrames);
+        cloudTime = 0f;
+    }
 
     private void makeEnemyAnim() {
         flyingSheet = new Texture(Gdx.files.internal("enemy.png"));
