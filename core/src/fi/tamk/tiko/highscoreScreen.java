@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g3d.particles.ResourceData;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
@@ -95,9 +96,24 @@ public class highscoreScreen implements Screen {
         if (!host.gameRun){
             host.batch.draw(menuButtonTex, menuButtonRec.getX(), menuButtonRec.getY());
         }
+
+        // High score text drawing
+        if (host.currentLang.equals("fin")) {
+            host.fontMedium.draw(host.batch,"Parhaat Pisteet", 450,670);
+        }
+        else {
+            host.fontMedium.draw(host.batch,"High Scores", 500,670);
+        }
+
+        // High scores drawing
+        host.fontMedium.draw(host.batch, "1. " + host.preferences.getString("highscore1name") + " " +
+                host.preferences.getInteger("highscoreMin") +
+                "." +
+                host.preferences.getInteger("highscoreSec"), 500, 500);
+
         host.batch.end();
 
-        // GOes back to main menu
+        // Goes back to main menu
         if (menuButtonRec.contains(touch.x,touch.y)){
             host.setScreen(new menuScreen(host));
         }

@@ -75,6 +75,13 @@ public class GameTimer {
         timeStop = true;
     }
 
+    public float getSeconds() {
+        return sec;
+    }
+    public float getMinutes() {
+        return min;
+    }
+
     public void reset() {
         time = 0;
         sec = 0;

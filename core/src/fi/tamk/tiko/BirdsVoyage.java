@@ -2,6 +2,7 @@ package fi.tamk.tiko;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -51,6 +52,8 @@ public class BirdsVoyage extends Game implements MapProperties{
     private Texture cloudSheet;
     float cloudTime;
 
+    Preferences preferences;
+
 	public int getCameraHeight() {
 		return cameraHeight;
 	}
@@ -91,6 +94,8 @@ public class BirdsVoyage extends Game implements MapProperties{
 
 		levelTheme = Gdx.audio.newMusic(Gdx.files.internal("LevelTheme.ogg"));
 		mainMenuTheme = Gdx.audio.newMusic(Gdx.files.internal("MainMenuTheme.ogg"));
+
+		preferences = Gdx.app.getPreferences("My Preferences");
 
 		camera.cameraMove();
 		setScreen(menu);
@@ -175,4 +180,11 @@ public class BirdsVoyage extends Game implements MapProperties{
 		player.resume();
 		camera.resume();
 	}
+
+	public float getMinutes() {
+	    return time.getMinutes();
+    }
+    public float getSeconds() {
+	    return time.getSeconds();
+    }
 }

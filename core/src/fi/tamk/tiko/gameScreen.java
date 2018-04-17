@@ -173,6 +173,24 @@ public class gameScreen implements Screen {
             host.batch.begin();
             host.fontMedium.draw(host.batch,"voitto", host.camera.getPositionX(),host.camera.getPositionY());
             host.batch.end();
+
+            // Checks if new high score for the top 10 list
+            boolean newHighscore = false;
+            if (host.getMinutes() < (host.preferences.getInteger("highscoreMin", 100))) {
+                newHighscore = true;
+            }
+            if (!newHighscore && (host.getMinutes() == (host.preferences.getInteger("highscoreMin", 100))) &&
+                    (host.getSeconds() < host.preferences.getInteger("highscoreSec", 100))) {
+                newHighscore = true;
+
+            }
+            if (newHighscore) {
+                host.preferences.flush();
+                host.preferences.putInteger("highscoreMin",(int) host.getMinutes());
+                host.preferences.putInteger("highscoreSec",(int) host.getSeconds());
+            }
+
+            // Returns to menu
             if (Gdx.input.justTouched()){
                 host.setScreen(new menuScreen(host));
             }
