@@ -248,7 +248,7 @@ public class gameScreen implements Screen {
         for (int i = 0; i<enemies.size(); i++) {
             Enemy enemy = enemies.get(i);
             enemy.move();
-            enemy.draw(host.batch);
+            enemy.draw(host);
 
             // Deletes enemy if it goes out of bounds
             if (enemy.getEnemyXpos()<0 || enemy.getEnemyXpos()>host.getMapWidth() ||

@@ -4,8 +4,11 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class BirdsVoyage extends Game implements MapProperties{
@@ -37,6 +40,11 @@ public class BirdsVoyage extends Game implements MapProperties{
 
 	// boolean to check if game is running
 	boolean gameRun = false;
+
+    Animation<TextureRegion> flyingAnimation;
+    private Texture flyingSheet;
+
+    float stateTime;
 
 	public int getCameraHeight() {
 		return cameraHeight;
@@ -73,6 +81,8 @@ public class BirdsVoyage extends Game implements MapProperties{
         parameterMedium.borderWidth = 3;
         fontMedium = textFont.generateFont(parameterMedium);
 
+        makeEnemyAnim();
+
 		levelTheme = Gdx.audio.newMusic(Gdx.files.internal("LevelTheme.ogg"));
 		mainMenuTheme = Gdx.audio.newMusic(Gdx.files.internal("MainMenuTheme.ogg"));
 
@@ -80,7 +90,23 @@ public class BirdsVoyage extends Game implements MapProperties{
 		setScreen(menu);
 	}
 
-	public float getMapWidth() {
+    private void makeEnemyAnim() {
+        flyingSheet = new Texture(Gdx.files.internal("enemy.png"));
+        TextureRegion[][] tmp = TextureRegion.split(flyingSheet,
+                flyingSheet.getWidth() / 4,
+                flyingSheet.getHeight() / 1);
+        TextureRegion[] flyingFrames = new TextureRegion[4 * 1];
+        int index = 0;
+        for (int i = 0; i < 1; i++){
+            for (int j = 0; j < 4; j++){
+                flyingFrames[index++] = tmp[i][j];
+            }
+        }
+        flyingAnimation = new Animation<TextureRegion>(1 / 10f, flyingFrames);
+        stateTime = 0f;
+    }
+
+    public float getMapWidth() {
 		return mapWidth;
 	}
 
