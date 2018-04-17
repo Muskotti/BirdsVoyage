@@ -15,12 +15,19 @@ import java.util.ArrayList;
 public class Player implements MapProperties, PlayerProperties{
 
     private Sprite player;
+
+    // flying animation
     private Animation<TextureRegion> flyingAnimation;
     private Texture flyingSheet;
+    float stateTime;
+
+    // feather animation
+    private Animation<TextureRegion> featherAnimation;
+    private Texture featherSheet;
+    float featherTime;
+
     private Rectangle boundingRectangle;
     private Rectangle playerRectangle;
-
-    float stateTime;
 
     float moveSpeedX = moveSpeedXog;
     float moveSpeedY = moveSpeedYog;
@@ -39,6 +46,33 @@ public class Player implements MapProperties, PlayerProperties{
 
     // player constructor
     public Player(){
+        flyingAnim();
+        featherAnim();
+        player = new Sprite();
+        playerRectangle = new Rectangle(player.getX(),player.getY(),128, 64);
+        boundingRectangle = new Rectangle();
+        playerRestTop = cameraHeight;
+        slowdownTimer = 0;
+        stopMove = true;
+    }
+
+    private void featherAnim() {
+        featherSheet = new Texture(Gdx.files.internal("feathers.png"));
+        TextureRegion[][] tmp = TextureRegion.split(featherSheet,
+                featherSheet.getWidth() / 2,
+                featherSheet.getHeight() / 1);
+        TextureRegion[] flyingFrames = new TextureRegion[2 * 1];
+        int index = 0;
+        for (int i = 0; i < 1; i++){
+            for (int j = 0; j < 2; j++){
+                flyingFrames[index++] = tmp[i][j];
+            }
+        }
+        featherAnimation = new Animation<TextureRegion>(1 / 10f, flyingFrames);
+        featherTime = 0f;
+    }
+
+    private void flyingAnim() {
         flyingSheet = new Texture(Gdx.files.internal("player.png"));
         TextureRegion[][] tmp = TextureRegion.split(flyingSheet,
                 flyingSheet.getWidth() / 4,
@@ -52,12 +86,6 @@ public class Player implements MapProperties, PlayerProperties{
         }
         flyingAnimation = new Animation<TextureRegion>(1 / 10f, flyingFrames);
         stateTime = 0f;
-        player = new Sprite();
-        playerRectangle = new Rectangle(player.getX(),player.getY(),128, 64);
-        boundingRectangle = new Rectangle();
-        playerRestTop = cameraHeight;
-        slowdownTimer = 0;
-        stopMove = true;
     }
 
     public void fixPosition(OrthographicCamera camera) {
@@ -205,19 +233,6 @@ public class Player implements MapProperties, PlayerProperties{
         }
     }
 
-    private void changeTrans() {
-        if (stopMove) {
-            transTime += Gdx.graphics.getRawDeltaTime();
-            if (transTime <= 0.05) {
-                player.setAlpha(0.5f);
-            } else if (transTime >= 0.1 && transTime <= 0.29999) {
-                player.setAlpha(1f);
-            } else if (transTime >= 0.3) {
-                transTime = 0;
-            }
-        }
-    }
-
     public void collision(Rectangle rectangle) {
         if (playerRectangle.overlaps(rectangle)) {
             boundingRectangle = rectangle;
@@ -232,7 +247,7 @@ public class Player implements MapProperties, PlayerProperties{
         return collision;
     }
 
-    public void changeSpeed(ArrayList<Enemy> enemies, StormCloud cloud) {
+    public void changeSpeed(ArrayList<Enemy> enemies, StormCloud cloud, SpriteBatch b) {
         // Enemy collision
         for (int i = 0; i<enemies.size(); i++) {
             Enemy enemy = enemies.get(i);
@@ -259,15 +274,22 @@ public class Player implements MapProperties, PlayerProperties{
         if (playerRectangle.overlaps(boundingRectangle)) {
             speedY = halfSpeed;
             speedX = halfSpeed;
-            changeTrans();
+            hitAnim(b);
             if (stopMove){
                 Gdx.input.vibrate(50);
             }
         } else {
             speedY = normalSpeed;
             speedX = normalSpeed;
-            player.setAlpha(1f);
         }
+    }
+
+    private void hitAnim(SpriteBatch b) {
+        featherTime += Gdx.graphics.getDeltaTime();
+        TextureRegion currentFrame = featherAnimation.getKeyFrame(featherTime, true);
+        b.begin();
+        b.draw(currentFrame, player.getX(), player.getY());
+        b.end();
     }
 
     public float getSpeedY() {
