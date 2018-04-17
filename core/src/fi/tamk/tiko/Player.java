@@ -270,6 +270,7 @@ public class Player implements MapProperties, PlayerProperties{
 
     public void changeSpeed(ArrayList<Enemy> enemies, StormCloud cloud, SpriteBatch b) {
         // Enemy collision
+        Gdx.app.log("asd",""+ slowdownTimer);
         for (int i = 0; i<enemies.size(); i++) {
             Enemy enemy = enemies.get(i);
             if (playerRectangle.overlaps(enemy.getEnemyBoundingRectangle())) {
@@ -277,7 +278,7 @@ public class Player implements MapProperties, PlayerProperties{
                 slowdownTimer += Gdx.graphics.getRawDeltaTime();
             }
         }
-        if (slowdownTimer > 0 && slowdownTimer < 3) {
+        if (slowdownTimer > 0 && slowdownTimer < 5) {
             speedY = halfSpeed;
             speedX = halfSpeed;
             slowdownTimer += Gdx.graphics.getRawDeltaTime();

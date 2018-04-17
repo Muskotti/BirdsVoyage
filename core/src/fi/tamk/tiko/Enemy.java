@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Enemy implements EnemyProperties {
     private Sprite enemy;
+    private Rectangle enemyRect;
     float speed = 3f;
     boolean moveStop;
 
@@ -18,6 +19,7 @@ public class Enemy implements EnemyProperties {
     public Enemy() {
         moveStop = true;
         enemy = new Sprite();
+        enemyRect = new Rectangle(0,0,256,128);
     }
 
     public void spawn(float x, float y) {
@@ -38,6 +40,7 @@ public class Enemy implements EnemyProperties {
 
     public void draw(BirdsVoyage host) {
         host.stateTime += Gdx.graphics.getDeltaTime();
+        enemyRect.setPosition(enemy.getX(),enemy.getY());
         TextureRegion currentFrame = host.flyingAnimation.getKeyFrame(host.stateTime, true);
         host.batch.draw(currentFrame, enemy.getX(), enemy.getY());
     }
@@ -62,7 +65,7 @@ public class Enemy implements EnemyProperties {
         return enemy.getX();
     }
     public Rectangle getEnemyBoundingRectangle() {
-        return enemy.getBoundingRectangle();
+        return enemyRect;
     }
 
     public void stop() {

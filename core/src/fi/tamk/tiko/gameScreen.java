@@ -262,7 +262,6 @@ public class gameScreen implements Screen {
             cloudMove = true;
             cloud.compliteMove = false;
         }
-        Gdx.app.log("asd","asd " + cloudMove);
         if (cloudMove){
             cloud.moveUp(host.camera);
         } else {
