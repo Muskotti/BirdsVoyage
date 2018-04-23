@@ -192,6 +192,7 @@ public class sensitivityScreen implements Screen {
             Rectangle buttonRec = sliderButtonRec1;
             String direction = "upSens";
             String button = "button1";
+            float sensitivity = 1f;
             switch (i) {
                 case 0:
                     sliderRec = sliderBarRec1;
@@ -244,47 +245,44 @@ public class sensitivityScreen implements Screen {
             }
             // Saves sensitivity and button position
             if (buttonRec.getX()>=sliderRec.getX() && buttonRec.getX()<sliderRec.getX()+49) {
-                host.preferences.flush();
-                host.preferences.putFloat(direction, 0.2f);
+                sensitivity = 0.2f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+50 && buttonRec.getX()<sliderRec.getX()+99) {
-                host.preferences.flush();
-                host.preferences.putFloat(direction, 0.4f);
+                sensitivity = 0.4f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+100 && buttonRec.getX()<sliderRec.getX()+149) {
-                host.preferences.flush();
-                host.preferences.putFloat(direction, 0.6f);
+                sensitivity = 0.6f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+150 && buttonRec.getX()<sliderRec.getX()+199) {
-                host.preferences.flush();
-                host.preferences.putFloat(direction, 0.8f);
+                sensitivity = 0.8f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+200 && buttonRec.getX()<sliderRec.getX()+249) {
-                host.preferences.flush();
-                host.preferences.putFloat(direction, 1f);
+                sensitivity = 1f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+250 && buttonRec.getX()<sliderRec.getX()+299) {
-                host.preferences.flush();
-                host.preferences.putFloat(direction, 1.2f);
+                sensitivity = 1.2f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+300 && buttonRec.getX()<sliderRec.getX()+349) {
-                host.preferences.flush();
-                host.preferences.putFloat(direction, 1.4f);
+                sensitivity = 1.4f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+350 && buttonRec.getX()<sliderRec.getX()+399) {
-                host.preferences.flush();
-                host.preferences.putFloat(direction, 1.6f);
+                sensitivity = 1.6f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+400 && buttonRec.getX()<sliderRec.getX()+449) {
-                host.preferences.flush();
-                host.preferences.putFloat(direction, 1.8f);
+                sensitivity = 1.8f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+450 && buttonRec.getX()<sliderRec.getX()+500) {
-                host.preferences.flush();
-                host.preferences.putFloat(direction, 2f);
+                sensitivity = 2f;
             }
-
-            System.out.println(direction);
+            // Sensitivity negative values, if up/right. Positive if down/left
+            if (direction == "upSens" || direction == "rightSens") {
+                host.preferences.flush();
+                host.preferences.putFloat(direction, -sensitivity);
+            }
+            else {
+                host.preferences.flush();
+                host.preferences.putFloat(direction, sensitivity);
+            }
         }
 
         // changes the language

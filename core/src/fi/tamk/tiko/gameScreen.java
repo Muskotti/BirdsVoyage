@@ -62,6 +62,12 @@ public class gameScreen implements Screen {
 
     StormCloud cloud;
 
+    // Sensitivities
+    float downSens;
+    float leftSens;
+    float upSens;
+    float rightSens;
+
     public gameScreen(BirdsVoyage host){
         font = new BitmapFont();
 
@@ -125,6 +131,13 @@ public class gameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         host.map.setMap(host.camera.getCamera());
         host.batch.setProjectionMatrix(host.camera.combined());
+
+        upSens = host.preferences.getFloat("upSens");
+        downSens = host.preferences.getFloat("downSens");
+        leftSens = host.preferences.getFloat("leftSens");
+        rightSens = host.preferences.getFloat("rightSens");
+
+        host.player.setSens(upSens, downSens, leftSens, rightSens);
         host.player.move();
         host.player.fixPosition(host.camera.getCamera());
         host.map.checkCollision(host.player);

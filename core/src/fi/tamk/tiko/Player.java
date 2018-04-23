@@ -61,13 +61,7 @@ public class Player implements MapProperties, PlayerProperties{
         slowdownTimer = 0;
         stopMove = true;
 
-        // default sensitivities
-        // Got to be positive
-        downSens = 2f;
-        leftSens = 2f;
-        // Got to be negative
-        upSens = -2f;
-        rightSens = -2f;
+
     }
 
     private void featherAnim() {
@@ -351,5 +345,12 @@ public class Player implements MapProperties, PlayerProperties{
         playerRectangle.setPosition(player.getX(), player.getY());
         TextureRegion currentFrame = flyingAnimation.getKeyFrame(stateTime, true);
         b.draw(currentFrame, player.getX(), player.getY());
+    }
+
+    public void setSens(float up, float down, float left, float right) {
+        upSens = up;
+        downSens = down;
+        leftSens = left;
+        rightSens = right;
     }
 }
