@@ -23,6 +23,11 @@ public class gameScreen implements Screen {
     private Texture pauseButton;
     private Texture popUp;
 
+    // map finish textures
+    private Texture mapWinTex;
+    private Texture timeboxEng;
+    private Texture timeboxFin;
+
     // english buttons
     private Texture resumeENG;
     private Texture settingsENG;
@@ -77,6 +82,11 @@ public class gameScreen implements Screen {
         resumeFIN = new Texture(Gdx.files.internal("continueFIN.png"));
         settingsFIN = new Texture(Gdx.files.internal("settingsFIN.png"));
         menuFIN = new Texture(Gdx.files.internal("mmenuFIN.png"));
+
+        // win screen
+        mapWinTex = new Texture(Gdx.files.internal("Goalscreen.png"));
+        timeboxEng = new Texture(Gdx.files.internal("timeboxENG.png"));
+        timeboxFin = new Texture(Gdx.files.internal("timeboxFIN.png"));
 
         pauseRect = new Rectangle(0, 24, pauseButton.getWidth(), pauseButton.getHeight());
         resumeRect = new Rectangle(host.getCameraWidth()/2 - (resumeENG.getWidth()/2),
@@ -157,42 +167,6 @@ public class gameScreen implements Screen {
                     enemy.resume();
                 }
                 cloud.resume();
-            }
-        }
-
-        if (mapWin){
-            host.time.stop();
-            host.player.stop();
-            host.camera.stop();
-            for (int i = 0; i<enemies.size(); i++) {
-                Enemy enemy = enemies.get(i);
-                enemy.stop();
-            }
-            cloud.stop();
-            host.lastScreen = "game";
-            host.batch.begin();
-            host.fontMedium.draw(host.batch,"voitto", host.camera.getPositionX(),host.camera.getPositionY());
-            host.batch.end();
-
-            // Checks if new high score for the top 10 list
-            boolean newHighscore = false;
-            if (host.getMinutes() < (host.preferences.getInteger("highscoreMin", 100))) {
-                newHighscore = true;
-            }
-            if (!newHighscore && (host.getMinutes() == (host.preferences.getInteger("highscoreMin", 100))) &&
-                    (host.getSeconds() < host.preferences.getInteger("highscoreSec", 100))) {
-                newHighscore = true;
-
-            }
-            if (newHighscore) {
-                host.preferences.flush();
-                host.preferences.putInteger("highscoreMin",(int) host.getMinutes());
-                host.preferences.putInteger("highscoreSec",(int) host.getSeconds());
-            }
-
-            // Returns to menu
-            if (Gdx.input.justTouched()){
-                host.setScreen(new menuScreen(host));
             }
         }
 
@@ -294,7 +268,7 @@ public class gameScreen implements Screen {
         // draws clock
         for (int i = 0; i<clocks.size(); i++) {
             clockPickUp clock = clocks.get(i);
-            clock.draw(host.batch);
+            clock.draw(host);
 
             // Deletes enemy if it goes out of bounds
             if (clock.hits(host.player.getRectangle())){
@@ -338,6 +312,54 @@ public class gameScreen implements Screen {
         font.draw(host.batch, "X = " + Gdx.input.getAccelerometerY(), host.camera.getPositionX() + 420, host.camera.getPositionY() + 350);
         font.draw(host.batch, "Y = " + Gdx.input.getAccelerometerZ(), host.camera.getPositionX() + 420, host.camera.getPositionY() + 300);
         host.batch.end();
+
+        if (mapWin){
+            host.time.stop();
+            host.player.stop();
+            host.camera.stop();
+            for (int i = 0; i<enemies.size(); i++) {
+                Enemy enemy = enemies.get(i);
+                enemy.stop();
+            }
+            cloud.stop();
+            host.lastScreen = "game";
+            host.batch.begin();
+            menuRect.setPosition(host.camera.getPositionX() - 600, host.camera.getPositionY() - 350);
+            host.batch.draw(mapWinTex,0,host.camera.getPositionY() - mapWinTex.getHeight()/2,mapWinTex.getWidth(),mapWinTex.getHeight());
+            if (host.currentLang.equals("eng")){
+                host.batch.draw(timeboxEng,host.camera.getPositionX() + 200,host.camera.getPositionY() - 150,timeboxEng.getWidth(),timeboxEng.getHeight());
+                host.batch.draw(menuENG, menuRect.getX(), menuRect.getY());
+            } else {
+                host.batch.draw(timeboxFin,host.camera.getPositionX() + 200,host.camera.getPositionY() - 150,timeboxEng.getWidth(),timeboxEng.getHeight());
+                host.batch.draw(menuFIN, menuRect.getX(), menuRect.getY());
+            }
+            host.fontMedBig.draw(host.batch,host.time.getTime(),host.camera.getPositionX() + 225, host.camera.getPositionY() - 30);
+            host.batch.end();
+
+            // Checks if new high score for the top 10 list
+            boolean newHighscore = false;
+            if (host.getMinutes() < (host.preferences.getInteger("highscoreMin", 100))) {
+                newHighscore = true;
+            }
+            if (!newHighscore && (host.getMinutes() == (host.preferences.getInteger("highscoreMin", 100))) &&
+                    (host.getSeconds() < host.preferences.getInteger("highscoreSec", 100))) {
+                newHighscore = true;
+
+            }
+            if (newHighscore) {
+                host.preferences.flush();
+                host.preferences.putInteger("highscoreMin",(int) host.getMinutes());
+                host.preferences.putInteger("highscoreSec",(int) host.getSeconds());
+            }
+
+            // Returns to menu
+            if (menuRect.contains(touch.x,touch.y)){
+                touch.set(0,0,0);
+                host.lastScreen = "game";
+                host.gameRun = false;
+                host.setScreen(new menuScreen(host));
+            }
+        }
     }
 
     @Override
