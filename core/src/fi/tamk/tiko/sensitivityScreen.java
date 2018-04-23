@@ -84,17 +84,21 @@ public class sensitivityScreen implements Screen {
                 menuButtonTex.getHeight()
         );
         // Rectangles for sliders
-        sliderBarRec1 = new Rectangle(200, 600, sliderBar.getWidth(),sliderBar.getHeight());
-        sliderButtonRec1 = new Rectangle(200, 593, sliderButton.getWidth(),sliderButton.getHeight());
+        sliderBarRec1 = new Rectangle(190, 590, sliderBar.getWidth()+10,sliderBar.getHeight()+10);
+        sliderButtonRec1 = new Rectangle(host.preferences.getFloat("button1", sliderBarRec1.getX()+250)
+                , 593, sliderButton.getWidth(),sliderButton.getHeight());
 
-        sliderBarRec2 = new Rectangle(200, 500, sliderBar.getWidth(),sliderBar.getHeight());
-        sliderButtonRec2 = new Rectangle(200, 493, sliderButton.getWidth(),sliderButton.getHeight());
+        sliderBarRec2 = new Rectangle(190, 490, sliderBar.getWidth()+10,sliderBar.getHeight()+10);
+        sliderButtonRec2 = new Rectangle(host.preferences.getFloat("button2", sliderBarRec2.getX()+250)
+                , 493, sliderButton.getWidth(),sliderButton.getHeight());
 
-        sliderBarRec3 = new Rectangle(200, 400, sliderBar.getWidth(),sliderBar.getHeight());
-        sliderButtonRec3 = new Rectangle(200, 393, sliderButton.getWidth(),sliderButton.getHeight());
+        sliderBarRec3 = new Rectangle(190, 390, sliderBar.getWidth()+10,sliderBar.getHeight()+10);
+        sliderButtonRec3 = new Rectangle(host.preferences.getFloat("button3", sliderBarRec3.getX()+250)
+                , 393, sliderButton.getWidth(),sliderButton.getHeight());
 
-        sliderBarRec4 = new Rectangle(200, 300, sliderBar.getWidth(),sliderBar.getHeight());
-        sliderButtonRec4 = new Rectangle(200, 293, sliderButton.getWidth(),sliderButton.getHeight());
+        sliderBarRec4 = new Rectangle(190, 290, sliderBar.getWidth()+10,sliderBar.getHeight()+10);
+        sliderButtonRec4 = new Rectangle(host.preferences.getFloat("button4", sliderBarRec4.getX()+250)
+                , 293, sliderButton.getWidth(),sliderButton.getHeight());
     }
 
     @Override
@@ -122,17 +126,17 @@ public class sensitivityScreen implements Screen {
         host.batch.draw(enGBButtonTex, enGBButtonRec.getX(), enGBButtonRec.getY());
         host.batch.draw(fiFIButtonTex, fiFIButtonRec.getX(), fiFIButtonRec.getY());
 
-        // Draws sliders
-        host.batch.draw(sliderBar,sliderBarRec1.getX(), sliderBarRec1.getY());
+        // Draws sliders and buttons
+        host.batch.draw(sliderBar,200, 600);
         host.batch.draw(sliderButton,sliderButtonRec1.getX(), sliderButtonRec1.getY());
 
-        host.batch.draw(sliderBar,sliderBarRec2.getX(), sliderBarRec2.getY());
+        host.batch.draw(sliderBar,200, 500);
         host.batch.draw(sliderButton,sliderButtonRec2.getX(), sliderButtonRec2.getY());
 
-        host.batch.draw(sliderBar,sliderBarRec3.getX(), sliderBarRec3.getY());
+        host.batch.draw(sliderBar,200, 400);
         host.batch.draw(sliderButton,sliderButtonRec3.getX(), sliderButtonRec3.getY());
 
-        host.batch.draw(sliderBar,sliderBarRec4.getX(), sliderBarRec4.getY());
+        host.batch.draw(sliderBar,200, 300);
         host.batch.draw(sliderButton,sliderButtonRec4.getX(), sliderButtonRec4.getY());
 
         // Draws back button
@@ -187,26 +191,31 @@ public class sensitivityScreen implements Screen {
             Rectangle sliderRec = sliderBarRec1;
             Rectangle buttonRec = sliderButtonRec1;
             String direction = "upSens";
+            String button = "button1";
             switch (i) {
                 case 0:
                     sliderRec = sliderBarRec1;
                     buttonRec = sliderButtonRec1;
                     direction = "upSens";
+                    button = "button1";
                     break;
                 case 1:
                     sliderRec = sliderBarRec2;
                     buttonRec = sliderButtonRec2;
                     direction = "downSens";
+                    button = "button2";
                     break;
                 case 2:
                     sliderRec = sliderBarRec3;
                     buttonRec = sliderButtonRec3;
                     direction = "leftSens";
+                    button = "button3";
                     break;
                 case 3:
                     sliderRec = sliderBarRec4;
                     buttonRec = sliderButtonRec4;
                     direction = "rightSens";
+                    button = "button4";
                     break;
             }
             if (sliderRec.contains(touch.x,touch.y)) {
@@ -219,19 +228,63 @@ public class sensitivityScreen implements Screen {
                 }
                 if (Gdx.input.isTouched()) {
                     buttonRec.x += Gdx.input.getDeltaX();
+                    host.preferences.putFloat(button, buttonRec.x);
 
                     if (buttonRec.x<sliderRec.getX()) {
                         buttonRec.x = sliderRec.getX();
                     }
-                    else if (buttonRec.x>sliderRec.getX()+sliderBar.getWidth()-sliderButton.getWidth()) {
-                        buttonRec.x = sliderRec.getX()+sliderBar.getWidth()-sliderButton.getWidth();
+                    else if (buttonRec.x>sliderRec.getX()+sliderBar.getWidth()-sliderButton.getWidth()/2) {
+                        buttonRec.x = sliderRec.getX()+sliderBar.getWidth()-sliderButton.getWidth()/2;
                     }
                 }
+                else {
+                    host.preferences.flush();
+                    host.preferences.putFloat(button, buttonRec.x);
+                }
             }
-            // Saves sensitivity
+            // Saves sensitivity and button position
             if (buttonRec.getX()>=sliderRec.getX() && buttonRec.getX()<sliderRec.getX()+49) {
+                host.preferences.flush();
                 host.preferences.putFloat(direction, 0.2f);
             }
+            if (buttonRec.getX()>=sliderRec.getX()+50 && buttonRec.getX()<sliderRec.getX()+99) {
+                host.preferences.flush();
+                host.preferences.putFloat(direction, 0.4f);
+            }
+            if (buttonRec.getX()>=sliderRec.getX()+100 && buttonRec.getX()<sliderRec.getX()+149) {
+                host.preferences.flush();
+                host.preferences.putFloat(direction, 0.6f);
+            }
+            if (buttonRec.getX()>=sliderRec.getX()+150 && buttonRec.getX()<sliderRec.getX()+199) {
+                host.preferences.flush();
+                host.preferences.putFloat(direction, 0.8f);
+            }
+            if (buttonRec.getX()>=sliderRec.getX()+200 && buttonRec.getX()<sliderRec.getX()+249) {
+                host.preferences.flush();
+                host.preferences.putFloat(direction, 1f);
+            }
+            if (buttonRec.getX()>=sliderRec.getX()+250 && buttonRec.getX()<sliderRec.getX()+299) {
+                host.preferences.flush();
+                host.preferences.putFloat(direction, 1.2f);
+            }
+            if (buttonRec.getX()>=sliderRec.getX()+300 && buttonRec.getX()<sliderRec.getX()+349) {
+                host.preferences.flush();
+                host.preferences.putFloat(direction, 1.4f);
+            }
+            if (buttonRec.getX()>=sliderRec.getX()+350 && buttonRec.getX()<sliderRec.getX()+399) {
+                host.preferences.flush();
+                host.preferences.putFloat(direction, 1.6f);
+            }
+            if (buttonRec.getX()>=sliderRec.getX()+400 && buttonRec.getX()<sliderRec.getX()+449) {
+                host.preferences.flush();
+                host.preferences.putFloat(direction, 1.8f);
+            }
+            if (buttonRec.getX()>=sliderRec.getX()+450 && buttonRec.getX()<sliderRec.getX()+500) {
+                host.preferences.flush();
+                host.preferences.putFloat(direction, 2f);
+            }
+
+            System.out.println(direction);
         }
 
         // changes the language

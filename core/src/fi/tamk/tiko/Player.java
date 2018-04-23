@@ -39,10 +39,10 @@ public class Player implements MapProperties, PlayerProperties{
     float defaultPositionY;
 
     // Sensitivities for each leaning direction
-    double upSens;
-    double downSens;
-    double rightSens;
-    double leftSens;
+    float upSens;
+    float downSens;
+    float rightSens;
+    float leftSens;
 
     float playerRestTop;
     float transTime;
@@ -63,11 +63,11 @@ public class Player implements MapProperties, PlayerProperties{
 
         // default sensitivities
         // Got to be positive
-        downSens = 0.8;
-        leftSens = 0.8;
+        downSens = 2f;
+        leftSens = 2f;
         // Got to be negative
-        upSens = -0.8;
-        rightSens = -0.8;
+        upSens = -2f;
+        rightSens = -2f;
     }
 
     private void featherAnim() {

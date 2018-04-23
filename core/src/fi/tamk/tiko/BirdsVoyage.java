@@ -23,6 +23,11 @@ public class BirdsVoyage extends Game implements MapProperties{
 	GameTimer time;
 	String currentLang = defaultLang;
 
+	float upSens;
+	float downSens;
+	float leftSens;
+	float rightSens;
+
 	menuScreen menu;
 	String currentScreen;
 	String lastScreen;
@@ -75,6 +80,14 @@ public class BirdsVoyage extends Game implements MapProperties{
 		map = new Map();
 
 		mute = false;
+
+		// default sensitivities
+		// Got to be positive
+		downSens = 0.8f;
+		leftSens = 0.8f;
+		// Got to be negative
+		upSens = -0.8f;
+		rightSens = -0.8f;
 
 		textFont = new FreeTypeFontGenerator(Gdx.files.internal("Bord-Regular.ttf"));
 
