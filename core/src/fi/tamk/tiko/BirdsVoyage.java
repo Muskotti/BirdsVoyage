@@ -52,6 +52,7 @@ public class BirdsVoyage extends Game implements MapProperties{
     private Texture cloudSheet;
     float cloudTime;
 
+    // Preferences for high score and sensitivity saving
     Preferences preferences;
 
 	public int getCameraHeight() {
