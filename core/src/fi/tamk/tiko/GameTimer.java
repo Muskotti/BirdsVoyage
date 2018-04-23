@@ -87,4 +87,8 @@ public class GameTimer {
         sec = 0;
         min = 0;
     }
+
+    public String getTime() {
+        return text;
+    }
 }

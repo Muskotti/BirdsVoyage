@@ -38,6 +38,7 @@ public class BirdsVoyage extends Game implements MapProperties{
 
     FreeTypeFontGenerator textFont;
     BitmapFont fontBig;
+    BitmapFont fontMedBig;
     BitmapFont fontMedium;
 
 	// saved position of the camera after going to setting
@@ -56,6 +57,11 @@ public class BirdsVoyage extends Game implements MapProperties{
     Animation<TextureRegion> cloudAnimation;
     private Texture cloudSheet;
     float cloudTime;
+
+    //clock animation
+    Animation<TextureRegion> clockAnimation;
+    private Texture clockSheet;
+    float clockTime;
 
     // Preferences for high score and sensitivity saving
     Preferences preferences;
@@ -103,8 +109,15 @@ public class BirdsVoyage extends Game implements MapProperties{
         parameterMedium.borderWidth = 3;
         fontMedium = textFont.generateFont(parameterMedium);
 
+        FreeTypeFontGenerator.FreeTypeFontParameter parameterMedBig = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameterMedBig.size = 100;
+        parameterMedBig.borderColor = Color.BLACK;
+        parameterMedBig.borderWidth = 3;
+        fontMedBig = textFont.generateFont(parameterMedBig);
+
         makeEnemyAnim();
         makeCloudAnim();
+        makeClockAnim();
 
 		levelTheme = Gdx.audio.newMusic(Gdx.files.internal("LevelTheme.ogg"));
 		mainMenuTheme = Gdx.audio.newMusic(Gdx.files.internal("MainMenuTheme.ogg"));
@@ -115,8 +128,24 @@ public class BirdsVoyage extends Game implements MapProperties{
 		setScreen(menu);
 	}
 
-    private void makeCloudAnim() {
-        cloudSheet = new Texture(Gdx.files.internal("pilvi.png"));
+	private void makeClockAnim() {
+		clockSheet = new Texture(Gdx.files.internal("clock.png"));
+		TextureRegion[][] tmp = TextureRegion.split(clockSheet,
+                clockSheet.getWidth() / 6,
+                clockSheet.getHeight() / 1);
+		TextureRegion[] flyingFrames = new TextureRegion[6 * 1];
+		int index = 0;
+		for (int i = 0; i < 1; i++){
+			for (int j = 0; j < 6; j++){
+				flyingFrames[index++] = tmp[i][j];
+			}
+		}
+		clockAnimation = new Animation<TextureRegion>(6, flyingFrames);
+		clockTime = 0f;
+	}
+
+	private void makeCloudAnim() {
+        cloudSheet = new Texture(Gdx.files.internal("cloud.png"));
         TextureRegion[][] tmp = TextureRegion.split(cloudSheet,
                 cloudSheet.getWidth() / 3,
                 cloudSheet.getHeight() / 1);

@@ -4,28 +4,33 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
 public class clockPickUp {
 
     private Sprite clock;
-    float speed = 3f;
+    private Rectangle clockRect;
 
     public clockPickUp(){
-        clock = new Sprite(new Texture(Gdx.files.internal("clock.png")));
+        clock = new Sprite();
+        clockRect = new Rectangle(0,0,64,64);
     }
 
     public void spawn(float x, float y) {
         clock.setPosition(x, y);
     }
 
-    public void draw(SpriteBatch batch) {
-        clock.draw(batch);
+    public void draw(BirdsVoyage host) {
+        host.clockTime += Gdx.graphics.getDeltaTime();
+        clockRect.setPosition(clock.getX(),clock.getY());
+        TextureRegion currentFrame = host.clockAnimation.getKeyFrame(host.clockTime, true);
+        host.batch.draw(currentFrame, clock.getX(), clock.getY());
     }
 
     public boolean hits(Rectangle rectangle) {
         boolean hits = false;
-        if (rectangle.overlaps(clock.getBoundingRectangle())){
+        if (rectangle.overlaps(clockRect)){
             hits = true;
         }
         return hits;

@@ -82,7 +82,7 @@ public class Player implements MapProperties, PlayerProperties{
                 flyingFrames[index++] = tmp[i][j];
             }
         }
-        featherAnimation = new Animation<TextureRegion>(1 / 10f, flyingFrames);
+        featherAnimation = new Animation<TextureRegion>(1 / 5f, flyingFrames);
         featherTime = 0f;
     }
 
