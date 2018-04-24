@@ -21,6 +21,7 @@ public class BirdsVoyage extends Game implements MapProperties{
 	Map map;
 	Camera camera;
 	GameTimer time;
+	splashScreen splash;
 	String currentLang = defaultLang;
 
 	menuScreen menu;
@@ -79,6 +80,7 @@ public class BirdsVoyage extends Game implements MapProperties{
 		time = new GameTimer();
 		menu = new menuScreen(this);
 		map = new Map();
+		splash = new splashScreen(this);
 
 		mute = false;
 
@@ -112,7 +114,7 @@ public class BirdsVoyage extends Game implements MapProperties{
 		preferences = Gdx.app.getPreferences("My Preferences");
 
 		camera.cameraMove();
-		setScreen(menu);
+		setScreen(splash);
 	}
 
 	private void makeClockAnim() {
