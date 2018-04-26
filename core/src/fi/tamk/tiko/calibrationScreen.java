@@ -21,10 +21,14 @@ public class calibrationScreen implements Screen {
 
     private Vector3 touch;
 
-    // Texture fot menu button
+    // Texture for menu button
     private Texture menuButtonTex;
 
-    // Texture for language buttons
+    //Textures for calibration buttons
+    private Texture calibrationFI;
+    private Texture calibrationEN;
+
+    // Textures for language buttons
     private Texture enGBButtonTex;
     private Texture fiFIButtonTex;
 
@@ -32,6 +36,8 @@ public class calibrationScreen implements Screen {
     private Rectangle enGBButtonRec;
     private Rectangle fiFIButtonRec;
     private Rectangle menuButtonRec;
+    private Rectangle calibrationFIrec;
+    private Rectangle calibrationENrec;
 
     public calibrationScreen(BirdsVoyage host) {
         touch = new Vector3(0,0,0);
@@ -40,6 +46,10 @@ public class calibrationScreen implements Screen {
 
         //loads menu button
         menuButtonTex = new Texture(Gdx.files.internal("goback.png"));
+
+        // Loads calibration buttons
+        calibrationFI = new Texture(Gdx.files.internal("calibrateFIN.png"));
+        calibrationEN = new Texture(Gdx.files.internal("calibrateENG.png"));
 
         // loads flags
         enGBButtonTex = new Texture(Gdx.files.internal("eng.png"));
@@ -64,6 +74,18 @@ public class calibrationScreen implements Screen {
                 menuButtonTex.getWidth(),
                 menuButtonTex.getHeight()
         );
+        calibrationFIrec = new Rectangle(
+                100,
+                100,
+                calibrationFI.getWidth(),
+                calibrationFI.getHeight()
+        );
+        calibrationENrec = new Rectangle(
+                100,
+                100,
+                calibrationEN.getWidth(),
+                calibrationEN.getHeight()
+        );
     }
 
     @Override
@@ -84,6 +106,16 @@ public class calibrationScreen implements Screen {
             touch.set(Gdx.input.getX(),Gdx.input.getY(),0);
             host.camera.unproject(touch);
         }
+
+        // Draws calibration buttons
+        host.batch.begin();
+        if (host.currentLang.equals("fin")) {
+            host.batch.draw(calibrationFI, calibrationFIrec.getX(), calibrationFIrec.getY());
+        }
+        else {
+            host.batch.draw(calibrationEN, calibrationENrec.getX(), calibrationENrec.getY());
+        }
+        host.batch.end();
 
         // draws language buttons
         host.batch.begin();
