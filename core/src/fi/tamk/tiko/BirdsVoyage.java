@@ -59,6 +59,9 @@ public class BirdsVoyage extends Game implements MapProperties{
     private Texture clockSheet;
     float clockTime;
 
+    // selected level info
+    String currentLevel;
+
     // Preferences for high score and sensitivity saving
     Preferences preferences;
 
@@ -79,7 +82,6 @@ public class BirdsVoyage extends Game implements MapProperties{
 		camera = new Camera(player);
 		time = new GameTimer();
 		menu = new menuScreen(this);
-		map = new Map();
 		splash = new splashScreen(this);
 
 		mute = false;
@@ -107,6 +109,9 @@ public class BirdsVoyage extends Game implements MapProperties{
         makeEnemyAnim();
         makeCloudAnim();
         makeClockAnim();
+
+        // selected level
+        currentLevel = "level1";
 
 		levelTheme = Gdx.audio.newMusic(Gdx.files.internal("LevelTheme.ogg"));
 		mainMenuTheme = Gdx.audio.newMusic(Gdx.files.internal("MainMenuTheme.ogg"));
@@ -218,5 +223,9 @@ public class BirdsVoyage extends Game implements MapProperties{
     }
     public float getSeconds() {
 	    return time.getSeconds();
+    }
+
+    public void loadMap() {
+        map = new Map(currentLevel);
     }
 }

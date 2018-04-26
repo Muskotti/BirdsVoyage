@@ -21,8 +21,43 @@ public class Map {
     float clockRecLocX;
     float clockRecLocY;
 
-    public Map(){
-        tiledMap = new TmxMapLoader().load("map2-1.tmx");
+    public Map(String currentLevel){
+        if (currentLevel.equals("level1")){
+            tiledMap = new TmxMapLoader().load("map1-1.tmx");
+        }
+
+        if (currentLevel.equals("level2")){
+            tiledMap = new TmxMapLoader().load("map1-2.tmx");
+        }
+
+        if (currentLevel.equals("level3")){
+            tiledMap = new TmxMapLoader().load("map1-3.tmx");
+        }
+
+        if (currentLevel.equals("level4")){
+            tiledMap = new TmxMapLoader().load("map2-1.tmx");
+        }
+
+        if (currentLevel.equals("level5")){
+            tiledMap = new TmxMapLoader().load("map2-2.tmx");
+        }
+
+        if (currentLevel.equals("level6")){
+            tiledMap = new TmxMapLoader().load("map2-3.tmx");
+        }
+
+        if (currentLevel.equals("level7")){
+            tiledMap = new TmxMapLoader().load("map3-1.tmx");
+        }
+
+        if (currentLevel.equals("level8")){
+            tiledMap = new TmxMapLoader().load("map3-2.tmx");
+        }
+
+        if (currentLevel.equals("level9")){
+            tiledMap = new TmxMapLoader().load("map3-3.tmx");
+        }
+
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
     }
 

@@ -137,7 +137,7 @@ public class menuScreen implements Screen{
         if (playButtonRec.contains(touch.x,touch.y)){
             host.reset();
             host.lastScreen = "menu";
-            host.setScreen(new gameScreen(host));
+            host.setScreen(new levelScreen(host));
         }
         if (settingsButtonRec.contains(touch.x,touch.y)){
             host.lastScreen = "menu";
@@ -208,5 +208,6 @@ public class menuScreen implements Screen{
         exitButtonTexFI.dispose();
         enGBButtonTex.dispose();
         fiFIButtonTex.dispose();
+        background.dispose();
     }
 }
