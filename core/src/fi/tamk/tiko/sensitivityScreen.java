@@ -193,6 +193,7 @@ public class sensitivityScreen implements Screen {
             String direction = "upSens";
             String button = "button1";
             float sensitivity = 1f;
+            float printSens = 1f;
             switch (i) {
                 case 0:
                     sliderRec = sliderBarRec1;
@@ -219,6 +220,7 @@ public class sensitivityScreen implements Screen {
                     button = "button4";
                     break;
             }
+
             if (sliderRec.contains(touch.x,touch.y)) {
                 if (Gdx.input.justTouched()) {
                     tap = true;
@@ -245,34 +247,44 @@ public class sensitivityScreen implements Screen {
             }
             // Saves sensitivity and button position
             if (buttonRec.getX()>=sliderRec.getX() && buttonRec.getX()<sliderRec.getX()+49) {
-                sensitivity = 0.2f;
+                sensitivity = 2f;
+                printSens = 0.2f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+50 && buttonRec.getX()<sliderRec.getX()+99) {
-                sensitivity = 0.4f;
+                sensitivity = 1.8f;
+                printSens = 0.4f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+100 && buttonRec.getX()<sliderRec.getX()+149) {
-                sensitivity = 0.6f;
+                sensitivity = 1.6f;
+                printSens = 0.6f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+150 && buttonRec.getX()<sliderRec.getX()+199) {
-                sensitivity = 0.8f;
+                sensitivity = 1.4f;
+                printSens = 0.8f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+200 && buttonRec.getX()<sliderRec.getX()+249) {
-                sensitivity = 1f;
+                sensitivity = 1.2f;
+                printSens = 1f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+250 && buttonRec.getX()<sliderRec.getX()+299) {
-                sensitivity = 1.2f;
+                sensitivity = 1f;
+                printSens = 1.2f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+300 && buttonRec.getX()<sliderRec.getX()+349) {
-                sensitivity = 1.4f;
+                sensitivity = 0.8f;
+                printSens = 1.4f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+350 && buttonRec.getX()<sliderRec.getX()+399) {
-                sensitivity = 1.6f;
+                sensitivity = 0.6f;
+                printSens = 1.6f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+400 && buttonRec.getX()<sliderRec.getX()+449) {
-                sensitivity = 1.8f;
+                sensitivity = 0.4f;
+                printSens = 1.8f;
             }
             if (buttonRec.getX()>=sliderRec.getX()+450 && buttonRec.getX()<sliderRec.getX()+500) {
-                sensitivity = 2f;
+                sensitivity = 0.2f;
+                printSens = 2f;
             }
             // Sensitivity negative values, if up/right. Positive if down/left
             if (direction == "upSens" || direction == "rightSens") {
@@ -283,6 +295,11 @@ public class sensitivityScreen implements Screen {
                 host.preferences.flush();
                 host.preferences.putFloat(direction, sensitivity);
             }
+
+            // Draws sensitivity value
+            host.batch.begin();
+            host.fontMedium.draw(host.batch, String.valueOf(printSens), sliderRec.getX()-30, sliderRec.getY());
+            host.batch.end();
         }
 
         // changes the language

@@ -1,6 +1,7 @@
 package fi.tamk.tiko;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -18,6 +19,8 @@ public class gameScreen implements Screen {
     BirdsVoyage host;
 
     BitmapFont font;
+
+    textInputListener listener;
 
     // general buttons
     private Texture pauseButton;
@@ -70,6 +73,8 @@ public class gameScreen implements Screen {
 
     public gameScreen(BirdsVoyage host){
         font = new BitmapFont();
+
+        listener = new textInputListener();
 
         this.host = host;
         touch = new Vector3(0,0,0);
@@ -143,7 +148,8 @@ public class gameScreen implements Screen {
         host.map.checkCollision(host.player);
         mapWin = host.map.checkFinish(host.player);
         host.camera.cameraMove();
-        pauseRect.setPosition(host.camera.getPositionX() + (host.getCameraWidth()/2) - pauseButton.getWidth() - 5,host.camera.getPositionY() - (host.getCameraHeight()/2));
+        pauseRect.setPosition(host.camera.getPositionX() + (host.getCameraWidth()/2) - pauseButton.getWidth() - 5,
+                host.camera.getPositionY() - (host.getCameraHeight()/2));
 
         if(mapStart){
             host.time.stop();
@@ -357,13 +363,26 @@ public class gameScreen implements Screen {
             if (!newHighscore && (host.getMinutes() == (host.preferences.getInteger("highscoreMin", 100))) &&
                     (host.getSeconds() < host.preferences.getInteger("highscoreSec", 100))) {
                 newHighscore = true;
-
             }
             if (newHighscore) {
                 host.preferences.flush();
                 host.preferences.putInteger("highscoreMin",(int) host.getMinutes());
                 host.preferences.putInteger("highscoreSec",(int) host.getSeconds());
             }
+            // Name for highscore
+            /*String name;
+            Gdx.input.setOnscreenKeyboardVisible(true);
+            name = Gdx.input.getTextInput(new Input.TextInputListener() {
+                @Override
+                public void input(String text) {);
+                }
+
+                @Override
+                public void canceled() {
+
+                }
+            });*/
+            Gdx.input.setOnscreenKeyboardVisible(false);
 
             // Returns to menu
             if (menuRect.contains(touch.x,touch.y)){
