@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
 
-public class Player implements MapProperties, PlayerProperties{
+public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
 
     private Sprite player;
 
