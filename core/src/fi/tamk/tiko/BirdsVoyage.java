@@ -74,6 +74,7 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 
 	@Override
 	public void create() {
+        preferences = Gdx.app.getPreferences("My Preferences");
 		batch = new SpriteBatch();
 		player = new Player();
 		enemy = new Enemy();
@@ -82,7 +83,12 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 		time = new GameTimer();
 		menu = new menuScreen(this);
 		splash = new splashScreen(this);
-
+        float x = preferences.getFloat("defX",0f);
+        float y = preferences.getFloat("defY",0f);
+        if (y == 0f){
+            y = 4f;
+        }
+        player.setDefPos(x,y);
 		mute = false;
 
 		textFont = new FreeTypeFontGenerator(Gdx.files.internal("Bord-Regular.ttf"));

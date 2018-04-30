@@ -317,8 +317,9 @@ public class gameScreen implements Screen {
         }
 
         // Poista myöhemmin. Tässä anturiarvot
-        //font.draw(host.batch, "X = " + Gdx.input.getAccelerometerY(), host.camera.getPositionX() + 420, host.camera.getPositionY() + 350);
-        //font.draw(host.batch, "Y = " + Gdx.input.getAccelerometerZ(), host.camera.getPositionX() + 420, host.camera.getPositionY() + 300);
+        font.draw(host.batch, "X = " + Gdx.input.getAccelerometerY(), host.camera.getPositionX() + 420, host.camera.getPositionY() + 350);
+        font.draw(host.batch, "Y = " + Gdx.input.getAccelerometerZ(), host.camera.getPositionX() + 420, host.camera.getPositionY() + 300);
+        Gdx.app.log("asd", "x=" + host.preferences.getFloat("defX") + " y=" + host.preferences.getFloat("defY"));
         host.batch.end();
 
         if (mapWin){
