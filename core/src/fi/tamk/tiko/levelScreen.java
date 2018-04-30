@@ -27,6 +27,11 @@ public class levelScreen implements Screen {
     private Texture level7Tex;
     private Texture level8Tex;
     private Texture level9Tex;
+    private Texture levelbox;
+
+    // Texture for language buttons
+    private Texture enGBButtonTex;
+    private Texture fiFIButtonTex;
 
     //rectangles
     private Rectangle returnButtonRect;
@@ -40,6 +45,9 @@ public class levelScreen implements Screen {
     private Rectangle level8Rec;
     private Rectangle level9Rec;
 
+    private Rectangle enGBButtonRec;
+    private Rectangle fiFIButtonRec;
+
     public levelScreen(BirdsVoyage host){
         this.host = host;
         touch = new Vector3(0,0,0);
@@ -49,15 +57,20 @@ public class levelScreen implements Screen {
         returnButton = new Texture(Gdx.files.internal("goback.png"));
 
         //level textures
-        level1Tex = new Texture(Gdx.files.internal("playENG.png"));
-        level2Tex = new Texture(Gdx.files.internal("playFIN.png"));
-        level3Tex = new Texture(Gdx.files.internal("mmenuENG.png"));
-        level4Tex = new Texture(Gdx.files.internal("mmenuENG.png"));
-        level5Tex = new Texture(Gdx.files.internal("mmenuENG.png"));
-        level6Tex = new Texture(Gdx.files.internal("mmenuENG.png"));
-        level7Tex = new Texture(Gdx.files.internal("mmenuENG.png"));
-        level8Tex = new Texture(Gdx.files.internal("mmenuENG.png"));
-        level9Tex = new Texture(Gdx.files.internal("mmenuENG.png"));
+        level1Tex = new Texture(Gdx.files.internal("level1.png"));
+        level2Tex = new Texture(Gdx.files.internal("level2.png"));
+        level3Tex = new Texture(Gdx.files.internal("level3.png"));
+        level4Tex = new Texture(Gdx.files.internal("level4.png"));
+        level5Tex = new Texture(Gdx.files.internal("level5.png"));
+        level6Tex = new Texture(Gdx.files.internal("level6.png"));
+        level7Tex = new Texture(Gdx.files.internal("level7.png"));
+        level8Tex = new Texture(Gdx.files.internal("level8.png"));
+        level9Tex = new Texture(Gdx.files.internal("level9.png"));
+        levelbox = new Texture(Gdx.files.internal("levelbox.png"));
+
+        // loads flags
+        enGBButtonTex = new Texture(Gdx.files.internal("eng.png"));
+        fiFIButtonTex = new Texture(Gdx.files.internal("fin.png"));
 
         // return rectangle
         returnButtonRect = new Rectangle(
@@ -69,66 +82,80 @@ public class levelScreen implements Screen {
 
         // level select rectangles
         level1Rec = new Rectangle(
-                host.camera.getPositionX() - 550,
-                host.camera.getPositionY() + 150,
+                host.camera.getPositionX() + 30,
+                host.camera.getPositionY() + 85,
                 level1Tex.getWidth(),
                 level1Tex.getHeight()
         );
 
         level2Rec = new Rectangle(
-                host.camera.getPositionX() - 150,
-                host.camera.getPositionY() + 150,
+                host.camera.getPositionX() + 140,
+                host.camera.getPositionY() + 85,
                 level2Tex.getWidth(),
                 level2Tex.getHeight()
         );
 
         level3Rec = new Rectangle(
                 host.camera.getPositionX() + 250,
-                host.camera.getPositionY() + 150,
+                host.camera.getPositionY() + 85,
                 level3Tex.getWidth(),
                 level3Tex.getHeight()
         );
 
         level4Rec = new Rectangle(
-                host.camera.getPositionX() + 250,
-                host.camera.getPositionY() + 150,
+                host.camera.getPositionX() + 30,
+                host.camera.getPositionY() - 50,
                 level4Tex.getWidth(),
                 level4Tex.getHeight()
         );
 
         level5Rec = new Rectangle(
-                host.camera.getPositionX() + 250,
-                host.camera.getPositionY() + 150,
+                host.camera.getPositionX() + 140,
+                host.camera.getPositionY() - 50,
                 level5Tex.getWidth(),
                 level5Tex.getHeight()
         );
 
         level6Rec = new Rectangle(
                 host.camera.getPositionX() + 250,
-                host.camera.getPositionY() + 150,
+                host.camera.getPositionY()  - 50,
                 level6Tex.getWidth(),
                 level6Tex.getHeight()
         );
 
         level7Rec = new Rectangle(
-                host.camera.getPositionX() + 250,
-                host.camera.getPositionY() + 150,
+                host.camera.getPositionX() + 30,
+                host.camera.getPositionY() - 185,
                 level7Tex.getWidth(),
                 level7Tex.getHeight()
         );
 
         level8Rec = new Rectangle(
-                host.camera.getPositionX() + 250,
-                host.camera.getPositionY() + 150,
+                host.camera.getPositionX() + 140,
+                host.camera.getPositionY() - 185,
                 level8Tex.getWidth(),
                 level8Tex.getHeight()
         );
 
         level9Rec = new Rectangle(
                 host.camera.getPositionX() + 250,
-                host.camera.getPositionY() + 150,
+                host.camera.getPositionY() - 185,
                 level9Tex.getWidth(),
                 level9Tex.getHeight()
+        );
+
+        // language rectangles
+        enGBButtonRec = new Rectangle(
+                host.getCameraWidth() - enGBButtonTex.getWidth()*2 - 5,
+                2,
+                enGBButtonTex.getWidth(),
+                enGBButtonTex.getHeight()
+        );
+        fiFIButtonRec = new Rectangle(
+                host.getCameraWidth() - fiFIButtonTex.getWidth(),
+                2,
+                fiFIButtonTex.getWidth(),
+                fiFIButtonTex.getHeight()
         );
     }
 
@@ -154,11 +181,19 @@ public class levelScreen implements Screen {
         // draws the background and the level buttons
         host.batch.begin();
         host.batch.draw(background,0,0);
+        host.batch.draw(enGBButtonTex, enGBButtonRec.getX(), enGBButtonRec.getY());
+        host.batch.draw(fiFIButtonTex, fiFIButtonRec.getX(), fiFIButtonRec.getY());
         host.batch.draw(returnButton, returnButtonRect.getX(), returnButtonRect.getY());
+        host.batch.draw(levelbox,host.camera.getPositionX() - 370, host.camera.getPositionY() - 207);
         host.batch.draw(level1Tex,level1Rec.getX(),level1Rec.getY());
         host.batch.draw(level2Tex,level2Rec.getX(),level2Rec.getY());
         host.batch.draw(level3Tex,level3Rec.getX(),level3Rec.getY());
-        host.batch.end();
+        host.batch.draw(level4Tex,level4Rec.getX(),level4Rec.getY());
+        host.batch.draw(level5Tex,level5Rec.getX(),level5Rec.getY());
+        host.batch.draw(level6Tex,level6Rec.getX(),level6Rec.getY());
+        host.batch.draw(level7Tex,level7Rec.getX(),level7Rec.getY());
+        host.batch.draw(level8Tex,level8Rec.getX(),level8Rec.getY());
+        host.batch.draw(level9Tex,level9Rec.getX(),level9Rec.getY());
         // listens if return is pressed
         if (returnButtonRect.contains(touch.x,touch.y)){
             //host.lastScreen = "level";
@@ -177,27 +212,27 @@ public class levelScreen implements Screen {
             host.currentLevel = "level3";
         }
 
-        if (level3Rec.contains(touch.x,touch.y)){
+        if (level4Rec.contains(touch.x,touch.y)){
             host.currentLevel = "level4";
         }
 
-        if (level3Rec.contains(touch.x,touch.y)){
+        if (level5Rec.contains(touch.x,touch.y)){
             host.currentLevel = "level5";
         }
 
-        if (level3Rec.contains(touch.x,touch.y)){
+        if (level6Rec.contains(touch.x,touch.y)){
             host.currentLevel = "level6";
         }
 
-        if (level3Rec.contains(touch.x,touch.y)){
+        if (level7Rec.contains(touch.x,touch.y)){
             host.currentLevel = "level7";
         }
 
-        if (level3Rec.contains(touch.x,touch.y)){
+        if (level8Rec.contains(touch.x,touch.y)){
             host.currentLevel = "level8";
         }
 
-        if (level3Rec.contains(touch.x,touch.y)){
+        if (level9Rec.contains(touch.x,touch.y)){
             host.currentLevel = "level9";
         }
 
@@ -209,6 +244,26 @@ public class levelScreen implements Screen {
             host.loadMap();
             host.setScreen(new gameScreen(host));
         }
+
+        // changes the language
+        if (fiFIButtonRec.contains(touch.x,touch.y)){
+            host.setLang("fin");
+        }
+        if (enGBButtonRec.contains(touch.x,touch.y)){
+            host.setLang("eng");
+        }
+
+        // draws assets of used language bundle
+        if (host.currentLang.equals("fin")){
+            host.fontMedium.draw(host.batch,"Helppo", host.camera.getPositionX() - 300,host.camera.getPositionY() + 160);
+            host.fontMedium.draw(host.batch,"Normaali", host.camera.getPositionX() - 300,host.camera.getPositionY() + 25);
+            host.fontMedium.draw(host.batch,"Vaikea", host.camera.getPositionX() - 300,host.camera.getPositionY() - 115);
+        } else {
+            host.fontMedium.draw(host.batch,"Easy", host.camera.getPositionX() - 300,host.camera.getPositionY() + 160);
+            host.fontMedium.draw(host.batch,"Medium", host.camera.getPositionX() - 300,host.camera.getPositionY() + 25);
+            host.fontMedium.draw(host.batch,"Hard", host.camera.getPositionX() - 300,host.camera.getPositionY() - 115);
+        }
+        host.batch.end();
     }
 
     @Override
