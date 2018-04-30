@@ -74,6 +74,7 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 
 	@Override
 	public void create() {
+	    Gdx.input.setCatchBackKey(true);
         preferences = Gdx.app.getPreferences("My Preferences");
 		batch = new SpriteBatch();
 		player = new Player();
