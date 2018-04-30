@@ -36,8 +36,7 @@ public class calibrationScreen implements Screen {
     private Rectangle enGBButtonRec;
     private Rectangle fiFIButtonRec;
     private Rectangle menuButtonRec;
-    private Rectangle calibrationFIrec;
-    private Rectangle calibrationENrec;
+    private Rectangle calibrationRec;
 
     public calibrationScreen(BirdsVoyage host) {
         touch = new Vector3(0,0,0);
@@ -74,17 +73,11 @@ public class calibrationScreen implements Screen {
                 menuButtonTex.getWidth(),
                 menuButtonTex.getHeight()
         );
-        calibrationFIrec = new Rectangle(
-                100,
-                100,
+        calibrationRec = new Rectangle(
+                host.camera.getPositionX() - calibrationEN.getWidth()/2,
+                host.camera.getPositionY(),
                 calibrationFI.getWidth(),
                 calibrationFI.getHeight()
-        );
-        calibrationENrec = new Rectangle(
-                100,
-                100,
-                calibrationEN.getWidth(),
-                calibrationEN.getHeight()
         );
     }
 
@@ -109,23 +102,43 @@ public class calibrationScreen implements Screen {
 
         // Draws calibration buttons
         host.batch.begin();
+        host.batch.draw(background,0,0);
         if (host.currentLang.equals("fin")) {
-            host.batch.draw(calibrationFI, calibrationFIrec.getX(), calibrationFIrec.getY());
+            host.batch.draw(calibrationFI, calibrationRec.getX(), calibrationRec.getY());
+            host.fontMedium.draw(host.batch,"Aseta uusi nolla piste",host.camera.getPositionX() - 300,host.camera.getPositionY() + 200);
         }
         else {
-            host.batch.draw(calibrationEN, calibrationENrec.getX(), calibrationENrec.getY());
+            host.batch.draw(calibrationEN, calibrationRec.getX(), calibrationRec.getY());
+            host.fontMedium.draw(host.batch,"Set new default position",host.camera.getPositionX() - 300,host.camera.getPositionY() + 200);
         }
-        host.batch.end();
 
         // draws language buttons
-        host.batch.begin();
-        host.batch.draw(background,0,0);
         host.batch.draw(enGBButtonTex, enGBButtonRec.getX(), enGBButtonRec.getY());
         host.batch.draw(fiFIButtonTex, fiFIButtonRec.getX(), fiFIButtonRec.getY());
 
-        if (!host.gameRun){
-            host.batch.draw(menuButtonTex, menuButtonRec.getX(), menuButtonRec.getY());
+        //back to settings
+        host.batch.draw(menuButtonTex, menuButtonRec.getX(), menuButtonRec.getY());
+
+        // calibrates the new position
+        if (calibrationRec.contains(touch.x,touch.y) && calibrationRec.contains(touch.x,touch.y)) {
+            host.player.defaultPositionX = Gdx.input.getAccelerometerY();
+            host.player.defaultPositionY = Gdx.input.getAccelerometerZ();
+
+            if (host.player.defaultPositionX < 0) {
+                host.player.defaultPositionX = -Math.abs(host.player.defaultPositionX);
+            }
+
+            if (host.player.defaultPositionY < 0) {
+                host.player.defaultPositionY = -Math.abs(host.player.defaultPositionY);
+            }
+            if (host.currentLang.equals("fin")) {
+                host.fontMedium.draw(host.batch,"Uusi nollapiste asetettu!",host.camera.getPositionX() - 300,host.camera.getPositionY() - 50);
+            }
+            else {
+                host.fontMedium.draw(host.batch,"New default position set!",host.camera.getPositionX() - 300,host.camera.getPositionY() - 50);
+            }
         }
+
         host.batch.end();
 
         if (menuButtonRec.contains(touch.x,touch.y)){

@@ -166,17 +166,6 @@ public class gameScreen implements Screen {
                 sec--;
             }
             if (sec == 0){
-                host.player.defaultPositionX = Gdx.input.getAccelerometerY();
-                host.player.defaultPositionY = Gdx.input.getAccelerometerZ();
-
-                if (host.player.defaultPositionX < 0) {
-                    host.player.defaultPositionX =- Math.abs(host.player.defaultPositionX);
-                }
-
-                if (host.player.defaultPositionY < 0) {
-                    host.player.defaultPositionY =- Math.abs(host.player.defaultPositionY);
-                }
-
                 mapStart = false;
                 host.time.resume();
                 host.player.resume();

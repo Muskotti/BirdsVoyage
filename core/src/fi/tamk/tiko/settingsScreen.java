@@ -50,7 +50,7 @@ public class settingsScreen implements Screen{
         this.host = host;
         touch = new Vector3(0,0,0);
 
-        background = new Texture(Gdx.files.internal("menuBack.png"));
+        background = new Texture(Gdx.files.internal("menuBack2.png"));
 
         //loads the mute button
         muteButtonTex = new Texture(Gdx.files.internal("soundOFF.png"));
@@ -167,17 +167,15 @@ public class settingsScreen implements Screen{
 
         // checks if the buttons are touched
         if (zeroButtonRec.contains(touch.x,touch.y)){
-            Gdx.app.log("tag","zero");
             host.setScreen(new calibrationScreen(host));
         }
         if (sensButtonRec.contains(touch.x,touch.y)){
-            Gdx.app.log("tag","sens");
             host.setScreen(new sensitivityScreen(host));
         }
         if (muteButtonRec.contains(touch.x,touch.y)){
-            Gdx.app.log("tag","mute");
+
         }
-        if (menuButtonRec.contains(touch.x,touch.y)){
+        if (menuButtonRec.contains(touch.x,touch.y) && !host.gameRun){
             host.lastScreen = "settings";
             host.setScreen(new menuScreen(host));
         }
