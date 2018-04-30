@@ -196,7 +196,7 @@ public class levelScreen implements Screen {
         host.batch.draw(level9Tex,level9Rec.getX(),level9Rec.getY());
         // listens if return is pressed
         if (returnButtonRect.contains(touch.x,touch.y)){
-            //host.lastScreen = "level";
+            host.lastScreen = "level";
             host.setScreen(new menuScreen(host));
         }
 

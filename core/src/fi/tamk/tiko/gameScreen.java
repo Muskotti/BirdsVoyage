@@ -137,10 +137,10 @@ public class gameScreen implements Screen {
         host.map.setMap(host.camera.getCamera());
         host.batch.setProjectionMatrix(host.camera.combined());
 
-        upSens = host.preferences.getFloat("upSens");
-        downSens = host.preferences.getFloat("downSens");
-        leftSens = host.preferences.getFloat("leftSens");
-        rightSens = host.preferences.getFloat("rightSens");
+        upSens = host.preferences.getFloat("upSens", 1.2f);
+        downSens = host.preferences.getFloat("downSens", 1.2f);
+        leftSens = host.preferences.getFloat("leftSens", 1.2f);
+        rightSens = host.preferences.getFloat("rightSens", 1.2f);
 
         host.player.setSens(upSens, downSens, leftSens, rightSens);
         host.player.move();

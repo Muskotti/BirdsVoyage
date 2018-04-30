@@ -2,6 +2,7 @@ package fi.tamk.tiko;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -12,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
-public class BirdsVoyage extends Game implements MapProperties{
+public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 
 	SpriteBatch batch;
 	Player player;
@@ -28,8 +29,6 @@ public class BirdsVoyage extends Game implements MapProperties{
 	String currentScreen;
 	String lastScreen;
 
-	Music levelTheme;
-	Music mainMenuTheme;
 	Boolean mute;
 
     FreeTypeFontGenerator textFont;
@@ -113,9 +112,6 @@ public class BirdsVoyage extends Game implements MapProperties{
         // selected level
         currentLevel = "level1";
 
-		levelTheme = Gdx.audio.newMusic(Gdx.files.internal("LevelTheme.ogg"));
-		mainMenuTheme = Gdx.audio.newMusic(Gdx.files.internal("MainMenuTheme.ogg"));
-
 		preferences = Gdx.app.getPreferences("My Preferences");
 
 		camera.cameraMove();
@@ -176,11 +172,14 @@ public class BirdsVoyage extends Game implements MapProperties{
 
 	@Override
 	public void render() {
-		if ((currentScreen == "menu") && lastScreen == "game" || lastScreen == null) {
-			if (levelTheme.isPlaying()) {
-				levelTheme.stop();
+		if ((currentScreen == "menu" || currentScreen == "splash") && lastScreen == "game" || lastScreen == null) {
+			if (easyTheme.isPlaying() || mediumTheme.isPlaying() || hardTheme.isPlaying()) {
+				easyTheme.stop();
+                mediumTheme.stop();
+                hardTheme.stop();
 			}
 			mainMenuTheme.play();
+			mainMenuTheme.setVolume(0.5f);
 			mainMenuTheme.setLooping(true);
 
 		}
@@ -188,9 +187,20 @@ public class BirdsVoyage extends Game implements MapProperties{
 			if (mainMenuTheme.isPlaying()) {
 				mainMenuTheme.stop();
 			}
-			levelTheme.play();
-			levelTheme.setLooping(true);
+			if (currentLevel == "level1" || currentLevel == "level2" || currentLevel == "level3") {
+			    easyTheme.play();
+			    easyTheme.setLooping(true);
+            }
+            else if (currentLevel == "level4" || currentLevel == "level5" || currentLevel == "level6") {
+                mediumTheme.play();
+                mediumTheme.setLooping(true);
+            }
+            else if (currentLevel == "level7" || currentLevel == "level8" || currentLevel == "level9") {
+                hardTheme.play();
+                hardTheme.setLooping(true);
+            }
 		}
+
 		super.render();
 	}
 

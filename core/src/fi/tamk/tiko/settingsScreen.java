@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
-public class settingsScreen implements Screen{
+public class settingsScreen implements Screen, SoundAndMusic{
 
     BirdsVoyage host;
 
@@ -167,20 +167,35 @@ public class settingsScreen implements Screen{
 
         // checks if the buttons are touched
         if (zeroButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.setScreen(new calibrationScreen(host));
         }
         if (sensButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.setScreen(new sensitivityScreen(host));
         }
         if (muteButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
 
         }
         if (menuButtonRec.contains(touch.x,touch.y) && !host.gameRun){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.lastScreen = "settings";
             host.setScreen(new menuScreen(host));
         }
         if (host.gameRun) {
             if (retGameButRec.contains(touch.x, touch.y)) {
+                if (Gdx.input.justTouched()) {
+                    buttonSound.play();
+                }
                 host.resumeGame();
                 host.setScreen(new gameScreen(host));
             }
@@ -188,9 +203,15 @@ public class settingsScreen implements Screen{
 
         // changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.setLang("fin");
         }
         if (enGBButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.setLang("eng");
         }
     }

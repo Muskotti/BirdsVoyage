@@ -32,6 +32,7 @@ public class splashScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         timer += Gdx.graphics.getRawDeltaTime();
+        host.currentScreen = "splash";
         host.batch.begin();
         if (timer <= 4.1f){
             host.batch.draw(exerium,(Gdx.graphics.getWidth()/2) - (exerium.getWidth()/2),(Gdx.graphics.getHeight()/2) - (exerium.getHeight()/2));
@@ -40,6 +41,7 @@ public class splashScreen implements Screen {
         } else if (timer >= 6.1f && timer <= 8.1f){
             host.batch.draw(team,(Gdx.graphics.getWidth()/2) - (team.getWidth()/2),(Gdx.graphics.getHeight()/2) - (team.getHeight()/2));
         } else {
+            host.lastScreen = "splash";
             host.setScreen(host.menu);
         }
         host.batch.end();

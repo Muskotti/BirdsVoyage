@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
-public class menuScreen implements Screen{
+public class menuScreen implements Screen, SoundAndMusic{
 
     private BirdsVoyage host;
 
@@ -135,26 +135,44 @@ public class menuScreen implements Screen{
 
         // checks if the buttons are touched
         if (playButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.reset();
             host.lastScreen = "menu";
             host.setScreen(new levelScreen(host));
         }
         if (settingsButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.lastScreen = "menu";
             host.setScreen(new settingsScreen(host));
         }
         if (highButtonRec.contains(touch.x, touch.y)) {
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.setScreen(new highscoreScreen(host));
         }
         if (exitButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             Gdx.app.exit();
         }
 
         // changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.setLang("fin");
         }
         if (enGBButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.setLang("eng");
         }
 

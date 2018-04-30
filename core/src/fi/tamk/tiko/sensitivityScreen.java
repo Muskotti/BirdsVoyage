@@ -17,7 +17,7 @@ import java.awt.TextArea;
  * Created by Jimi on 12.4.2018.
  */
 
-public class sensitivityScreen implements Screen {
+public class sensitivityScreen implements Screen, SoundAndMusic {
 
     BirdsVoyage host;
 
@@ -25,6 +25,7 @@ public class sensitivityScreen implements Screen {
 
     private Vector3 touch;
     boolean tap;
+    boolean sliderRelease;
 
     // Textures for sliders
     private Texture sliderBar;
@@ -183,6 +184,9 @@ public class sensitivityScreen implements Screen {
         host.batch.end();
 
         if (menuButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.setScreen(new settingsScreen(host));
         }
 
@@ -223,6 +227,7 @@ public class sensitivityScreen implements Screen {
 
             if (sliderRec.contains(touch.x,touch.y)) {
                 if (Gdx.input.justTouched()) {
+                    sliderPressSound.play();
                     tap = true;
                 }
                 if (tap) {
@@ -230,6 +235,7 @@ public class sensitivityScreen implements Screen {
                     tap = false;
                 }
                 if (Gdx.input.isTouched()) {
+                    sliderRelease = false;
                     buttonRec.x += Gdx.input.getDeltaX();
                     host.preferences.putFloat(button, buttonRec.x);
 
@@ -241,6 +247,10 @@ public class sensitivityScreen implements Screen {
                     }
                 }
                 else {
+                    if (!sliderRelease) {
+                        sliderReleaseSound.play();
+                        sliderRelease = true;
+                    }
                     host.preferences.flush();
                     host.preferences.putFloat(button, buttonRec.x);
                 }
@@ -304,9 +314,15 @@ public class sensitivityScreen implements Screen {
 
         // changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.setLang("fin");
         }
         if (enGBButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.setLang("eng");
         }
     }
