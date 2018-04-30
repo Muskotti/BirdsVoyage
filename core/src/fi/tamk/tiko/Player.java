@@ -2,6 +2,7 @@ package fi.tamk.tiko;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -60,8 +61,6 @@ public class Player implements MapProperties, PlayerProperties{
         playerRestTop = cameraHeight;
         slowdownTimer = 0;
         stopMove = true;
-
-
     }
 
     private void featherAnim() {
@@ -352,5 +351,10 @@ public class Player implements MapProperties, PlayerProperties{
         downSens = down;
         leftSens = left;
         rightSens = right;
+    }
+
+    public void setDefPos(float x, float y) {
+        defaultPositionX = x;
+        defaultPositionY = y;
     }
 }

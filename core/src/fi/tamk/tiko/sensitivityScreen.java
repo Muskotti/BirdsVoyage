@@ -299,6 +299,11 @@ public class sensitivityScreen implements Screen {
             // Draws sensitivity value
             host.batch.begin();
             host.fontMedium.draw(host.batch, String.valueOf(printSens), sliderRec.getX()-30, sliderRec.getY());
+            if (host.currentLang.equals("fin")) {
+                host.fontMedium.draw(host.batch,"Mitä suurempi arvo sitä herkempi liike",host.camera.getPositionX() - 400,host.camera.getPositionY() - 150);
+            } else {
+                host.fontMedium.draw(host.batch,"The higher the value the more sensitive movement",host.camera.getPositionX() - 600,host.camera.getPositionY() - 150);
+            }
             host.batch.end();
         }
 

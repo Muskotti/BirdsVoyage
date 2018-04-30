@@ -123,6 +123,9 @@ public class calibrationScreen implements Screen {
         if (calibrationRec.contains(touch.x,touch.y) && calibrationRec.contains(touch.x,touch.y)) {
             host.player.defaultPositionX = Gdx.input.getAccelerometerY();
             host.player.defaultPositionY = Gdx.input.getAccelerometerZ();
+            host.preferences.putFloat("defX",Gdx.input.getAccelerometerY());
+            host.preferences.putFloat("defY",Gdx.input.getAccelerometerZ());
+            host.preferences.flush();
 
             if (host.player.defaultPositionX < 0) {
                 host.player.defaultPositionX = -Math.abs(host.player.defaultPositionX);
