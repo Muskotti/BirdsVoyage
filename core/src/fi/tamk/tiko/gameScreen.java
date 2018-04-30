@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
 
-public class gameScreen implements Screen {
+public class gameScreen implements Screen, SoundAndMusic {
     BirdsVoyage host;
 
     BitmapFont font;
@@ -185,18 +185,27 @@ public class gameScreen implements Screen {
 
         // pauses the game
         if (pauseRect.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             touch.set(0,0,0);
             pause();
         }
 
         // resumes the game
         if (resumeRect.contains(touch.x,touch.y) && gamePause){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             touch.set(0,0,0);
             resume();
         }
 
         // goes to settings screen
         if (settingsRect.contains(touch.x,touch.y) && gamePause){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             touch.set(0,0,0);
             host.cameraPosX = host.camera.getPositionX();
             host.cameraPosY = host.camera.getPositionY();
@@ -207,6 +216,9 @@ public class gameScreen implements Screen {
 
         // goes to menu
         if (menuRect.contains(touch.x,touch.y) && gamePause){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             touch.set(0,0,0);
             host.lastScreen = "game";
             host.gameRun = false;
@@ -376,6 +388,9 @@ public class gameScreen implements Screen {
 
             // Returns to menu
             if (menuRect.contains(touch.x,touch.y)){
+                if (Gdx.input.justTouched()) {
+                    buttonSound.play();
+                }
                 touch.set(0,0,0);
                 host.lastScreen = "game";
                 host.gameRun = false;

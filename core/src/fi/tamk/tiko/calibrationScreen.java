@@ -13,7 +13,7 @@ import java.awt.TextArea;
  * Created by Jimi on 12.4.2018.
  */
 
-public class calibrationScreen implements Screen {
+public class calibrationScreen implements Screen, SoundAndMusic {
 
     BirdsVoyage host;
 
@@ -121,6 +121,9 @@ public class calibrationScreen implements Screen {
 
         // calibrates the new position
         if (calibrationRec.contains(touch.x,touch.y) && calibrationRec.contains(touch.x,touch.y)) {
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.player.defaultPositionX = Gdx.input.getAccelerometerY();
             host.player.defaultPositionY = Gdx.input.getAccelerometerZ();
             host.preferences.putFloat("defX",Gdx.input.getAccelerometerY());
@@ -145,14 +148,23 @@ public class calibrationScreen implements Screen {
         host.batch.end();
 
         if (menuButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.setScreen(new settingsScreen(host));
         }
 
         // changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.setLang("fin");
         }
         if (enGBButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.setLang("eng");
         }
     }

@@ -14,7 +14,7 @@ import java.awt.TextArea;
  * Created by Jimi on 12.4.2018.
  */
 
-public class highscoreScreen implements Screen {
+public class highscoreScreen implements Screen, SoundAndMusic {
 
     BirdsVoyage host;
 
@@ -115,14 +115,23 @@ public class highscoreScreen implements Screen {
 
         // Goes back to main menu
         if (menuButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.setScreen(new menuScreen(host));
         }
 
         // changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.setLang("fin");
         }
         if (enGBButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched()) {
+                buttonSound.play();
+            }
             host.setLang("eng");
         }
     }
