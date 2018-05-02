@@ -206,6 +206,9 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 		player.setStart();
 	}
 
+	/**
+	 * Resumes the game
+	 */
 	public void resumeGame() {
 		camera.returnPos(cameraPosX,cameraPosY);
 		time.resume();
@@ -264,15 +267,34 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
         cloudTime = 0f;
     }
 
-    public void loadMap() {
+	/**
+	 * Loads the map based on current level selected in the level select
+	 */
+	public void loadMap() {
         map = new Map(currentLevel);
     }
+
+    /**
+     * Updates current language to preferences, so the game knows to load the last used language
+     * when booted.
+     * @param lang current language user has chosen.
+     */
     public void setLang(String lang) {
         currentLang = lang;
         preferences.putString("language",lang);
         preferences.flush();
     }
 
+    /**
+     * Returns how many minutes have passed
+     * @return
+     */
+    public float getMinutes() {
+	    return time.getMinutes();
+    }
+    public float getSeconds() {
+	    return time.getSeconds();
+    }
     public int getCameraHeight() {
         return cameraHeight;
     }

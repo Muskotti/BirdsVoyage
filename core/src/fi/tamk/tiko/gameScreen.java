@@ -363,7 +363,7 @@ public class gameScreen implements Screen, SoundAndMusic {
             if (host.time.getMinutes() < (host.preferences.getInteger("highscoreMin" + host.currentLevel, 100))) {
                 newHighscore = true;
             }
-            if (!newHighscore && (host.time.getMinutes() <= (host.preferences.getInteger("highscoreMin" + host.currentLevel, 100))) &&
+            if (!newHighscore && (host.time.getMinutes() == (host.preferences.getInteger("highscoreMin" + host.currentLevel, 100))) &&
                     (host.time.getSeconds() < host.preferences.getInteger("highscoreSec" + host.currentLevel, 100))) {
                 newHighscore = true;
             }

@@ -251,8 +251,8 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
                         sliderReleaseSound.play();
                         sliderRelease = true;
                     }
-                    host.preferences.flush();
                     host.preferences.putFloat(button, buttonRec.x);
+                    host.preferences.flush();
                 }
             }
             // Saves sensitivity and button position
@@ -298,12 +298,12 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
             }
             // Sensitivity negative values, if up/right. Positive if down/left
             if (direction == "upSens" || direction == "rightSens") {
-                host.preferences.flush();
                 host.preferences.putFloat(direction, -sensitivity);
+                host.preferences.flush();
             }
             else {
-                host.preferences.flush();
                 host.preferences.putFloat(direction, sensitivity);
+                host.preferences.flush();
             }
 
             // Draws sensitivity value

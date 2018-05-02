@@ -154,7 +154,6 @@ public class menuScreen implements Screen, SoundAndMusic{
                 buttonSound.play();
             }
             host.lastScreen = "menu";
-            host.preferences.flush();
             host.setScreen(new settingsScreen(host));
         }
         if (highButtonRec.contains(touch.x, touch.y)) {
