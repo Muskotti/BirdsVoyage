@@ -179,13 +179,13 @@ public class settingsScreen implements Screen, SoundAndMusic{
             }
             host.setScreen(new sensitivityScreen(host));
         }
-        if (muteButtonRec.contains(touch.x,touch.y)){
+        if (muteButtonRec.contains(touch.x,touch.y) && Gdx.input.justTouched()){
             if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
-            if (!host.mute){
+            if (Gdx.input.justTouched() && !host.mute){
                 host.mute = true;
-            } else if (host.mute){
+            } else if (Gdx.input.justTouched() && host.mute){
                 host.mute = false;
             }
         }
