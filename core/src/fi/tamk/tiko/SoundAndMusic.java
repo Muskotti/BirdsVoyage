@@ -17,9 +17,8 @@ public interface SoundAndMusic {
     Music mainMenuTheme = Gdx.audio.newMusic(Gdx.files.internal("MainMenuTheme.ogg"));
 
     // Sound effects
+    Sound collisionSound = Gdx.audio.newSound(Gdx.files.internal("BirdCollision.wav"));
     Sound buttonSound = Gdx.audio.newSound(Gdx.files.internal("ButtonClick.wav"));
-    Sound birdCollisionSound = Gdx.audio.newSound(Gdx.files.internal("BirdCollision.wav"));
-    Sound treeCollisionSound = Gdx.audio.newSound(Gdx.files.internal("TreeCollision.wav"));
     Sound clockSound = Gdx.audio.newSound(Gdx.files.internal("ClockSound.wav"));
     Sound mapFinishSound = Gdx.audio.newSound(Gdx.files.internal("MapFinishSound.wav"));
     Sound sliderPressSound = Gdx.audio.newSound(Gdx.files.internal("SliderPress.wav"));

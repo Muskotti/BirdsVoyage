@@ -136,10 +136,18 @@ public class gameScreen implements Screen, SoundAndMusic {
         host.map.setMap(host.camera.getCamera());
         host.batch.setProjectionMatrix(host.camera.combined());
 
-        upSens = host.preferences.getFloat("upSens", 1.2f);
+        upSens = host.preferences.getFloat("upSens", -1.2f);
         downSens = host.preferences.getFloat("downSens", 1.2f);
         leftSens = host.preferences.getFloat("leftSens", 1.2f);
-        rightSens = host.preferences.getFloat("rightSens", 1.2f);
+        rightSens = host.preferences.getFloat("rightSens", -1.2f);
+
+        // First time setting for default sensitivities
+        if (upSens == 0 || downSens == 0 || leftSens == 0 || rightSens == 0) {
+            upSens = 1f;
+            downSens = 1f;
+            rightSens = 1f;
+            leftSens = 1f;
+        }
 
         host.player.setSens(upSens, downSens, leftSens, rightSens);
         host.player.move();
@@ -281,7 +289,7 @@ public class gameScreen implements Screen, SoundAndMusic {
             cloudMove = false;
         }
         cloud.draw(host);
-        host.player.changeSpeed(enemies, cloud, host.batch);
+        host.player.changeSpeed(enemies, cloud, host.batch, host.mute);
         host.player.animate(host.batch);
 
         // draws clock
