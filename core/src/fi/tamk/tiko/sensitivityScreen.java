@@ -52,7 +52,7 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
         touch = new Vector3(0,0,0);
         tap = false;
         this.host = host;
-        background = new Texture(Gdx.files.internal("menuBack.png"));
+        background = new Texture(Gdx.files.internal("menuBack2.png"));
 
         //loads menu button
         menuButtonTex = new Texture(Gdx.files.internal("goback.png"));

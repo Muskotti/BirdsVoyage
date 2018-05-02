@@ -162,7 +162,7 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 	@Override
 	public void render() {
 	    System.out.println(currentScreen);
-	    if (!mute) {
+        if (!mute) {
             if (currentScreen == "menu" || currentScreen == "splash" || currentScreen == "settings") {
                 if (easyTheme.isPlaying() || mediumTheme.isPlaying() || hardTheme.isPlaying()) {
                     easyTheme.stop();
