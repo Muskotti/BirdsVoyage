@@ -20,8 +20,6 @@ public class gameScreen implements Screen, SoundAndMusic {
 
     BitmapFont font;
 
-    textInputListener listener;
-
     // general buttons
     private Texture pauseButton;
     private Texture popUp;
@@ -73,8 +71,6 @@ public class gameScreen implements Screen, SoundAndMusic {
 
     public gameScreen(BirdsVoyage host){
         font = new BitmapFont();
-
-        listener = new textInputListener();
 
         this.host = host;
         touch = new Vector3(0,0,0);
@@ -299,7 +295,7 @@ public class gameScreen implements Screen, SoundAndMusic {
         }
 
         // draws the time text
-        host.time.drawText(host.batch,host.camera, host.getCameraWidth(), host.getCameraHeight(), host.fontMedium);
+        host.time.drawText(host.batch,host.camera, host.getCameraWidth(), host.getCameraHeight(), host.fontSmall);
 
         // draws the pause button
         host.batch.draw(pauseButton, pauseRect.getX(),pauseRect.getY());
@@ -323,9 +319,9 @@ public class gameScreen implements Screen, SoundAndMusic {
         if (sec > 0){
             host.fontBig.draw(host.batch, "" + sec, host.camera.getPositionX() - 45,host.camera.getPositionY() + 90);
             if (host.currentLang.equals("eng")) {
-                host.fontMedium.draw(host.batch, "Dodge trees and other objects", host.camera.getPositionX() - 350,host.camera.getPositionY() - 80);
+                host.fontSmall.draw(host.batch, "Dodge trees and other objects", host.camera.getPositionX() - 350,host.camera.getPositionY() - 80);
             } else {
-                host.fontMedium.draw(host.batch, "Väistä puita ja muita esineitä", host.camera.getPositionX() - 350,host.camera.getPositionY() - 80);
+                host.fontSmall.draw(host.batch, "Väistä puita ja muita esineitä", host.camera.getPositionX() - 350,host.camera.getPositionY() - 80);
             }
         }
 
@@ -355,7 +351,7 @@ public class gameScreen implements Screen, SoundAndMusic {
                 host.batch.draw(timeboxFin,host.camera.getPositionX() + 200,host.camera.getPositionY() - 150,timeboxEng.getWidth(),timeboxEng.getHeight());
                 host.batch.draw(menuFIN, menuRect.getX(), menuRect.getY());
             }
-            host.fontMedBig.draw(host.batch,host.time.getTime(),host.camera.getPositionX() + 225, host.camera.getPositionY() - 30);
+            host.fontMedium.draw(host.batch,host.time.getTime(),host.camera.getPositionX() + 225, host.camera.getPositionY() - 30);
             host.batch.end();
 
             // checks for highscore

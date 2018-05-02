@@ -42,7 +42,7 @@ public class splashScreen implements Screen {
             host.batch.draw(team,(Gdx.graphics.getWidth()/2) - (team.getWidth()/2),(Gdx.graphics.getHeight()/2) - (team.getHeight()/2));
         } else {
             host.lastScreen = "splash";
-            host.setScreen(host.menu);
+            host.setScreen(new menuScreen(host));
         }
         host.batch.end();
     }

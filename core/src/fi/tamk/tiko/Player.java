@@ -286,8 +286,7 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
 
                 collision(enemy.getEnemyBoundingRectangle());
                 slowdownTimer += Gdx.graphics.getRawDeltaTime();
-            }
-            else {
+            } else {
                 birdCollisionSound.stop();
                 enemyCollisionTimer = 0;
             }
@@ -296,8 +295,9 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
             speedY = halfSpeed;
             speedX = halfSpeed;
             slowdownTimer += Gdx.graphics.getRawDeltaTime();
-        }
-        else {
+        } else {
+            speedY = normalSpeed;
+            speedX = normalSpeed;
             slowdownTimer = 0;
         }
 

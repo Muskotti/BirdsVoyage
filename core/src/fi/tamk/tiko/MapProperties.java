@@ -9,5 +9,4 @@ public interface MapProperties {
     int mapWidth            = tilesAmountWidth  * tileWidth;
     int cameraWidth         = 1280;
     int cameraHeight        = 720;
-    String defaultLang      = "eng";
 }

@@ -70,9 +70,15 @@ public class highscoreScreen implements Screen, SoundAndMusic {
 
     @Override
     public void render(float delta) {
+
+        //updates camera
         host.camera.update();
+
+        // sets camera position
         host.camera.setPos();
         host.batch.setProjectionMatrix(host.camera.combined());
+
+        //draws background
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -93,15 +99,7 @@ public class highscoreScreen implements Screen, SoundAndMusic {
             host.batch.draw(menuButtonTex, menuButtonRec.getX(), menuButtonRec.getY());
         }
 
-        // High score text drawing
-        if (host.currentLang.equals("fin")) {
-            host.fontMedium.draw(host.batch,"Nopein aika", host.camera.getPositionX() - 200,host.camera.getPositionX() + 200);
-        }
-        else {
-            host.fontMedium.draw(host.batch,"Fastest time", host.camera.getPositionX() - 200,host.camera.getPositionX() + 200);
-        }
-
-        // High scores drawing
+        // High scores location variables
         int left = 550;
         int middle = 100;
         int right = 300;
@@ -112,37 +110,63 @@ public class highscoreScreen implements Screen, SoundAndMusic {
 
         int score = 50;
 
-        // easy levels
-        host.fontMedium.draw(host.batch,"Level 1:", host.camera.getPositionX() - left,host.camera.getPositionY() + high);
-        host.fontMedium.draw(host.batch, host.preferences.getInteger("highscoreMinlevel1") + ":" + host.preferences.getInteger("highscoreSeclevel1"),
+        // draws english or finnish text
+        if (host.currentLang == "eng"){
+            // easy levels
+            host.fontSmall.draw(host.batch,"Level 1:", host.camera.getPositionX() - left,host.camera.getPositionY() + high);
+            host.fontSmall.draw(host.batch,"Level 2:", host.camera.getPositionX() - middle,host.camera.getPositionY() + high);
+            host.fontSmall.draw(host.batch,"Level 3:", host.camera.getPositionX() + right,host.camera.getPositionY() + high);
+
+            //medium levels
+            host.fontSmall.draw(host.batch,"Level 4:", host.camera.getPositionX() - left,host.camera.getPositionY() + middleHeight);
+            host.fontSmall.draw(host.batch,"Level 5:", host.camera.getPositionX() - middle,host.camera.getPositionY() + middleHeight);
+            host.fontSmall.draw(host.batch,"Level 6:", host.camera.getPositionX() + right,host.camera.getPositionY() + middleHeight);
+
+            //hard levels
+            host.fontSmall.draw(host.batch,"Level 7:", host.camera.getPositionX() - left,host.camera.getPositionY() - low);
+            host.fontSmall.draw(host.batch,"Level 8:", host.camera.getPositionX() - middle,host.camera.getPositionY() - low);
+            host.fontSmall.draw(host.batch,"Level 9:", host.camera.getPositionX() + right,host.camera.getPositionY() - low);
+
+        } else {
+            // easy levels
+            host.fontSmall.draw(host.batch,"Taso 1:", host.camera.getPositionX() - left,host.camera.getPositionY() + high);
+            host.fontSmall.draw(host.batch,"Taso 2:", host.camera.getPositionX() - middle,host.camera.getPositionY() + high);
+            host.fontSmall.draw(host.batch,"Taso 3:", host.camera.getPositionX() + right,host.camera.getPositionY() + high);
+
+            //medium levels
+            host.fontSmall.draw(host.batch,"Taso 4:", host.camera.getPositionX() - left,host.camera.getPositionY() + middleHeight);
+            host.fontSmall.draw(host.batch,"Taso 5:", host.camera.getPositionX() - middle,host.camera.getPositionY() + middleHeight);
+            host.fontSmall.draw(host.batch,"Taso 6:", host.camera.getPositionX() + right,host.camera.getPositionY() + middleHeight);
+
+            //hard levels
+            host.fontSmall.draw(host.batch,"Taso 7:", host.camera.getPositionX() - left,host.camera.getPositionY() - low);
+            host.fontSmall.draw(host.batch,"Taso 8:", host.camera.getPositionX() - middle,host.camera.getPositionY() - low);
+            host.fontSmall.draw(host.batch,"Taso 9:", host.camera.getPositionX() + right,host.camera.getPositionY() - low);
+        }
+
+
+        // draws easy level times
+        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel1") + ":" + host.preferences.getInteger("highscoreSeclevel1"),
                 host.camera.getPositionX() - left,host.camera.getPositionY() + high - score);
-        host.fontMedium.draw(host.batch,"Level 2:", host.camera.getPositionX() - middle,host.camera.getPositionY() + high);
-        host.fontMedium.draw(host.batch, host.preferences.getInteger("highscoreMinlevel2") + ":" + host.preferences.getInteger("highscoreSeclevel2"),
+        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel2") + ":" + host.preferences.getInteger("highscoreSeclevel2"),
                 host.camera.getPositionX() - middle,host.camera.getPositionY() + high - score);
-        host.fontMedium.draw(host.batch,"Level 3:", host.camera.getPositionX() + right,host.camera.getPositionY() + high);
-        host.fontMedium.draw(host.batch, host.preferences.getInteger("highscoreMinlevel3") + ":" + host.preferences.getInteger("highscoreSeclevel3"),
+        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel3") + ":" + host.preferences.getInteger("highscoreSeclevel3"),
                 host.camera.getPositionX() + right,host.camera.getPositionY() + high - score);
 
-        //medium levels
-        host.fontMedium.draw(host.batch,"Level 4:", host.camera.getPositionX() - left,host.camera.getPositionY() + middleHeight);
-        host.fontMedium.draw(host.batch, host.preferences.getInteger("highscoreMinlevel4") + ":" + host.preferences.getInteger("highscoreSeclevel4"),
+        // draws medium levels times
+        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel4") + ":" + host.preferences.getInteger("highscoreSeclevel4"),
                 host.camera.getPositionX() - left,host.camera.getPositionY() + middleHeight - score);
-        host.fontMedium.draw(host.batch,"Level 5:", host.camera.getPositionX() - middle,host.camera.getPositionY() + middleHeight);
-        host.fontMedium.draw(host.batch, host.preferences.getInteger("highscoreMinlevel5") + ":" + host.preferences.getInteger("highscoreSeclevel5"),
+        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel5") + ":" + host.preferences.getInteger("highscoreSeclevel5"),
                 host.camera.getPositionX() - middle,host.camera.getPositionY() + middleHeight - score);
-        host.fontMedium.draw(host.batch,"Level 6:", host.camera.getPositionX() + right,host.camera.getPositionY() + middleHeight);
-        host.fontMedium.draw(host.batch, host.preferences.getInteger("highscoreMinlevel6") + ":" + host.preferences.getInteger("highscoreSeclevel6"),
+        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel6") + ":" + host.preferences.getInteger("highscoreSeclevel6"),
                 host.camera.getPositionX() + right,host.camera.getPositionY() + middleHeight - score);
 
-        // hard levels
-        host.fontMedium.draw(host.batch,"Level 7:", host.camera.getPositionX() - left,host.camera.getPositionY() - low);
-        host.fontMedium.draw(host.batch, host.preferences.getInteger("highscoreMinlevel7") + ":" + host.preferences.getInteger("highscoreSeclevel7"),
+        // draws hard levels times
+        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel7") + ":" + host.preferences.getInteger("highscoreSeclevel7"),
                 host.camera.getPositionX() - left,host.camera.getPositionY() - low - score);
-        host.fontMedium.draw(host.batch,"Level 8:", host.camera.getPositionX() - middle,host.camera.getPositionY() - low);
-        host.fontMedium.draw(host.batch, host.preferences.getInteger("highscoreMinlevel8") + ":" + host.preferences.getInteger("highscoreSeclevel8"),
+        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel8") + ":" + host.preferences.getInteger("highscoreSeclevel8"),
                 host.camera.getPositionX() - middle,host.camera.getPositionY() - low - score);
-        host.fontMedium.draw(host.batch,"Level 9:", host.camera.getPositionX() + right,host.camera.getPositionY() - low);
-        host.fontMedium.draw(host.batch, host.preferences.getInteger("highscoreMinlevel9") + ":" + host.preferences.getInteger("highscoreSeclevel9"),
+        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel9") + ":" + host.preferences.getInteger("highscoreSeclevel9"),
                 host.camera.getPositionX() + right,host.camera.getPositionY() - low - score);
         host.batch.end();
 

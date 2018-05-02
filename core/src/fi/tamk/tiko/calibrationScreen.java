@@ -105,11 +105,11 @@ public class calibrationScreen implements Screen, SoundAndMusic {
         host.batch.draw(background,0,0);
         if (host.currentLang.equals("fin")) {
             host.batch.draw(calibrationFI, calibrationRec.getX(), calibrationRec.getY());
-            host.fontMedium.draw(host.batch,"Aseta uusi nolla piste",host.camera.getPositionX() - 300,host.camera.getPositionY() + 200);
+            host.fontSmall.draw(host.batch,"Aseta uusi nolla piste",host.camera.getPositionX() - 300,host.camera.getPositionY() + 200);
         }
         else {
             host.batch.draw(calibrationEN, calibrationRec.getX(), calibrationRec.getY());
-            host.fontMedium.draw(host.batch,"Set new default position",host.camera.getPositionX() - 300,host.camera.getPositionY() + 200);
+            host.fontSmall.draw(host.batch,"Set new default position",host.camera.getPositionX() - 300,host.camera.getPositionY() + 200);
         }
 
         // draws language buttons
@@ -138,10 +138,10 @@ public class calibrationScreen implements Screen, SoundAndMusic {
                 host.player.defaultPositionY = -Math.abs(host.player.defaultPositionY);
             }
             if (host.currentLang.equals("fin")) {
-                host.fontMedium.draw(host.batch,"Uusi nollapiste asetettu!",host.camera.getPositionX() - 300,host.camera.getPositionY() - 50);
+                host.fontSmall.draw(host.batch,"Uusi nollapiste asetettu!",host.camera.getPositionX() - 300,host.camera.getPositionY() - 50);
             }
             else {
-                host.fontMedium.draw(host.batch,"New default position set!",host.camera.getPositionX() - 300,host.camera.getPositionY() - 50);
+                host.fontSmall.draw(host.batch,"New default position set!",host.camera.getPositionX() - 300,host.camera.getPositionY() - 50);
             }
         }
 

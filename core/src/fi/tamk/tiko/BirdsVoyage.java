@@ -2,9 +2,7 @@ package fi.tamk.tiko;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -13,28 +11,45 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
+/**
+ * The main class for the game
+ *
+ *
+ * @author Toni Vänttinen & Jimi Savola
+ * @version 1.8, 05/02/18
+ * @since 1.8
+ */
+
 public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
+
+    // Preferences for saving all info
+    Preferences preferences;
 
 	SpriteBatch batch;
 	Player player;
-	Enemy enemy;
 	StormCloud cloud;
 	Map map;
 	Camera camera;
 	GameTimer time;
 	splashScreen splash;
-	String currentLang = defaultLang;
 
-	menuScreen menu;
+	// string for current language
+    String currentLang;
+
+    // String for current screen
 	String currentScreen;
+
+    // String for previous screen
 	String lastScreen;
 
+	// boolean for game mutes
 	Boolean mute;
 
+	// different fonts
     FreeTypeFontGenerator textFont;
     BitmapFont fontBig;
-    BitmapFont fontMedBig;
     BitmapFont fontMedium;
+    BitmapFont fontSmall;
 
 	// saved position of the camera after going to setting
 	float cameraPosX;
@@ -61,9 +76,6 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
     // selected level info
     String currentLevel;
 
-    // Preferences for high score and sensitivity saving
-    Preferences preferences;
-
 	public int getCameraHeight() {
 		return cameraHeight;
 	}
@@ -74,54 +86,78 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 
 	@Override
 	public void create() {
+
+	    // disables back key
 	    Gdx.input.setCatchBackKey(true);
+
+	    // creates/gets preferences
         preferences = Gdx.app.getPreferences("My Preferences");
+
+        // gets language
+        currentLang = preferences.getString(currentLang,"eng");
+
+        // creates sprite batch
 		batch = new SpriteBatch();
+
+        // creates player
 		player = new Player();
-		enemy = new Enemy();
+
+		// creates storm cloud
 		cloud = new StormCloud();
+
+		// creates camera
 		camera = new Camera(player);
+
+		// creates timer for levels
 		time = new GameTimer();
-		menu = new menuScreen(this);
+
+		// creates splash screen
 		splash = new splashScreen(this);
+
+		// sets the players default position
         float x = preferences.getFloat("defX",0f);
         float y = preferences.getFloat("defY",0f);
         if (y == 0f){
             y = 4f;
         }
         player.setDefPos(x,y);
+
+        // sets the mute as false
 		mute = false;
 
+		// loads up a font style
 		textFont = new FreeTypeFontGenerator(Gdx.files.internal("Bord-Regular.ttf"));
 
+		// makes a big font
 		FreeTypeFontGenerator.FreeTypeFontParameter parameterBig = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameterBig.size = 180;
 		parameterBig.borderColor = Color.BLACK;
 		parameterBig.borderWidth = 3;
 		fontBig = textFont.generateFont(parameterBig);
 
+		// makes a small font
         FreeTypeFontGenerator.FreeTypeFontParameter parameterMedium = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameterMedium.size = 42;
         parameterMedium.borderColor = Color.BLACK;
         parameterMedium.borderWidth = 3;
-        fontMedium = textFont.generateFont(parameterMedium);
+        fontSmall = textFont.generateFont(parameterMedium);
 
+        // makes medium font
         FreeTypeFontGenerator.FreeTypeFontParameter parameterMedBig = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameterMedBig.size = 100;
         parameterMedBig.borderColor = Color.BLACK;
         parameterMedBig.borderWidth = 3;
-        fontMedBig = textFont.generateFont(parameterMedBig);
+        fontMedium = textFont.generateFont(parameterMedBig);
 
+        // creates animations
         makeEnemyAnim();
         makeCloudAnim();
         makeClockAnim();
 
-        // selected level
+        // sets the current level to level1
         currentLevel = "level1";
 
-		preferences = Gdx.app.getPreferences("My Preferences");
-
-		camera.cameraMove();
+        // sets the screen to splash screen
 		setScreen(splash);
 	}
 

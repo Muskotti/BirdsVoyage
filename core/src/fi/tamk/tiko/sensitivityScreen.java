@@ -145,37 +145,37 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
 
         // Draws sensitivity texts
         if (host.currentLang.equals("fin")) {
-            host.fontMedium.draw(host.batch, "Ylös",
+            host.fontSmall.draw(host.batch, "Ylös",
                     sliderBarRec1.getX()+sliderBarRec1.getWidth()+sliderButton.getWidth(),
                     sliderBarRec1.getY()+sliderButton.getHeight()
             );
-            host.fontMedium.draw(host.batch, "Alas",
+            host.fontSmall.draw(host.batch, "Alas",
                     sliderBarRec2.getX()+sliderBarRec2.getWidth()+sliderButton.getWidth(),
                     sliderBarRec2.getY()+sliderButton.getHeight()
             );
-            host.fontMedium.draw(host.batch, "Vasen",
+            host.fontSmall.draw(host.batch, "Vasen",
                     sliderBarRec3.getX()+sliderBarRec3.getWidth()+sliderButton.getWidth(),
                     sliderBarRec3.getY()+sliderButton.getHeight()
             );
-            host.fontMedium.draw(host.batch, "Oikea",
+            host.fontSmall.draw(host.batch, "Oikea",
                     sliderBarRec4.getX()+sliderBarRec4.getWidth()+sliderButton.getWidth(),
                     sliderBarRec4.getY()+sliderButton.getHeight()
             );
         }
         else {
-            host.fontMedium.draw(host.batch, "Up",
+            host.fontSmall.draw(host.batch, "Up",
                     sliderBarRec1.getX()+sliderBarRec1.getWidth()+sliderButton.getWidth(),
                     sliderBarRec1.getY()+sliderButton.getHeight()
             );
-            host.fontMedium.draw(host.batch, "Down",
+            host.fontSmall.draw(host.batch, "Down",
                     sliderBarRec2.getX()+sliderBarRec2.getWidth()+sliderButton.getWidth(),
                     sliderBarRec2.getY()+sliderButton.getHeight()
             );
-            host.fontMedium.draw(host.batch, "Left",
+            host.fontSmall.draw(host.batch, "Left",
                     sliderBarRec3.getX()+sliderBarRec3.getWidth()+sliderButton.getWidth(),
                     sliderBarRec3.getY()+sliderButton.getHeight()
             );
-            host.fontMedium.draw(host.batch, "Right",
+            host.fontSmall.draw(host.batch, "Right",
                     sliderBarRec4.getX()+sliderBarRec4.getWidth()+sliderButton.getWidth(),
                     sliderBarRec4.getY()+sliderButton.getHeight()
             );
@@ -308,11 +308,11 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
 
             // Draws sensitivity value
             host.batch.begin();
-            host.fontMedium.draw(host.batch, String.valueOf(printSens), sliderRec.getX()-30, sliderRec.getY());
+            host.fontSmall.draw(host.batch, String.valueOf(printSens), sliderRec.getX()-30, sliderRec.getY());
             if (host.currentLang.equals("fin")) {
-                host.fontMedium.draw(host.batch,"Mitä suurempi arvo sitä herkempi liike",host.camera.getPositionX() - 400,host.camera.getPositionY() - 150);
+                host.fontSmall.draw(host.batch,"Mitä suurempi arvo sitä herkempi liike",host.camera.getPositionX() - 400,host.camera.getPositionY() - 150);
             } else {
-                host.fontMedium.draw(host.batch,"The higher the value the more sensitive movement",host.camera.getPositionX() - 600,host.camera.getPositionY() - 150);
+                host.fontSmall.draw(host.batch,"The higher the value the more sensitive movement",host.camera.getPositionX() - 600,host.camera.getPositionY() - 150);
             }
             host.batch.end();
         }

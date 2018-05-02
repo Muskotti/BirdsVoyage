@@ -285,13 +285,13 @@ public class levelScreen implements Screen, SoundAndMusic {
 
         // draws assets of used language bundle
         if (host.currentLang.equals("fin")){
-            host.fontMedium.draw(host.batch,"Helppo", host.camera.getPositionX() - 300,host.camera.getPositionY() + 160);
-            host.fontMedium.draw(host.batch,"Normaali", host.camera.getPositionX() - 300,host.camera.getPositionY() + 25);
-            host.fontMedium.draw(host.batch,"Vaikea", host.camera.getPositionX() - 300,host.camera.getPositionY() - 115);
+            host.fontSmall.draw(host.batch,"Helppo", host.camera.getPositionX() - 300,host.camera.getPositionY() + 160);
+            host.fontSmall.draw(host.batch,"Normaali", host.camera.getPositionX() - 300,host.camera.getPositionY() + 25);
+            host.fontSmall.draw(host.batch,"Vaikea", host.camera.getPositionX() - 300,host.camera.getPositionY() - 115);
         } else {
-            host.fontMedium.draw(host.batch,"Easy", host.camera.getPositionX() - 300,host.camera.getPositionY() + 160);
-            host.fontMedium.draw(host.batch,"Medium", host.camera.getPositionX() - 300,host.camera.getPositionY() + 25);
-            host.fontMedium.draw(host.batch,"Hard", host.camera.getPositionX() - 300,host.camera.getPositionY() - 115);
+            host.fontSmall.draw(host.batch,"Easy", host.camera.getPositionX() - 300,host.camera.getPositionY() + 160);
+            host.fontSmall.draw(host.batch,"Medium", host.camera.getPositionX() - 300,host.camera.getPositionY() + 25);
+            host.fontSmall.draw(host.batch,"Hard", host.camera.getPositionX() - 300,host.camera.getPositionY() - 115);
         }
         host.batch.end();
     }
