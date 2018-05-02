@@ -50,8 +50,8 @@ public class gameScreen implements Screen, SoundAndMusic {
     int enemyNumber = 0;
     int clockNumber = 0;
 
-    private float time;
-    private int sec = 5;
+    private float startTimer;
+    private float startTimerDefault = 5f;
 
     boolean gamePause = false;
     boolean mapWin = false;
@@ -156,12 +156,12 @@ public class gameScreen implements Screen, SoundAndMusic {
                 enemy.stop();
             }
             cloud.stop();
-            time += Gdx.graphics.getRawDeltaTime();
-            if(time >= 0.9f){
-                time = 0;
-                sec--;
+            startTimer += Gdx.graphics.getRawDeltaTime();
+            if(startTimer >= 0.9f){
+                startTimer = 0;
+                startTimerDefault--;
             }
-            if (sec == 0){
+            if (startTimerDefault == 0){
                 mapStart = false;
                 host.time.resume();
                 host.player.resume();
@@ -316,8 +316,10 @@ public class gameScreen implements Screen, SoundAndMusic {
                 host.batch.draw(settingsFIN, settingsRect.getX(), settingsRect.getY());
             }
         }
-        if (sec > 0){
-            host.fontBig.draw(host.batch, "" + sec, host.camera.getPositionX() - 45,host.camera.getPositionY() + 90);
+
+        // Draws the help text at the beginning
+        if (startTimerDefault > 0){
+            host.fontBig.draw(host.batch, "" + startTimerDefault, host.camera.getPositionX() - 45,host.camera.getPositionY() + 90);
             if (host.currentLang.equals("eng")) {
                 host.fontSmall.draw(host.batch, "Dodge trees and other objects", host.camera.getPositionX() - 350,host.camera.getPositionY() - 80);
             } else {

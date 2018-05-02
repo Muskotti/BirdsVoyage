@@ -12,8 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 /**
- * The main class for the game
- *
+ * The main class for the game where everything runs
  *
  * @author Toni Vänttinen & Jimi Savola
  * @version 1.8, 05/02/18
@@ -76,14 +75,9 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
     // selected level info
     String currentLevel;
 
-	public int getCameraHeight() {
-		return cameraHeight;
-	}
-
-	public int getCameraWidth() {
-		return cameraWidth;
-	}
-
+    /**
+     * Constructor for the start of the game
+     */
 	@Override
 	public void create() {
 
@@ -161,57 +155,9 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 		setScreen(splash);
 	}
 
-	private void makeClockAnim() {
-		clockSheet = new Texture(Gdx.files.internal("clock.png"));
-		TextureRegion[][] tmp = TextureRegion.split(clockSheet,
-                clockSheet.getWidth() / 6,
-                clockSheet.getHeight() / 1);
-		TextureRegion[] flyingFrames = new TextureRegion[6 * 1];
-		int index = 0;
-		for (int i = 0; i < 1; i++){
-			for (int j = 0; j < 6; j++){
-				flyingFrames[index++] = tmp[i][j];
-			}
-		}
-		clockAnimation = new Animation<TextureRegion>(6, flyingFrames);
-		clockTime = 0f;
-	}
-
-	private void makeCloudAnim() {
-        cloudSheet = new Texture(Gdx.files.internal("cloud.png"));
-        TextureRegion[][] tmp = TextureRegion.split(cloudSheet,
-                cloudSheet.getWidth() / 3,
-                cloudSheet.getHeight() / 1);
-        TextureRegion[] flyingFrames = new TextureRegion[3 * 1];
-        int index = 0;
-        for (int i = 0; i < 1; i++){
-            for (int j = 0; j < 3; j++){
-                flyingFrames[index++] = tmp[i][j];
-            }
-        }
-        cloudAnimation = new Animation<TextureRegion>(1 / 10f, flyingFrames);
-        cloudTime = 0f;
-    }
-
-    private void makeEnemyAnim() {
-        flyingSheet = new Texture(Gdx.files.internal("enemy.png"));
-        TextureRegion[][] tmp = TextureRegion.split(flyingSheet,
-                flyingSheet.getWidth() / 4,
-                flyingSheet.getHeight() / 1);
-        TextureRegion[] flyingFrames = new TextureRegion[4 * 1];
-        int index = 0;
-        for (int i = 0; i < 1; i++){
-            for (int j = 0; j < 4; j++){
-                flyingFrames[index++] = tmp[i][j];
-            }
-        }
-        flyingAnimation = new Animation<TextureRegion>(1 / 10f, flyingFrames);
-        stateTime = 0f;
-    }
-
-    public float getMapWidth() {
-		return mapWidth;
-	}
+    /**
+     *
+     */
 
 	@Override
 	public void render() {
@@ -252,10 +198,6 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 		batch.dispose();
 	}
 
-	public void setLang(String lang) {
-		currentLang = lang;
-	}
-
 	public void reset() {
 		time.reset();
 		time.resume();
@@ -271,14 +213,78 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 		camera.resume();
 	}
 
-	public float getMinutes() {
-	    return time.getMinutes();
+    /**
+     * Creates the animation for enemy bird
+     */
+    private void makeEnemyAnim() {
+        flyingSheet = new Texture(Gdx.files.internal("enemy.png"));
+        TextureRegion[][] tmp = TextureRegion.split(flyingSheet,
+                flyingSheet.getWidth() / 4,
+                flyingSheet.getHeight() / 1);
+        TextureRegion[] flyingFrames = new TextureRegion[4 * 1];
+        int index = 0;
+        for (int i = 0; i < 1; i++){
+            for (int j = 0; j < 4; j++){
+                flyingFrames[index++] = tmp[i][j];
+            }
+        }
+        flyingAnimation = new Animation<TextureRegion>(1 / 10f, flyingFrames);
+        stateTime = 0f;
     }
-    public float getSeconds() {
-	    return time.getSeconds();
+
+    private void makeClockAnim() {
+        clockSheet = new Texture(Gdx.files.internal("clock.png"));
+        TextureRegion[][] tmp = TextureRegion.split(clockSheet,
+                clockSheet.getWidth() / 6,
+                clockSheet.getHeight() / 1);
+        TextureRegion[] flyingFrames = new TextureRegion[6 * 1];
+        int index = 0;
+        for (int i = 0; i < 1; i++){
+            for (int j = 0; j < 6; j++){
+                flyingFrames[index++] = tmp[i][j];
+            }
+        }
+        clockAnimation = new Animation<TextureRegion>(6, flyingFrames);
+        clockTime = 0f;
+    }
+
+    private void makeCloudAnim() {
+        cloudSheet = new Texture(Gdx.files.internal("cloud.png"));
+        TextureRegion[][] tmp = TextureRegion.split(cloudSheet,
+                cloudSheet.getWidth() / 3,
+                cloudSheet.getHeight() / 1);
+        TextureRegion[] flyingFrames = new TextureRegion[3 * 1];
+        int index = 0;
+        for (int i = 0; i < 1; i++){
+            for (int j = 0; j < 3; j++){
+                flyingFrames[index++] = tmp[i][j];
+            }
+        }
+        cloudAnimation = new Animation<TextureRegion>(1 / 10f, flyingFrames);
+        cloudTime = 0f;
     }
 
     public void loadMap() {
         map = new Map(currentLevel);
     }
+    public void setLang(String lang) {
+        currentLang = lang;
+    }
+
+    public float getMinutes() {
+	    return time.getMinutes();
+    }
+    public float getSeconds() {
+	    return time.getSeconds();
+    }
+    public int getCameraHeight() {
+        return cameraHeight;
+    }
+    public int getCameraWidth() {
+        return cameraWidth;
+    }
+    public float getMapWidth() {
+        return mapWidth;
+    }
+
 }
