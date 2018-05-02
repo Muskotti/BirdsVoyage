@@ -41,7 +41,7 @@ public class calibrationScreen implements Screen, SoundAndMusic {
     public calibrationScreen(BirdsVoyage host) {
         touch = new Vector3(0,0,0);
         this.host = host;
-        background = new Texture(Gdx.files.internal("menuBack.png"));
+        background = new Texture(Gdx.files.internal("menuBack2.png"));
 
         //loads menu button
         menuButtonTex = new Texture(Gdx.files.internal("goback.png"));
