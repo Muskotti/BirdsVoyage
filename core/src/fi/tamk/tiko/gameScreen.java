@@ -51,7 +51,7 @@ public class gameScreen implements Screen, SoundAndMusic {
     int clockNumber = 0;
 
     private float startTimer;
-    private float startTimerDefault = 5f;
+    private int startTimerDefault = 5;
 
     boolean gamePause = false;
     boolean mapWin = false;
@@ -328,9 +328,8 @@ public class gameScreen implements Screen, SoundAndMusic {
         }
 
         // Poista myöhemmin. Tässä anturiarvot
-        font.draw(host.batch, "X = " + Gdx.input.getAccelerometerY(), host.camera.getPositionX() + 420, host.camera.getPositionY() + 350);
-        font.draw(host.batch, "Y = " + Gdx.input.getAccelerometerZ(), host.camera.getPositionX() + 420, host.camera.getPositionY() + 300);
-        Gdx.app.log("asd", "x=" + host.preferences.getFloat("defX") + " y=" + host.preferences.getFloat("defY"));
+        //font.draw(host.batch, "X = " + Gdx.input.getAccelerometerY(), host.camera.getPositionX() + 420, host.camera.getPositionY() + 350);
+        //font.draw(host.batch, "Y = " + Gdx.input.getAccelerometerZ(), host.camera.getPositionX() + 420, host.camera.getPositionY() + 300);
         host.batch.end();
 
         if (mapWin){
@@ -364,12 +363,12 @@ public class gameScreen implements Screen, SoundAndMusic {
             if (!newHighscore && (host.getMinutes() <= (host.preferences.getInteger("highscoreMin" + host.currentLevel, 100))) &&
                     (host.getSeconds() < host.preferences.getInteger("highscoreSec" + host.currentLevel, 100))) {
                 newHighscore = true;
-                Gdx.app.log("asd","asd");
             }
             if (newHighscore) {
-                host.preferences.flush();
                 host.preferences.putInteger("highscoreMin" + host.currentLevel,(int) host.getMinutes());
                 host.preferences.putInteger("highscoreSec" + host.currentLevel,(int) host.getSeconds());
+                host.preferences.flush();
+                Gdx.app.log("asd","asd");
             }
 
             // Returns to menu

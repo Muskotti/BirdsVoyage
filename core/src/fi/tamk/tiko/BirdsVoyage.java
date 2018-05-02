@@ -88,7 +88,7 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
         preferences = Gdx.app.getPreferences("My Preferences");
 
         // gets language
-        currentLang = preferences.getString(currentLang,"eng");
+        currentLang = preferences.getString("language","eng");
 
         // creates sprite batch
 		batch = new SpriteBatch();
@@ -269,6 +269,8 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
     }
     public void setLang(String lang) {
         currentLang = lang;
+        preferences.putString("language",lang);
+        preferences.flush();
     }
 
     public float getMinutes() {
