@@ -30,6 +30,9 @@ public class menuScreen implements Screen, SoundAndMusic{
     private Texture enGBButtonTex;
     private Texture fiFIButtonTex;
 
+    // game logo
+    private Texture logoTex;
+
     // Rectangles for all the buttons
     private Rectangle playButtonRec;
     private Rectangle highButtonRec;
@@ -64,30 +67,33 @@ public class menuScreen implements Screen, SoundAndMusic{
         enGBButtonTex = new Texture(Gdx.files.internal("eng.png"));
         fiFIButtonTex = new Texture(Gdx.files.internal("fin.png"));
 
+        //loads logo
+        logoTex = new Texture(Gdx.files.internal("LOGOtransparent.png"));
+
         // setting up rectangles
         playButtonRec = new Rectangle(
                 host.getCameraWidth()/2 - (playButtonTexEN.getWidth()/2),
-                375,
+                317,
                 playButtonTexEN.getWidth(),
                 playButtonTexEN.getHeight()
         );
 
         highButtonRec = new Rectangle(
                 host.getCameraWidth()/2 - (playButtonTexEN.getWidth()/2),
-                250,
+                212,
                 playButtonTexEN.getWidth(),
                 playButtonTexEN.getHeight()
         );
 
         settingsButtonRec = new Rectangle(
                 host.getCameraWidth()/2 - (settingsButtonTexEN.getWidth()/2),
-                125,
+                107,
                 settingsButtonTexEN.getWidth(),
                 settingsButtonTexEN.getHeight()
         );
         exitButtonRec = new Rectangle(
                 host.getCameraWidth()/2 - (exitButtonTexEN.getWidth()/2),
-                0,
+                2,
                 exitButtonTexEN.getWidth(),
                 exitButtonTexEN.getHeight()
         );
@@ -131,6 +137,7 @@ public class menuScreen implements Screen, SoundAndMusic{
         host.batch.draw(background,0,0);
         host.batch.draw(enGBButtonTex, enGBButtonRec.getX(), enGBButtonRec.getY());
         host.batch.draw(fiFIButtonTex, fiFIButtonRec.getX(), fiFIButtonRec.getY());
+        host.batch.draw(logoTex, host.camera.getPositionX() - logoTex.getWidth()/2,host.camera.getPositionY() + 60);
         host.batch.end();
 
         // checks if the buttons are touched
@@ -147,6 +154,7 @@ public class menuScreen implements Screen, SoundAndMusic{
                 buttonSound.play();
             }
             host.lastScreen = "menu";
+            host.preferences.flush();
             host.setScreen(new settingsScreen(host));
         }
         if (highButtonRec.contains(touch.x, touch.y)) {

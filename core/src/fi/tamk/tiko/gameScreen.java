@@ -358,34 +358,21 @@ public class gameScreen implements Screen, SoundAndMusic {
             host.fontMedBig.draw(host.batch,host.time.getTime(),host.camera.getPositionX() + 225, host.camera.getPositionY() - 30);
             host.batch.end();
 
-            // Checks if new high score for the top 10 list
+            // checks for highscore
             boolean newHighscore = false;
-            if (host.getMinutes() < (host.preferences.getInteger("highscoreMin", 100))) {
+            if (host.getMinutes() < (host.preferences.getInteger("highscoreMin" + host.currentLevel, 100))) {
                 newHighscore = true;
             }
-            if (!newHighscore && (host.getMinutes() == (host.preferences.getInteger("highscoreMin", 100))) &&
-                    (host.getSeconds() < host.preferences.getInteger("highscoreSec", 100))) {
+            if (!newHighscore && (host.getMinutes() <= (host.preferences.getInteger("highscoreMin" + host.currentLevel, 100))) &&
+                    (host.getSeconds() < host.preferences.getInteger("highscoreSec" + host.currentLevel, 100))) {
                 newHighscore = true;
+                Gdx.app.log("asd","asd");
             }
             if (newHighscore) {
                 host.preferences.flush();
-                host.preferences.putInteger("highscoreMin",(int) host.getMinutes());
-                host.preferences.putInteger("highscoreSec",(int) host.getSeconds());
+                host.preferences.putInteger("highscoreMin" + host.currentLevel,(int) host.getMinutes());
+                host.preferences.putInteger("highscoreSec" + host.currentLevel,(int) host.getSeconds());
             }
-            // Name for highscore
-            /*String name;
-            Gdx.input.setOnscreenKeyboardVisible(true);
-            name = Gdx.input.getTextInput(new Input.TextInputListener() {
-                @Override
-                public void input(String text) {);
-                }
-
-                @Override
-                public void canceled() {
-
-                }
-            });*/
-            Gdx.input.setOnscreenKeyboardVisible(false);
 
             // Returns to menu
             if (menuRect.contains(touch.x,touch.y)){
