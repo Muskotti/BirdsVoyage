@@ -51,6 +51,11 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
 
     boolean stopMove;
 
+    // Timer for collision sounds
+    float treeCollisionTimer;
+    float cloudCollisionTimer;
+    float enemyCollisionTimer;
+
     // player constructor
     public Player(){
         flyingAnim();
@@ -60,6 +65,9 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
         boundingRectangle = new Rectangle();
         playerRestTop = cameraHeight;
         slowdownTimer = 0;
+        treeCollisionTimer = 0;
+        cloudCollisionTimer = 0;
+        enemyCollisionTimer = 0;
         stopMove = true;
     }
 
@@ -266,8 +274,22 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
         for (int i = 0; i<enemies.size(); i++) {
             Enemy enemy = enemies.get(i);
             if (playerRectangle.overlaps(enemy.getEnemyBoundingRectangle())) {
+
+                // Prevent collision sound from overlapping
+                if (enemyCollisionTimer == 0) {
+                    birdCollisionSound.play();
+                }
+                enemyCollisionTimer += Gdx.graphics.getRawDeltaTime();
+                if (enemyCollisionTimer>2) {
+                    enemyCollisionTimer = 0;
+                }
+
                 collision(enemy.getEnemyBoundingRectangle());
                 slowdownTimer += Gdx.graphics.getRawDeltaTime();
+            }
+            else {
+                birdCollisionSound.stop();
+                enemyCollisionTimer = 0;
             }
         }
         if (slowdownTimer > 0 && slowdownTimer < 5) {
@@ -289,10 +311,22 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
             speedY = halfSpeed;
             speedX = halfSpeed;
             hitAnim(b);
+
+            // Prevent collision sound from overlapping
+            if (treeCollisionTimer == 0) {
+                treeCollisionSound.play();
+            }
+            treeCollisionTimer += Gdx.graphics.getRawDeltaTime();
+            if (treeCollisionTimer>2) {
+                treeCollisionTimer = 0;
+            }
+
             if (stopMove){
                 Gdx.input.vibrate(50);
             }
         } else {
+            treeCollisionSound.stop();
+            treeCollisionTimer = 0;
             speedY = normalSpeed;
             speedX = normalSpeed;
         }

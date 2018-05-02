@@ -20,7 +20,7 @@ public interface SoundAndMusic {
     Sound buttonSound = Gdx.audio.newSound(Gdx.files.internal("ButtonClick.wav"));
     Sound birdCollisionSound = Gdx.audio.newSound(Gdx.files.internal("BirdCollision.wav"));
     Sound treeCollisionSound = Gdx.audio.newSound(Gdx.files.internal("TreeCollision.wav"));
-    Sound clockSound = Gdx.audio.newSound(Gdx.files.internal("ButtonClick.wav"));
+    Sound clockSound = Gdx.audio.newSound(Gdx.files.internal("ClockSound.wav"));
     Sound mapFinishSound = Gdx.audio.newSound(Gdx.files.internal("MapFinishSound.wav"));
     Sound sliderPressSound = Gdx.audio.newSound(Gdx.files.internal("SliderPress.wav"));
     Sound sliderReleaseSound = Gdx.audio.newSound(Gdx.files.internal("SliderRelease.wav"));

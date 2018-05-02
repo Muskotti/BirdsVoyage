@@ -290,8 +290,9 @@ public class gameScreen implements Screen, SoundAndMusic {
             clockPickUp clock = clocks.get(i);
             clock.draw(host);
 
-            // Deletes enemy if it goes out of bounds
+            // Deletes clock when picked up
             if (clock.hits(host.player.getRectangle())){
+                clockSound.play();
                 clocks.remove(i);
                 host.time.removeTime();
             }
