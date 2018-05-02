@@ -192,7 +192,7 @@ public class gameScreen implements Screen, SoundAndMusic {
 
         // pauses the game
         if (pauseRect.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             touch.set(0,0,0);
@@ -201,7 +201,7 @@ public class gameScreen implements Screen, SoundAndMusic {
 
         // resumes the game
         if (resumeRect.contains(touch.x,touch.y) && gamePause){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             touch.set(0,0,0);
@@ -210,7 +210,7 @@ public class gameScreen implements Screen, SoundAndMusic {
 
         // goes to settings screen
         if (settingsRect.contains(touch.x,touch.y) && gamePause){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             touch.set(0,0,0);
@@ -223,7 +223,7 @@ public class gameScreen implements Screen, SoundAndMusic {
 
         // goes to menu
         if (menuRect.contains(touch.x,touch.y) && gamePause){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             touch.set(0,0,0);
@@ -384,7 +384,7 @@ public class gameScreen implements Screen, SoundAndMusic {
 
             // Returns to menu
             if (menuRect.contains(touch.x,touch.y)){
-                if (Gdx.input.justTouched()) {
+                if (Gdx.input.justTouched() && !host.mute) {
                     buttonSound.play();
                 }
                 touch.set(0,0,0);

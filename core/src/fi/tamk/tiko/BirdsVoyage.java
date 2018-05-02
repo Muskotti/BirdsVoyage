@@ -161,35 +161,40 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 
 	@Override
 	public void render() {
-		if ((currentScreen == "menu" || currentScreen == "splash") && lastScreen == "game" || lastScreen == null) {
-			if (easyTheme.isPlaying() || mediumTheme.isPlaying() || hardTheme.isPlaying()) {
-				easyTheme.stop();
-                mediumTheme.stop();
-                hardTheme.stop();
-			}
-			mainMenuTheme.play();
-			mainMenuTheme.setVolume(0.5f);
-			mainMenuTheme.setLooping(true);
+	    if (!mute) {
+            if ((currentScreen == "menu" || currentScreen == "splash") && lastScreen == "game" || lastScreen == null) {
+                if (easyTheme.isPlaying() || mediumTheme.isPlaying() || hardTheme.isPlaying()) {
+                    easyTheme.stop();
+                    mediumTheme.stop();
+                    hardTheme.stop();
+                }
+                mainMenuTheme.play();
+                mainMenuTheme.setVolume(0.5f);
+                mainMenuTheme.setLooping(true);
 
-		}
-		if ((currentScreen == "game") && lastScreen == "menu") {
-			if (mainMenuTheme.isPlaying()) {
-				mainMenuTheme.stop();
-			}
-			if (currentLevel == "level1" || currentLevel == "level2" || currentLevel == "level3") {
-			    easyTheme.play();
-			    easyTheme.setLooping(true);
             }
-            else if (currentLevel == "level4" || currentLevel == "level5" || currentLevel == "level6") {
-                mediumTheme.play();
-                mediumTheme.setLooping(true);
+            if ((currentScreen == "game") && lastScreen == "menu") {
+                if (mainMenuTheme.isPlaying()) {
+                    mainMenuTheme.stop();
+                }
+                if (currentLevel == "level1" || currentLevel == "level2" || currentLevel == "level3") {
+                    easyTheme.play();
+                    easyTheme.setLooping(true);
+                } else if (currentLevel == "level4" || currentLevel == "level5" || currentLevel == "level6") {
+                    mediumTheme.play();
+                    mediumTheme.setLooping(true);
+                } else if (currentLevel == "level7" || currentLevel == "level8" || currentLevel == "level9") {
+                    hardTheme.play();
+                    hardTheme.setLooping(true);
+                }
             }
-            else if (currentLevel == "level7" || currentLevel == "level8" || currentLevel == "level9") {
-                hardTheme.play();
-                hardTheme.setLooping(true);
-            }
-		}
-
+        } else {
+            easyTheme.stop();
+            mediumTheme.stop();
+            hardTheme.stop();
+            mainMenuTheme.stop();
+        }
+        Gdx.app.log("mute","mute:" + mute);
 		super.render();
 	}
 
@@ -304,5 +309,4 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
     public float getMapWidth() {
         return mapWidth;
     }
-
 }

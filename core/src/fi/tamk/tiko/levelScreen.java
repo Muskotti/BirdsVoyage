@@ -196,7 +196,7 @@ public class levelScreen implements Screen, SoundAndMusic {
         host.batch.draw(level9Tex,level9Rec.getX(),level9Rec.getY());
         // listens if return is pressed
         if (returnButtonRect.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.lastScreen = "level";
@@ -204,63 +204,63 @@ public class levelScreen implements Screen, SoundAndMusic {
         }
 
         if (level1Rec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.currentLevel = "level1";
         }
 
         if (level2Rec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.currentLevel = "level2";
         }
 
         if (level3Rec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched()&& !host.mute) {
                 buttonSound.play();
             }
             host.currentLevel = "level3";
         }
 
         if (level4Rec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.currentLevel = "level4";
         }
 
         if (level5Rec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.currentLevel = "level5";
         }
 
         if (level6Rec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.currentLevel = "level6";
         }
 
         if (level7Rec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.currentLevel = "level7";
         }
 
         if (level8Rec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.currentLevel = "level8";
         }
 
         if (level9Rec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.currentLevel = "level9";
@@ -277,9 +277,15 @@ public class levelScreen implements Screen, SoundAndMusic {
 
         // changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched() && !host.mute) {
+                buttonSound.play();
+            }
             host.setLang("fin");
         }
         if (enGBButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched() && !host.mute) {
+                buttonSound.play();
+            }
             host.setLang("eng");
         }
 

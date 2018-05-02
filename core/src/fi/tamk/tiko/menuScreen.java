@@ -142,7 +142,7 @@ public class menuScreen implements Screen, SoundAndMusic{
 
         // checks if the buttons are touched
         if (playButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.reset();
@@ -150,20 +150,20 @@ public class menuScreen implements Screen, SoundAndMusic{
             host.setScreen(new levelScreen(host));
         }
         if (settingsButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.lastScreen = "menu";
             host.setScreen(new settingsScreen(host));
         }
         if (highButtonRec.contains(touch.x, touch.y)) {
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setScreen(new highscoreScreen(host));
         }
         if (exitButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             Gdx.app.exit();
@@ -171,13 +171,13 @@ public class menuScreen implements Screen, SoundAndMusic{
 
         // changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setLang("fin");
         }
         if (enGBButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setLang("eng");

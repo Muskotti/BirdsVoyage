@@ -121,7 +121,7 @@ public class calibrationScreen implements Screen, SoundAndMusic {
 
         // calibrates the new position
         if (calibrationRec.contains(touch.x,touch.y) && calibrationRec.contains(touch.x,touch.y)) {
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.player.defaultPositionX = Gdx.input.getAccelerometerY();
@@ -148,7 +148,7 @@ public class calibrationScreen implements Screen, SoundAndMusic {
         host.batch.end();
 
         if (menuButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setScreen(new settingsScreen(host));
@@ -156,13 +156,13 @@ public class calibrationScreen implements Screen, SoundAndMusic {
 
         // changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setLang("fin");
         }
         if (enGBButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setLang("eng");

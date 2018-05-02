@@ -184,7 +184,7 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
         host.batch.end();
 
         if (menuButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setScreen(new settingsScreen(host));
@@ -226,7 +226,7 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
             }
 
             if (sliderRec.contains(touch.x,touch.y)) {
-                if (Gdx.input.justTouched()) {
+                if (Gdx.input.justTouched() && !host.mute) {
                     sliderPressSound.play();
                     tap = true;
                 }
@@ -247,7 +247,7 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
                     }
                 }
                 else {
-                    if (!sliderRelease) {
+                    if (!sliderRelease  && !host.mute) {
                         sliderReleaseSound.play();
                         sliderRelease = true;
                     }
@@ -319,13 +319,13 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
 
         // changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setLang("fin");
         }
         if (enGBButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setLang("eng");

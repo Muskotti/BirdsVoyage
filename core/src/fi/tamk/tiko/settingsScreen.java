@@ -168,25 +168,29 @@ public class settingsScreen implements Screen, SoundAndMusic{
 
         // checks if the buttons are touched
         if (zeroButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setScreen(new calibrationScreen(host));
         }
         if (sensButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setScreen(new sensitivityScreen(host));
         }
         if (muteButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
-
+            if (!host.mute){
+                host.mute = true;
+            } else if (host.mute){
+                host.mute = false;
+            }
         }
         if (menuButtonRec.contains(touch.x,touch.y) && !host.gameRun){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.lastScreen = "settings";
@@ -194,7 +198,7 @@ public class settingsScreen implements Screen, SoundAndMusic{
         }
         if (host.gameRun) {
             if (retGameButRec.contains(touch.x, touch.y)) {
-                if (Gdx.input.justTouched()) {
+                if (Gdx.input.justTouched() && !host.mute) {
                     buttonSound.play();
                 }
                 host.resumeGame();
@@ -204,13 +208,13 @@ public class settingsScreen implements Screen, SoundAndMusic{
 
         // changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setLang("fin");
         }
         if (enGBButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setLang("eng");

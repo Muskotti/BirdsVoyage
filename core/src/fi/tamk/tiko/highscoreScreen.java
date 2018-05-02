@@ -146,33 +146,51 @@ public class highscoreScreen implements Screen, SoundAndMusic {
 
 
         // draws easy level times
-        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel1") + ":" + host.preferences.getInteger("highscoreSeclevel1"),
-                host.camera.getPositionX() - left,host.camera.getPositionY() + high - score);
-        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel2") + ":" + host.preferences.getInteger("highscoreSeclevel2"),
-                host.camera.getPositionX() - middle,host.camera.getPositionY() + high - score);
-        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel3") + ":" + host.preferences.getInteger("highscoreSeclevel3"),
-                host.camera.getPositionX() + right,host.camera.getPositionY() + high - score);
+        String minZero;
+        String secZero;
 
-        // draws medium levels times
-        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel4") + ":" + host.preferences.getInteger("highscoreSeclevel4"),
-                host.camera.getPositionX() - left,host.camera.getPositionY() + middleHeight - score);
-        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel5") + ":" + host.preferences.getInteger("highscoreSeclevel5"),
-                host.camera.getPositionX() - middle,host.camera.getPositionY() + middleHeight - score);
-        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel6") + ":" + host.preferences.getInteger("highscoreSeclevel6"),
-                host.camera.getPositionX() + right,host.camera.getPositionY() + middleHeight - score);
+        for (int i = 0; i < 10; i++) {
+            minZero = "";
+            secZero = "";
 
-        // draws hard levels times
-        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel7") + ":" + host.preferences.getInteger("highscoreSeclevel7"),
-                host.camera.getPositionX() - left,host.camera.getPositionY() - low - score);
-        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel8") + ":" + host.preferences.getInteger("highscoreSeclevel8"),
-                host.camera.getPositionX() - middle,host.camera.getPositionY() - low - score);
-        host.fontSmall.draw(host.batch, host.preferences.getInteger("highscoreMinlevel9") + ":" + host.preferences.getInteger("highscoreSeclevel9"),
-                host.camera.getPositionX() + right,host.camera.getPositionY() - low - score);
+            /*
+            int min = host.preferences.getInteger("highscoreMinlevel" + i);
+            int sec = host.preferences.getInteger("highscoreSeclevel" + i);
+            if (min < 10) {
+                minZero = "0";
+            }
+            if (sec < 10) {
+                secZero = "0";
+            }
+            */
+            host.fontSmall.draw(host.batch, minZero + host.preferences.getInteger( "highscoreMinlevel1") + ":" + secZero + host.preferences.getInteger("highscoreSeclevel1"),
+                    host.camera.getPositionX() - left, host.camera.getPositionY() + high - score);
+            host.fontSmall.draw(host.batch, minZero + host.preferences.getInteger("highscoreMinlevel2") + ":" + secZero + host.preferences.getInteger("highscoreSeclevel2"),
+                    host.camera.getPositionX() - middle, host.camera.getPositionY() + high - score);
+            host.fontSmall.draw(host.batch, minZero + host.preferences.getInteger("highscoreMinlevel3") + ":" + secZero + host.preferences.getInteger("highscoreSeclevel3"),
+                    host.camera.getPositionX() + right, host.camera.getPositionY() + high - score);
+
+            // draws medium levels times
+            host.fontSmall.draw(host.batch, minZero + host.preferences.getInteger("highscoreMinlevel4") + ":" + secZero + host.preferences.getInteger("highscoreSeclevel4"),
+                    host.camera.getPositionX() - left, host.camera.getPositionY() + middleHeight - score);
+            host.fontSmall.draw(host.batch, minZero + host.preferences.getInteger("highscoreMinlevel5") + ":" + secZero + host.preferences.getInteger("highscoreSeclevel5"),
+                    host.camera.getPositionX() - middle, host.camera.getPositionY() + middleHeight - score);
+            host.fontSmall.draw(host.batch, minZero + host.preferences.getInteger("highscoreMinlevel6") + ":" + secZero + host.preferences.getInteger("highscoreSeclevel6"),
+                    host.camera.getPositionX() + right, host.camera.getPositionY() + middleHeight - score);
+
+            // draws hard levels times
+            host.fontSmall.draw(host.batch, minZero + host.preferences.getInteger("highscoreMinlevel7") + ":" + secZero + host.preferences.getInteger("highscoreSeclevel7"),
+                    host.camera.getPositionX() - left, host.camera.getPositionY() - low - score);
+            host.fontSmall.draw(host.batch, minZero + host.preferences.getInteger("highscoreMinlevel8") + ":" + secZero + host.preferences.getInteger("highscoreSeclevel8"),
+                    host.camera.getPositionX() - middle, host.camera.getPositionY() - low - score);
+            host.fontSmall.draw(host.batch, minZero + host.preferences.getInteger("highscoreMinlevel9") + ":" + secZero + host.preferences.getInteger("highscoreSeclevel9"),
+                    host.camera.getPositionX() + right, host.camera.getPositionY() - low - score);
+        }
         host.batch.end();
 
         // Goes back to main menu
         if (menuButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setScreen(new menuScreen(host));
@@ -180,13 +198,13 @@ public class highscoreScreen implements Screen, SoundAndMusic {
 
         // changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setLang("fin");
         }
         if (enGBButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setLang("eng");
