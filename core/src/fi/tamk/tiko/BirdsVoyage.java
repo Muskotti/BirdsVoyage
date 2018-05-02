@@ -161,8 +161,10 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 
 	@Override
 	public void render() {
+	    System.out.println(currentScreen);
 	    if (!mute) {
-            if ((currentScreen == "menu" || currentScreen == "splash") && lastScreen == "game" || lastScreen == null) {
+            if ((currentScreen == "menu" || currentScreen == "splash" || currentScreen == "settings") &&
+                    lastScreen == "game" || lastScreen == null || lastScreen == "settings" || lastScreen == "menu") {
                 if (easyTheme.isPlaying() || mediumTheme.isPlaying() || hardTheme.isPlaying()) {
                     easyTheme.stop();
                     mediumTheme.stop();
@@ -173,7 +175,8 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
                 mainMenuTheme.setLooping(true);
 
             }
-            if ((currentScreen == "game") && lastScreen == "menu") {
+            if ((currentScreen == "game" && lastScreen == "menu") ||
+                    (currentScreen == "settings" && lastScreen == "game")) {
                 if (mainMenuTheme.isPlaying()) {
                     mainMenuTheme.stop();
                 }
