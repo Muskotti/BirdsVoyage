@@ -69,6 +69,8 @@ public class gameScreen implements Screen, SoundAndMusic {
     float upSens;
     float rightSens;
 
+    boolean newHighscore;
+
     public gameScreen(BirdsVoyage host){
         font = new BitmapFont();
 
@@ -117,6 +119,7 @@ public class gameScreen implements Screen, SoundAndMusic {
         );
 
         host.currentScreen = "game";
+        newHighscore = false;
     }
 
     @Override
@@ -333,6 +336,7 @@ public class gameScreen implements Screen, SoundAndMusic {
         host.batch.end();
 
         if (mapWin){
+            Gdx.app.log("asd","min:" + host.time.getMinutes() + " sec:" + host.time.getSeconds());
             host.time.stop();
             host.player.stop();
             host.camera.stop();
@@ -356,19 +360,18 @@ public class gameScreen implements Screen, SoundAndMusic {
             host.batch.end();
 
             // checks for highscore
-            boolean newHighscore = false;
-            if (host.getMinutes() < (host.preferences.getInteger("highscoreMin" + host.currentLevel, 100))) {
+            if (host.time.getMinutes() < (host.preferences.getInteger("highscoreMin" + host.currentLevel, 100))) {
                 newHighscore = true;
             }
-            if (!newHighscore && (host.getMinutes() <= (host.preferences.getInteger("highscoreMin" + host.currentLevel, 100))) &&
-                    (host.getSeconds() < host.preferences.getInteger("highscoreSec" + host.currentLevel, 100))) {
+            if (!newHighscore && (host.time.getMinutes() <= (host.preferences.getInteger("highscoreMin" + host.currentLevel, 100))) &&
+                    (host.time.getSeconds() < host.preferences.getInteger("highscoreSec" + host.currentLevel, 100))) {
                 newHighscore = true;
             }
             if (newHighscore) {
-                host.preferences.putInteger("highscoreMin" + host.currentLevel,(int) host.getMinutes());
-                host.preferences.putInteger("highscoreSec" + host.currentLevel,(int) host.getSeconds());
+                Gdx.app.log("final time","min:" + host.time.getMinutes() + " sec:" + host.time.getSeconds());
+                host.preferences.putInteger("highscoreMin" + host.currentLevel, host.time.getMinutes());
+                host.preferences.putInteger("highscoreSec" + host.currentLevel, host.time.getSeconds());
                 host.preferences.flush();
-                Gdx.app.log("asd","asd");
             }
 
             // Returns to menu
@@ -381,7 +384,6 @@ public class gameScreen implements Screen, SoundAndMusic {
                 host.gameRun = false;
                 host.setScreen(new menuScreen(host));
             }
-
         }
     }
 

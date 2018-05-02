@@ -273,12 +273,6 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
         preferences.flush();
     }
 
-    public float getMinutes() {
-	    return time.getMinutes();
-    }
-    public float getSeconds() {
-	    return time.getSeconds();
-    }
     public int getCameraHeight() {
         return cameraHeight;
     }

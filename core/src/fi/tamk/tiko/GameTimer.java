@@ -32,7 +32,7 @@ public class GameTimer {
             time += Gdx.graphics.getRawDeltaTime();
         }
         // calculates time
-        if(time >= 0.9f){
+        if(time >= 1f){
             time = 0;
             sec++;
         } else if(sec == 60){
@@ -75,10 +75,10 @@ public class GameTimer {
         timeStop = true;
     }
 
-    public float getSeconds() {
+    public int getSeconds() {
         return sec;
     }
-    public float getMinutes() {
+    public int getMinutes() {
         return min;
     }
 
