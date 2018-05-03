@@ -287,7 +287,7 @@ public class gameScreen implements Screen, SoundAndMusic {
             cloudMove = false;
         }
         cloud.draw(host);
-        host.player.changeSpeed(enemies, cloud, host.batch, host.mute);
+        host.player.changeSpeed(enemies, cloud, host.batch, host.mute, gamePause);
         host.player.animate(host.batch);
 
         // draws clock

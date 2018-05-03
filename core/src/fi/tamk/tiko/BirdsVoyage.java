@@ -178,9 +178,11 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
                     easyTheme.play();
                     easyTheme.setLooping(true);
                 } else if (currentLevel == "level4" || currentLevel == "level5" || currentLevel == "level6") {
+                    mediumTheme.setVolume(0.85f);
                     mediumTheme.play();
                     mediumTheme.setLooping(true);
                 } else if (currentLevel == "level7" || currentLevel == "level8" || currentLevel == "level9") {
+                    hardTheme.setVolume(0.8f);
                     hardTheme.play();
                     hardTheme.setLooping(true);
                 }

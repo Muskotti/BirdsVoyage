@@ -51,7 +51,7 @@ public class levelScreen implements Screen, SoundAndMusic {
     public levelScreen(BirdsVoyage host){
         this.host = host;
         touch = new Vector3(0,0,0);
-        background = new Texture(Gdx.files.internal("menuBack.png"));
+        background = new Texture(Gdx.files.internal("menuBack3.png"));
 
         //return texture
         returnButton = new Texture(Gdx.files.internal("goback.png"));
