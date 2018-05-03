@@ -305,8 +305,9 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
      * @param b spritebatch
      * @param mute boolean that checks if game is muted
      * @param gamePause boolean that checks if game is currently paused, used in collision sound
+     * @param mapWin
      */
-    public void changeSpeed(ArrayList<Enemy> enemies, StormCloud cloud, SpriteBatch b, Boolean mute, boolean gamePause) {
+    public void changeSpeed(ArrayList<Enemy> enemies, StormCloud cloud, SpriteBatch b, Boolean mute, boolean gamePause, boolean mapWin) {
         // Enemy collision
         for (int i = 0; i<enemies.size(); i++) {
             Enemy enemy = enemies.get(i);
@@ -336,8 +337,8 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
             speedX = halfSpeed;
             hitAnim(b);
 
-            // Prevent collision sound from overlapping
-            if (collisionTimer == 0 && !mute && !gamePause) {
+            // Prevent collision sound from overlapping and playing in wrong time
+            if (collisionTimer == 0 && !mute && !gamePause && !mapWin) {
                 collisionSound.play();
             }
             collisionTimer += Gdx.graphics.getRawDeltaTime();
