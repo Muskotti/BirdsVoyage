@@ -71,6 +71,8 @@ public class gameScreen implements Screen, SoundAndMusic {
 
     boolean newHighscore;
 
+    private float clockTime;
+
     public gameScreen(BirdsVoyage host){
         font = new BitmapFont();
 
