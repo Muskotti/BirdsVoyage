@@ -435,5 +435,10 @@ public class gameScreen implements Screen, SoundAndMusic {
         resumeFIN.dispose();
         settingsFIN.dispose();
         menuFIN.dispose();
+        pauseButton.dispose();
+        popUp.dispose();
+        mapWinTex.dispose();
+        timeboxEng.dispose();
+        timeboxFin.dispose();
     }
 }

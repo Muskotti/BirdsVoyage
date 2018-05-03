@@ -191,6 +191,11 @@ public class calibrationScreen implements Screen, SoundAndMusic {
 
     @Override
     public void dispose() {
-
+        enGBButtonTex.dispose();
+        fiFIButtonTex.dispose();
+        menuButtonTex.dispose();
+        calibrationEN.dispose();
+        calibrationFI.dispose();
+        background.dispose();
     }
 }

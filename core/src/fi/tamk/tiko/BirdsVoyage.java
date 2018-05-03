@@ -197,7 +197,18 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 
 	@Override
 	public void dispose () {
-		batch.dispose();
+		hardTheme.dispose();
+		easyTheme.dispose();
+		mediumTheme.dispose();
+		mainMenuTheme.dispose();
+	    batch.dispose();
+	    fontMedium.dispose();
+	    fontBig.dispose();
+	    fontSmall.dispose();
+	    textFont.dispose();
+	    flyingSheet.dispose();
+	    cloudSheet.dispose();
+	    clockSheet.dispose();
 	}
 
 	public void reset() {
