@@ -342,7 +342,6 @@ public class gameScreen implements Screen, SoundAndMusic {
         host.batch.end();
 
         if (mapWin){
-            Gdx.app.log("asd","min:" + host.time.getMinutes() + " sec:" + host.time.getSeconds());
             host.time.stop();
             host.player.stop();
             host.camera.stop();

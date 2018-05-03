@@ -21,7 +21,7 @@ public class Camera implements MapProperties, PlayerProperties{
         stopMove = true;
     }
     public void update(){
-        cameraRect.y = camera.position.y + (cameraHeight/2);
+        cameraRect.y = camera.position.y + (cameraHeight/2) + 65;
         camera.update();
     }
     public OrthographicCamera getCamera(){

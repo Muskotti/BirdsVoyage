@@ -193,7 +193,6 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
             hardTheme.stop();
             mainMenuTheme.stop();
         }
-        Gdx.app.log("mute","mute:" + mute);
 		super.render();
 	}
 
