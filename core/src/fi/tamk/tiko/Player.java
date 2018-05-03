@@ -265,7 +265,7 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
         return collision;
     }
 
-    public void changeSpeed(ArrayList<Enemy> enemies, StormCloud cloud, SpriteBatch b, Boolean mute) {
+    public void changeSpeed(ArrayList<Enemy> enemies, StormCloud cloud, SpriteBatch b, Boolean mute, boolean gamePause) {
         // Enemy collision
         for (int i = 0; i<enemies.size(); i++) {
             Enemy enemy = enemies.get(i);
@@ -296,11 +296,11 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
             hitAnim(b);
 
             // Prevent collision sound from overlapping
-            if (collisionTimer == 0 && !mute) {
+            if (collisionTimer == 0 && !mute && !gamePause) {
                 collisionSound.play();
             }
             collisionTimer += Gdx.graphics.getRawDeltaTime();
-            if (collisionTimer>2) {
+            if (collisionTimer>1) {
                 collisionTimer = 0;
             }
 
