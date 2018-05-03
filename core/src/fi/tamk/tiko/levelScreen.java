@@ -199,7 +199,6 @@ public class levelScreen implements Screen, SoundAndMusic {
             if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
-            host.lastScreen = "level";
             host.setScreen(new menuScreen(host));
         }
 

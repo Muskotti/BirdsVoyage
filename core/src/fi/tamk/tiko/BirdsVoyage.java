@@ -38,9 +38,6 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
     // String for current screen
 	String currentScreen;
 
-    // String for previous screen
-	String lastScreen;
-
 	// boolean for game mutes
 	Boolean mute;
 
@@ -161,8 +158,7 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 
 	@Override
 	public void render() {
-	    System.out.println(currentScreen);
-        if (!mute) {
+	    if (!mute) {
             if (currentScreen == "menu" || currentScreen == "splash" || currentScreen == "settings") {
                 if (easyTheme.isPlaying() || mediumTheme.isPlaying() || hardTheme.isPlaying()) {
                     easyTheme.stop();

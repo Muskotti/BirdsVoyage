@@ -193,7 +193,6 @@ public class settingsScreen implements Screen, SoundAndMusic{
             if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
-            host.lastScreen = "settings";
             host.setScreen(new menuScreen(host));
         }
         if (host.gameRun) {

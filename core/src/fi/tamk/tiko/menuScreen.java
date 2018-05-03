@@ -146,14 +146,12 @@ public class menuScreen implements Screen, SoundAndMusic{
                 buttonSound.play();
             }
             host.reset();
-            host.lastScreen = "menu";
             host.setScreen(new levelScreen(host));
         }
         if (settingsButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
-            host.lastScreen = "menu";
             host.setScreen(new settingsScreen(host));
         }
         if (highButtonRec.contains(touch.x, touch.y)) {

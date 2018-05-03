@@ -217,7 +217,6 @@ public class gameScreen implements Screen, SoundAndMusic {
             host.cameraPosX = host.camera.getPositionX();
             host.cameraPosY = host.camera.getPositionY();
             host.gameRun = true;
-            host.lastScreen = "game";
             host.setScreen(new settingsScreen(host));
         }
 
@@ -227,7 +226,6 @@ public class gameScreen implements Screen, SoundAndMusic {
                 buttonSound.play();
             }
             touch.set(0,0,0);
-            host.lastScreen = "game";
             host.gameRun = false;
             host.setScreen(new menuScreen(host));
         }
@@ -353,7 +351,6 @@ public class gameScreen implements Screen, SoundAndMusic {
                 enemy.stop();
             }
             cloud.stop();
-            host.lastScreen = "game";
             host.batch.begin();
             menuRect.setPosition(host.camera.getPositionX() - 600, host.camera.getPositionY() - 350);
             host.batch.draw(mapWinTex,0,host.camera.getPositionY() - mapWinTex.getHeight()/2,mapWinTex.getWidth(),mapWinTex.getHeight());
@@ -388,7 +385,6 @@ public class gameScreen implements Screen, SoundAndMusic {
                     buttonSound.play();
                 }
                 touch.set(0,0,0);
-                host.lastScreen = "game";
                 host.gameRun = false;
                 host.setScreen(new menuScreen(host));
             }
