@@ -428,7 +428,7 @@
   <object id="7" x="0" y="10176" width="1280" height="64"/>
   <object id="8" x="0" y="4928" width="1280" height="64"/>
  </objectgroup>
- <objectgroup name="mapFinish" offsetx="0" offsety="320">
-  <object id="6" x="0" y="-320" width="1280" height="896"/>
+ <objectgroup name="mapFinish">
+  <object id="6" x="0" y="0" width="1280" height="896"/>
  </objectgroup>
 </map>

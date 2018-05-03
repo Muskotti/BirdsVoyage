@@ -984,7 +984,7 @@
  </objectgroup>
  <objectgroup name="enemySpawn"/>
  <objectgroup name="cloudSpawn"/>
- <objectgroup name="mapFinish" offsetx="0" offsety="320">
-  <object id="68" x="0" y="-320" width="1280" height="960"/>
+ <objectgroup name="mapFinish">
+  <object id="68" x="0" y="0" width="1280" height="960"/>
  </objectgroup>
 </map>
