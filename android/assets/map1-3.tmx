@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="20" height="200" tilewidth="64" tileheight="64" infinite="0" nextobjectid="39">
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="20" height="200" tilewidth="64" tileheight="64" infinite="0" nextobjectid="41">
  <tileset firstgid="1" source="tileset.tsx"/>
  <layer name="ground layer" width="20" height="200">
   <data encoding="csv">
@@ -640,15 +640,14 @@
   <object id="37" x="64" y="704" width="256" height="256"/>
  </objectgroup>
  <objectgroup name="clockSpawn">
-  <object id="3" x="1472" y="7936"/>
   <object id="27" x="896" y="7040" width="64" height="64"/>
-  <object id="28" x="704" y="2368" width="64" height="64"/>
+  <object id="39" x="704" y="2432" width="64" height="64"/>
  </objectgroup>
  <objectgroup name="enemySpawn"/>
  <objectgroup name="cloudSpawn">
   <object id="2" x="0" y="9216" width="1280" height="64"/>
  </objectgroup>
- <objectgroup name="mapFinish" offsetx="0" offsety="-128">
+ <objectgroup name="mapFinish">
   <object id="1" x="0" y="0" width="1280" height="768"/>
  </objectgroup>
 </map>
