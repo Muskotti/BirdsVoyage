@@ -140,6 +140,13 @@ public class settingsScreen implements Screen, SoundAndMusic{
             host.camera.unproject(touch);
         }
 
+        // Mute button
+        if (host.mute) {
+            muteButtonTex = new Texture(Gdx.files.internal("soundOFF.png"));
+        } else {
+            muteButtonTex = new Texture(Gdx.files.internal("soundON.png"));
+        }
+
         // draws the language, mute and menu buttons
         host.batch.begin();
         host.batch.draw(background,0,0);

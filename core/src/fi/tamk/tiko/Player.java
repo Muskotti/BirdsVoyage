@@ -13,6 +13,9 @@ import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
 
+/**
+ * Class for the player
+ */
 public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
 
     private Sprite player;
@@ -67,6 +70,9 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
         stopMove = true;
     }
 
+    /**
+     * Animation for collision
+     */
     private void featherAnim() {
         featherSheet = new Texture(Gdx.files.internal("feathers.png"));
         TextureRegion[][] tmp = TextureRegion.split(featherSheet,
@@ -83,6 +89,9 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
         featherTime = 0f;
     }
 
+    /**
+     * Animation for flapping wings
+     */
     private void flyingAnim() {
         flyingSheet = new Texture(Gdx.files.internal("player.png"));
         TextureRegion[][] tmp = TextureRegion.split(flyingSheet,
@@ -99,6 +108,10 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
         stateTime = 0f;
     }
 
+    /**
+     * Pushes player back to screen if going out of bounds
+     * @param camera is the same orthographic camera used in the game
+     */
     public void fixPosition(OrthographicCamera camera) {
         // method that restricts player movements on the screen
         if (player.getX()<0) {
@@ -117,14 +130,26 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
         }
     }
 
+    /**
+     *
+     * @return returns players X position
+     */
     public float getX() {
         return player.getX();
     }
 
+    /**
+     *
+     * @return returns players Y position
+     */
     public float getY() {
         return player.getY();
     }
 
+    /**
+     * Moves the player around using accelerometers. Movement speed, deadzones and
+     * default zero position is based on sensitivity and calibration settings on preferences
+     */
     public void move() {
         if (stopMove) {
             float delta = Gdx.graphics.getDeltaTime();
@@ -251,12 +276,20 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
         }
     }
 
+    /**
+     * Checks if player continues overlapping with the same rectangle hit earlier.
+     * @param rectangle rectangle for enemies, cloud or trees
+     */
     public void collision(Rectangle rectangle) {
         if (playerRectangle.overlaps(rectangle)) {
             boundingRectangle = rectangle;
         }
     }
 
+    /**
+     * Checks if player collides with an object
+     * @return boolean for collision
+     */
     public boolean notCollided() {
         boolean collision = true;
         if(speedY == halfSpeed) {
@@ -265,6 +298,14 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
         return collision;
     }
 
+    /**
+     * Changes player and camera movement speed if player collides with an onject
+     * @param enemies array for enemy objects
+     * @param cloud cloud object
+     * @param b spritebatch
+     * @param mute boolean that checks if game is muted
+     * @param gamePause boolean that checks if game is currently paused, used in collision sound
+     */
     public void changeSpeed(ArrayList<Enemy> enemies, StormCloud cloud, SpriteBatch b, Boolean mute, boolean gamePause) {
         // Enemy collision
         for (int i = 0; i<enemies.size(); i++) {
@@ -315,6 +356,10 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
         }
     }
 
+    /**
+     * Determines collision animations speed and following of the players position.
+     * @param b spritebatch
+     */
     public void hitAnim(SpriteBatch b) {
         featherTime += Gdx.graphics.getDeltaTime();
         TextureRegion currentFrame = featherAnimation.getKeyFrame(featherTime, true);
@@ -340,6 +385,10 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
         return playerHeight;
     }
 
+    /**
+     *
+     * @return player's bounding rectangle
+     */
     public Rectangle getRectangle() {
         return playerRectangle;
     }
@@ -352,10 +401,17 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
         stopMove = true;
     }
 
+    /**
+     * Sets starting position for the player when map begins.
+     */
     public void setStart() {
         player.setPosition(startX,startY);
     }
 
+    /**
+     * Does the flying animation for player.
+     * @param b spritebatch
+     */
     public void animate(SpriteBatch b) {
         stateTime += Gdx.graphics.getDeltaTime();
         playerRectangle.setPosition(player.getX(), player.getY());
@@ -363,6 +419,14 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
         b.draw(currentFrame, player.getX(), player.getY());
     }
 
+    /**
+     * Updates the sensitivities for each direction. Sensitivities come from preferences, which are
+     * determined in sensitivity screen.
+     * @param up sensitivity for up/forward direction
+     * @param down sensitivity for down/backwards direction
+     * @param left sensitivity for left direction
+     * @param right sensitivity for right direction
+     */
     public void setSens(float up, float down, float left, float right) {
         upSens = up;
         downSens = down;
@@ -370,6 +434,12 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
         rightSens = right;
     }
 
+    /**
+     * Sets default position/calibration for the player. This is stored in preferences and determined in
+     * calibration screen.
+     * @param x default X position
+     * @param y default Y position
+     */
     public void setDefPos(float x, float y) {
         defaultPositionX = x;
         defaultPositionY = y;
