@@ -119,26 +119,10 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 		// loads up a font style
 		textFont = new FreeTypeFontGenerator(Gdx.files.internal("Bord-Regular.ttf"));
 
-		// makes a big font
-		FreeTypeFontGenerator.FreeTypeFontParameter parameterBig = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameterBig.size = 180;
-		parameterBig.borderColor = Color.BLACK;
-		parameterBig.borderWidth = 3;
-		fontBig = textFont.generateFont(parameterBig);
-
-		// makes a small font
-        FreeTypeFontGenerator.FreeTypeFontParameter parameterMedium = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameterMedium.size = 42;
-        parameterMedium.borderColor = Color.BLACK;
-        parameterMedium.borderWidth = 3;
-        fontSmall = textFont.generateFont(parameterMedium);
-
-        // makes medium font
-        FreeTypeFontGenerator.FreeTypeFontParameter parameterMedBig = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameterMedBig.size = 100;
-        parameterMedBig.borderColor = Color.BLACK;
-        parameterMedBig.borderWidth = 3;
-        fontMedium = textFont.generateFont(parameterMedBig);
+		// makes fonts
+        makeBigfont();
+        makeMediumfont();
+        makeSmallfont();
 
         // creates animations
         makeEnemyAnim();
@@ -153,12 +137,59 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 	}
 
     /**
-     *
+     * Makes a big font
+     */
+    private void makeBigfont() {
+        FreeTypeFontGenerator.FreeTypeFontParameter parameterBig = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameterBig.size = 180;
+        parameterBig.borderColor = Color.BLACK;
+        parameterBig.borderWidth = 3;
+        fontBig = textFont.generateFont(parameterBig);
+    }
+
+    /**
+     * Makes a medium font
+     */
+    private void makeMediumfont() {
+        FreeTypeFontGenerator.FreeTypeFontParameter parameterMedBig = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameterMedBig.size = 100;
+        parameterMedBig.borderColor = Color.BLACK;
+        parameterMedBig.borderWidth = 3;
+        fontMedium = textFont.generateFont(parameterMedBig);
+    }
+
+    /**
+     * Makes a small font
+     */
+    private void makeSmallfont() {
+        FreeTypeFontGenerator.FreeTypeFontParameter parameterMedium = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameterMedium.size = 42;
+        parameterMedium.borderColor = Color.BLACK;
+        parameterMedium.borderWidth = 3;
+        fontSmall = textFont.generateFont(parameterMedium);
+    }
+
+    /**
+     * Renders everything in the game
      */
 
 	@Override
 	public void render() {
-	    if (!mute) {
+	    playMusic();
+		super.render();
+	}
+
+    /**
+     * Plays the music in the game
+     *
+     * First thing the code checks is if the mute is activated
+     * if not the code checks what screen is active
+     * in the menu, splash or settings the code plays menu theme
+     * in game the code plays depending on what level is selected
+     * if mute is activated the game doesn't play any music
+     */
+    private void playMusic() {
+        if (!mute) {
             if (currentScreen == "menu" || currentScreen == "splash" || currentScreen == "settings") {
                 if (easyTheme.isPlaying() || mediumTheme.isPlaying() || hardTheme.isPlaying()) {
                     easyTheme.stop();
@@ -193,11 +224,13 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
             hardTheme.stop();
             mainMenuTheme.stop();
         }
-        Gdx.app.log("mute","mute:" + mute);
-		super.render();
-	}
+    }
 
-	@Override
+    /**
+     * Disposes
+     */
+
+    @Override
 	public void dispose () {
 		hardTheme.dispose();
 		easyTheme.dispose();
@@ -212,6 +245,10 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 	    cloudSheet.dispose();
 	    clockSheet.dispose();
 	}
+
+    /**
+     * Resets the specific values to default
+     */
 
 	public void reset() {
 		time.reset();
@@ -232,7 +269,13 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
 	}
 
     /**
-     * Creates the animation for enemy bird
+     * Creates the animation for the enemy bird
+     *
+     * First the code loads up the animation sheet
+     * next the code generates a texture region from the animation sheet
+     * after that 1d array is generated
+     * the 2d array is placed in to the 1d array next
+     * the animation is made from the 1d array
      */
     private void makeEnemyAnim() {
         flyingSheet = new Texture(Gdx.files.internal("enemy.png"));
@@ -250,6 +293,15 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
         stateTime = 0f;
     }
 
+    /**
+     * Creates the animation for the clocks
+     *
+     * First the code loads up the animation sheet
+     * next the code generates a texture region from the animation sheet
+     * after that 1d array is generated
+     * the 2d array is placed in to the 1d array next
+     * the animation is made from the 1d array
+     */
     private void makeClockAnim() {
         clockSheet = new Texture(Gdx.files.internal("clock.png"));
         TextureRegion[][] tmp = TextureRegion.split(clockSheet,
@@ -266,6 +318,15 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
         clockTime = 0f;
     }
 
+    /**
+     * Creates the animation for the cloud
+     *
+     * First the code loads up the animation sheet
+     * next the code generates a texture region from the animation sheet
+     * after that 1d array is generated
+     * the 2d array is placed in to the 1d array next
+     * the animation is made from the 1d array
+     */
     private void makeCloudAnim() {
         cloudSheet = new Texture(Gdx.files.internal("cloud.png"));
         TextureRegion[][] tmp = TextureRegion.split(cloudSheet,
@@ -301,21 +362,25 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
     }
 
     /**
-     * Returns how many minutes have passed
-     * @return
+     * Returns the camera height
+     * @return camera height
      */
-    public float getMinutes() {
-	    return time.getMinutes();
-    }
-    public float getSeconds() {
-	    return time.getSeconds();
-    }
     public int getCameraHeight() {
         return cameraHeight;
     }
+
+    /**
+     * Returns the camera widths
+     * @return camera widths
+     */
     public int getCameraWidth() {
         return cameraWidth;
     }
+
+    /**
+     * Returns the map width
+     * @return map width
+     */
     public float getMapWidth() {
         return mapWidth;
     }
