@@ -1,17 +1,24 @@
 package fi.tamk.tiko;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
+/**
+ * Settings screen where user can mute the game, go to sensitivity and calibration screen to adjust those.
+ *
+ * @author Toni Vänttinen & Jimi Savola
+ * @version 1.8, 05/02/18
+ * @since 1.8
+ */
 public class settingsScreen implements Screen, SoundAndMusic{
 
     BirdsVoyage host;
 
+    // Background image texture
     private Texture background;
 
     // Texture for English buttons
@@ -44,20 +51,27 @@ public class settingsScreen implements Screen, SoundAndMusic{
     private Rectangle fiFIButtonRec;
     private Rectangle retGameButRec;
 
-    // players touch input
+    // players touch input location
     private Vector3 touch;
 
+    /**
+     * Constructor for the settings screen.
+     * @param host main games java class
+     */
     public settingsScreen(BirdsVoyage host){
+        // Makes the main java class the host
         this.host = host;
+        // Users touch input location creation
         touch = new Vector3(0,0,0);
 
+        // Loads the background image for the screen
         background = new Texture(Gdx.files.internal("menuBack2.png"));
 
-        //loads the mute button
+        //loads the mute buttons
         muteButtonTex = new Texture(Gdx.files.internal("soundOFF.png"));
         unmuteButtonTex = new Texture(Gdx.files.internal("soundON.png"));
 
-        //loads menu button
+        //loads back button
         menuButtonTex = new Texture(Gdx.files.internal("goback.png"));
 
         //loads english buttons
@@ -118,6 +132,7 @@ public class settingsScreen implements Screen, SoundAndMusic{
                 fiFIButtonTex.getHeight()
         );
 
+        // Saves the current screen to a string
         host.currentScreen = "settings";
     }
 
@@ -127,53 +142,28 @@ public class settingsScreen implements Screen, SoundAndMusic{
     }
 
     @Override
+    /**
+     * Rendering of the game.
+     */
     public void render(float delta) {
-        host.camera.update();
-        host.camera.setPos();
-        host.batch.setProjectionMatrix(host.camera.combined());
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        updateCamera();
+        refreshScreen();
+        saveTouchLocation();
+        loadMuteButton();
 
-        // saves touch location
-        if (Gdx.input.justTouched()){
-            touch.set(Gdx.input.getX(),Gdx.input.getY(),0);
-            host.camera.unproject(touch);
-        }
-
-        // Mute button
-        if (host.mute) {
-            muteButtonTex = new Texture(Gdx.files.internal("soundOFF.png"));
-        } else {
-            muteButtonTex = new Texture(Gdx.files.internal("soundON.png"));
-        }
-
-        // draws the language, mute and menu buttons
         host.batch.begin();
-        host.batch.draw(background,0,0);
-        host.batch.draw(muteButtonTex, muteButtonRec.getX(), muteButtonRec.getY());
-        host.batch.draw(enGBButtonTex, enGBButtonRec.getX(), enGBButtonRec.getY());
-        host.batch.draw(fiFIButtonTex, fiFIButtonRec.getX(), fiFIButtonRec.getY());
-
-        if (host.currentLang.equals("fin")){
-            if (host.gameRun) {
-                host.batch.draw(retGameButTexFI, retGameButRec.getX(), retGameButRec.getY());
-            }
-            host.batch.draw(zeroButtonTexFI, zeroButtonRec.getX(), zeroButtonRec.getY());
-            host.batch.draw(sensButtonTexFI, sensButtonRec.getX(), sensButtonRec.getY());
-        } else {
-            if (host.gameRun) {
-                host.batch.draw(retGameButTexEN, retGameButRec.getX(), retGameButRec.getY());
-            }
-            host.batch.draw(zeroButtonTexEN, zeroButtonRec.getX(), zeroButtonRec.getY());
-            host.batch.draw(sensButtonTexEN, sensButtonRec.getX(), sensButtonRec.getY());
-        }
-        if (!host.gameRun){
-            host.batch.draw(menuButtonTex, menuButtonRec.getX(), menuButtonRec.getY());
-        }
-
+        drawImages();
+        drawTextButtons();
         host.batch.end();
 
-        // checks if the buttons are touched
+        checkButtonPresses();
+    }
+
+    /**
+     * Checks if any of the buttons are touched and does actions according to the touch location.
+     */
+    private void checkButtonPresses() {
+        // Go to other screens
         if (zeroButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
@@ -186,6 +176,8 @@ public class settingsScreen implements Screen, SoundAndMusic{
             }
             host.setScreen(new sensitivityScreen(host));
         }
+
+        // Mutes or unmutes the game
         if (muteButtonRec.contains(touch.x,touch.y) && Gdx.input.justTouched()){
             if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
@@ -196,12 +188,16 @@ public class settingsScreen implements Screen, SoundAndMusic{
                 host.mute = false;
             }
         }
+
+        // Goes back to previous screen
         if (menuButtonRec.contains(touch.x,touch.y) && !host.gameRun){
             if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setScreen(new menuScreen(host));
         }
+
+        // Continues the game
         if (host.gameRun) {
             if (retGameButRec.contains(touch.x, touch.y)) {
                 if (Gdx.input.justTouched() && !host.mute) {
@@ -225,6 +221,77 @@ public class settingsScreen implements Screen, SoundAndMusic{
             }
             host.setLang("eng");
         }
+    }
+
+    /**
+     * Draws all the buttons that has text based on the current language selected.
+     */
+    private void drawTextButtons() {
+        if (host.currentLang.equals("fin")){
+            if (host.gameRun) {
+                host.batch.draw(retGameButTexFI, retGameButRec.getX(), retGameButRec.getY());
+            }
+            host.batch.draw(zeroButtonTexFI, zeroButtonRec.getX(), zeroButtonRec.getY());
+            host.batch.draw(sensButtonTexFI, sensButtonRec.getX(), sensButtonRec.getY());
+        } else {
+            if (host.gameRun) {
+                host.batch.draw(retGameButTexEN, retGameButRec.getX(), retGameButRec.getY());
+            }
+            host.batch.draw(zeroButtonTexEN, zeroButtonRec.getX(), zeroButtonRec.getY());
+            host.batch.draw(sensButtonTexEN, sensButtonRec.getX(), sensButtonRec.getY());
+        }
+        if (!host.gameRun){
+            host.batch.draw(menuButtonTex, menuButtonRec.getX(), menuButtonRec.getY());
+        }
+    }
+
+    /**
+     * Draws the backround image, mute button and language buttons.
+     */
+    private void drawImages() {
+        host.batch.draw(background,0,0);
+        host.batch.draw(muteButtonTex, muteButtonRec.getX(), muteButtonRec.getY());
+        host.batch.draw(enGBButtonTex, enGBButtonRec.getX(), enGBButtonRec.getY());
+        host.batch.draw(fiFIButtonTex, fiFIButtonRec.getX(), fiFIButtonRec.getY());
+    }
+
+    /**
+     * Loads the mute button texture based on the mute -boolean, so user has a visual
+     * indication if the game is muted or not.
+     */
+    private void loadMuteButton() {
+        if (host.mute) {
+            muteButtonTex = new Texture(Gdx.files.internal("soundOFF.png"));
+        } else {
+            muteButtonTex = new Texture(Gdx.files.internal("soundON.png"));
+        }
+    }
+
+    /**
+     * Saves the touch location to the last coordinates where user touched the screen.
+     */
+    private void saveTouchLocation() {
+        if (Gdx.input.justTouched()){
+            touch.set(Gdx.input.getX(),Gdx.input.getY(),0);
+            host.camera.unproject(touch);
+        }
+    }
+
+    /**
+     * Refreshes the screen and makes the background color.
+     */
+    private void refreshScreen() {
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }
+
+    /**
+     * Updates the camera position
+     */
+    private void updateCamera() {
+        host.camera.update();
+        host.camera.setPos();
+        host.batch.setProjectionMatrix(host.camera.combined());
     }
 
     @Override

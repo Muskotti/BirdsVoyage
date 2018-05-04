@@ -5,9 +5,12 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 /**
- * Created by Jimi on 30.4.2018.
+ * Class for all the music and sound effect files.
+ *
+ * @author Toni Vänttinen & Jimi Savola
+ * @version 1.8, 05/02/18
+ * @since 1.8
  */
-
 public interface SoundAndMusic {
 
     // Music
