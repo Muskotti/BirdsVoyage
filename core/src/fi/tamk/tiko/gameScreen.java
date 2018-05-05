@@ -178,8 +178,8 @@ public class gameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        update();
         refreshScreen();
+        update();
         setSensitivity();
         saveTouch();
         firstSens();
@@ -375,8 +375,10 @@ public class gameScreen implements Screen {
      * Draws the player too
      */
     private void playerDraw() {
+        host.batch.begin();
         host.player.changeSpeed(enemies, cloud, host.batch, host.mute, gamePause, mapWin);
         host.player.animate(host.batch);
+        host.batch.end();
     }
 
     /**
