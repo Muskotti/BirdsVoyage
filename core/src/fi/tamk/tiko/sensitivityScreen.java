@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Vector3;
  * @version 1.8, 05/02/18
  * @since 1.8
  */
-public class sensitivityScreen implements Screen, SoundAndMusic {
+public class sensitivityScreen implements Screen {
 
     // Main game java-class as host
     BirdsVoyage host;
@@ -181,7 +181,7 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
             // it follows users touch sliding until released.
             if (sliderRec.contains(touch.x,touch.y)) {
                 if (Gdx.input.justTouched() && !host.mute) {
-                    sliderPressSound.play();
+                    host.sliderPressSound.play();
                     tap = true;
                 }
                 if (tap) {
@@ -202,7 +202,7 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
                 }
                 else {
                     if (!sliderRelease  && !host.mute) {
-                        sliderReleaseSound.play();
+                        host.sliderReleaseSound.play();
                         sliderRelease = true;
                     }
                     host.preferences.putFloat(button, buttonRec.x);
@@ -279,7 +279,7 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
         // Goes back to previous screen
         if (menuButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setScreen(new settingsScreen(host));
         }
@@ -287,13 +287,13 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
         // changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setLang("fin");
         }
         if (enGBButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setLang("eng");
         }

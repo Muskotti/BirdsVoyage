@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.Vector3;
  * @version 1.8, 05/02/18
  * @since 1.8
  */
-public class levelScreen implements Screen, SoundAndMusic {
+public class levelScreen implements Screen {
 
     // main game java class
     BirdsVoyage host;
@@ -212,7 +212,7 @@ public class levelScreen implements Screen, SoundAndMusic {
     private void checkButton() {
         if (returnButtonRect.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setScreen(new menuScreen(host));
         }
@@ -220,76 +220,76 @@ public class levelScreen implements Screen, SoundAndMusic {
         // changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setLang("fin");
         }
         if (enGBButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setLang("eng");
         }
 
         if (level1Rec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.currentLevel = "level1";
         }
 
         if (level2Rec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.currentLevel = "level2";
         }
 
         if (level3Rec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched()&& !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.currentLevel = "level3";
         }
 
         if (level4Rec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.currentLevel = "level4";
         }
 
         if (level5Rec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.currentLevel = "level5";
         }
 
         if (level6Rec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.currentLevel = "level6";
         }
 
         if (level7Rec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.currentLevel = "level7";
         }
 
         if (level8Rec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.currentLevel = "level8";
         }
 
         if (level9Rec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.currentLevel = "level9";
         }

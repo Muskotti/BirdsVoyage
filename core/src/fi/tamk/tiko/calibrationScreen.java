@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Vector3;
  * @since 1.8
  */
 
-public class calibrationScreen implements Screen, SoundAndMusic {
+public class calibrationScreen implements Screen {
 
     // main game java class
     BirdsVoyage host;
@@ -132,7 +132,7 @@ public class calibrationScreen implements Screen, SoundAndMusic {
     private void checkButton() {
         if (menuButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setScreen(new settingsScreen(host));
         }
@@ -140,13 +140,13 @@ public class calibrationScreen implements Screen, SoundAndMusic {
         // changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setLang("fin");
         }
         if (enGBButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setLang("eng");
         }
@@ -165,7 +165,7 @@ public class calibrationScreen implements Screen, SoundAndMusic {
         host.batch.begin();
         if (calibrationRec.contains(touch.x,touch.y) && calibrationRec.contains(touch.x,touch.y)) {
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.player.defaultPositionX = Gdx.input.getAccelerometerY();
             host.player.defaultPositionY = Gdx.input.getAccelerometerZ();

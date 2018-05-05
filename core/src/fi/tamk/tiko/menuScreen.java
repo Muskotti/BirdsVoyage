@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.Vector3;
  * @version 1.8, 05/02/18
  * @since 1.8
  */
-public class menuScreen implements Screen, SoundAndMusic{
+public class menuScreen implements Screen {
 
     // Main java class as host
     private BirdsVoyage host;
@@ -159,26 +159,26 @@ public class menuScreen implements Screen, SoundAndMusic{
         // Checks if the menus buttons are touched
         if (playButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.reset();
             host.setScreen(new levelScreen(host));
         }
         if (settingsButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setScreen(new settingsScreen(host));
         }
         if (highButtonRec.contains(touch.x, touch.y)) {
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setScreen(new highscoreScreen(host));
         }
         if (exitButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             Gdx.app.exit();
         }
@@ -186,13 +186,13 @@ public class menuScreen implements Screen, SoundAndMusic{
         // Changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setLang("fin");
         }
         if (enGBButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setLang("eng");
         }

@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.Vector3;
  * @version 1.8, 05/02/18
  * @since 1.8
  */
-public class settingsScreen implements Screen, SoundAndMusic{
+public class settingsScreen implements Screen{
 
     BirdsVoyage host;
 
@@ -166,13 +166,13 @@ public class settingsScreen implements Screen, SoundAndMusic{
         // Go to other screens
         if (zeroButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setScreen(new calibrationScreen(host));
         }
         if (sensButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setScreen(new sensitivityScreen(host));
         }
@@ -180,7 +180,7 @@ public class settingsScreen implements Screen, SoundAndMusic{
         // Mutes or unmutes the game
         if (muteButtonRec.contains(touch.x,touch.y) && Gdx.input.justTouched()){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             if (Gdx.input.justTouched() && !host.mute){
                 host.mute = true;
@@ -192,7 +192,7 @@ public class settingsScreen implements Screen, SoundAndMusic{
         // Goes back to previous screen
         if (menuButtonRec.contains(touch.x,touch.y) && !host.gameRun){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setScreen(new menuScreen(host));
         }
@@ -201,7 +201,7 @@ public class settingsScreen implements Screen, SoundAndMusic{
         if (host.gameRun) {
             if (retGameButRec.contains(touch.x, touch.y)) {
                 if (Gdx.input.justTouched() && !host.mute) {
-                    buttonSound.play();
+                    host.buttonSound.play();
                 }
                 host.resumeGame();
                 host.setScreen(new gameScreen(host));
@@ -211,13 +211,13 @@ public class settingsScreen implements Screen, SoundAndMusic{
         // changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setLang("fin");
         }
         if (enGBButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setLang("eng");
         }

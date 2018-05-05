@@ -3,6 +3,8 @@ package fi.tamk.tiko;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -19,7 +21,19 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
  * @since 1.8
  */
 
-public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
+public class BirdsVoyage extends Game implements MapProperties {
+    // Music
+    Music mainMenuTheme;
+    Music easyTheme;
+    Music mediumTheme;
+    Music hardTheme;
+
+    // Sound effects
+    Sound buttonSound;
+    Sound clockSound;
+    Sound mapFinishSound;
+    Sound sliderPressSound;
+    Sound sliderReleaseSound;
 
     // Preferences for saving all info
     Preferences preferences;
@@ -77,6 +91,18 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
      */
 	@Override
 	public void create() {
+	    // Loads music
+        mainMenuTheme = Gdx.audio.newMusic(Gdx.files.internal("MainMenuTheme.ogg"));
+        easyTheme = Gdx.audio.newMusic(Gdx.files.internal("EasyTheme.ogg"));
+        mediumTheme = Gdx.audio.newMusic(Gdx.files.internal("MediumTheme.ogg"));
+        hardTheme = Gdx.audio.newMusic(Gdx.files.internal("HardTheme.ogg"));
+
+        // Loads Sound effects
+        buttonSound = Gdx.audio.newSound(Gdx.files.internal("ButtonClick.wav"));
+        clockSound = Gdx.audio.newSound(Gdx.files.internal("ClockSound.wav"));
+        mapFinishSound = Gdx.audio.newSound(Gdx.files.internal("MapFinishSound.wav"));
+        sliderPressSound = Gdx.audio.newSound(Gdx.files.internal("SliderPress.wav"));
+        sliderReleaseSound = Gdx.audio.newSound(Gdx.files.internal("SliderRelease.wav"));
 
 	    // disables back key
 	    Gdx.input.setCatchBackKey(true);
@@ -213,7 +239,7 @@ public class BirdsVoyage extends Game implements MapProperties, SoundAndMusic {
                     mediumTheme.play();
                     mediumTheme.setLooping(true);
                 } else if (currentLevel == "level7" || currentLevel == "level8" || currentLevel == "level9") {
-                    hardTheme.setVolume(0.8f);
+                    hardTheme.setVolume(0.65f);
                     hardTheme.play();
                     hardTheme.setLooping(true);
                 }

@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.Vector3;
  * @version 1.8, 05/02/18
  * @since 1.8
  */
-public class highscoreScreen implements Screen, SoundAndMusic {
+public class highscoreScreen implements Screen{
 
     // the main class
     BirdsVoyage host;
@@ -116,7 +116,7 @@ public class highscoreScreen implements Screen, SoundAndMusic {
         // Goes back to main menu
         if (menuButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setScreen(new menuScreen(host));
         }
@@ -124,13 +124,13 @@ public class highscoreScreen implements Screen, SoundAndMusic {
         // changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setLang("fin");
         }
         if (enGBButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             host.setLang("eng");
         }

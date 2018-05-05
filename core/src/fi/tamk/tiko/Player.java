@@ -2,6 +2,7 @@ package fi.tamk.tiko;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
  * @version 1.8, 05/02/18
  * @since 1.8
  */
-public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
+public class Player implements MapProperties, PlayerProperties{
 
     // Sprite for the player
     private Sprite player;
@@ -33,6 +34,9 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
     private Animation<TextureRegion> featherAnimation;
     private Texture featherSheet;
     float featherTime;
+
+    // Collision sound for player
+    private Sound collisionSound;
 
     // Players rectangle and rectangle for object currently overlapping with the player.
     private Rectangle boundingRectangle;
@@ -78,6 +82,8 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
         slowdownTimer = 0;
         collisionTimer = 0;
         stopMove = true;
+
+        collisionSound = Gdx.audio.newSound(Gdx.files.internal("BirdCollision.wav"));
     }
 
     /**
@@ -337,7 +343,7 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
 
             // Prevent collision sound from overlapping and playing in wrong time
             if (collisionTimer == 0 && !mute && !gamePause && !mapWin) {
-                collisionSound.play();
+                collisionSound.play(0.7f);
             }
             collisionTimer += Gdx.graphics.getRawDeltaTime();
             if (collisionTimer>1) {

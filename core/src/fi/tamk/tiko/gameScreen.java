@@ -1,15 +1,10 @@
 package fi.tamk.tiko;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
@@ -22,7 +17,7 @@ import java.util.ArrayList;
  * @version 1.8, 05/02/18
  * @since 1.8
  */
-public class gameScreen implements Screen, SoundAndMusic {
+public class gameScreen implements Screen {
     BirdsVoyage host;
 
     BitmapFont font;
@@ -64,6 +59,9 @@ public class gameScreen implements Screen, SoundAndMusic {
     boolean mapWin = false;
     boolean mapStart = true;
     boolean cloudMove = false;
+
+    // Boolean for finish sound played to prevent overlapping
+    boolean finishSoundPlayed;
 
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     ArrayList<clockPickUp> clocks = new ArrayList<clockPickUp>();
@@ -129,6 +127,7 @@ public class gameScreen implements Screen, SoundAndMusic {
 
         host.currentScreen = "game";
         newHighscore = false;
+        finishSoundPlayed = false;
     }
 
     @Override
@@ -202,7 +201,7 @@ public class gameScreen implements Screen, SoundAndMusic {
         // pauses the game
         if (pauseRect.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             touch.set(0,0,0);
             pause();
@@ -211,7 +210,7 @@ public class gameScreen implements Screen, SoundAndMusic {
         // resumes the game
         if (resumeRect.contains(touch.x,touch.y) && gamePause){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             touch.set(0,0,0);
             resume();
@@ -220,7 +219,7 @@ public class gameScreen implements Screen, SoundAndMusic {
         // goes to settings screen
         if (settingsRect.contains(touch.x,touch.y) && gamePause){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             touch.set(0,0,0);
             host.cameraPosX = host.camera.getPositionX();
@@ -232,7 +231,7 @@ public class gameScreen implements Screen, SoundAndMusic {
         // goes to menu
         if (menuRect.contains(touch.x,touch.y) && gamePause){
             if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
+                host.buttonSound.play();
             }
             touch.set(0,0,0);
             host.gameRun = false;
@@ -306,7 +305,7 @@ public class gameScreen implements Screen, SoundAndMusic {
 
             // Deletes clock when picked up
             if (clock.hits(host.player.getRectangle())){
-                clockSound.play();
+                host.clockSound.play(0.8f);
                 clocks.remove(i);
                 host.time.removeTime();
             }
@@ -351,6 +350,11 @@ public class gameScreen implements Screen, SoundAndMusic {
         host.batch.end();
 
         if (mapWin){
+            // Plays map finish sound only once
+            if (!finishSoundPlayed) {
+                host.mapFinishSound.play();
+                finishSoundPlayed = true;
+            }
             host.time.stop();
             host.player.stop();
             host.camera.stop();
@@ -390,7 +394,7 @@ public class gameScreen implements Screen, SoundAndMusic {
             // Returns to menu
             if (menuRect.contains(touch.x,touch.y)){
                 if (Gdx.input.justTouched() && !host.mute) {
-                    buttonSound.play();
+                    host.buttonSound.play();
                 }
                 touch.set(0,0,0);
                 host.gameRun = false;
