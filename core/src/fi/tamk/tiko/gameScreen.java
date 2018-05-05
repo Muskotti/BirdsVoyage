@@ -371,8 +371,7 @@ public class gameScreen implements Screen {
     }
 
     /**
-     * Changes the players movement if needed
-     * Draws the player too
+     * Changes the players movement if needed and draws the player too
      */
     private void playerDraw() {
         host.batch.begin();
