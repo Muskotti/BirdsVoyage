@@ -222,7 +222,6 @@ public class settingsScreen implements Screen, SoundAndMusic{
             host.setLang("eng");
         }
     }
-    //asd
 
     /**
      * Draws all the buttons that has text based on the current language selected.
