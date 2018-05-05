@@ -7,6 +7,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
+/**
+ * class for the enemy bird
+ *
+ * @author Toni Vänttinen & Jimi Savola
+ * @version 1.8, 05/02/18
+ * @since 1.8
+ */
 public class levelScreen implements Screen, SoundAndMusic {
     BirdsVoyage host;
     private Texture background;
