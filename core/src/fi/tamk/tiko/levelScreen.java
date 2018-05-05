@@ -8,14 +8,18 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 /**
- * class for the enemy bird
+ * class for the level select screen
  *
  * @author Toni Vänttinen & Jimi Savola
  * @version 1.8, 05/02/18
  * @since 1.8
  */
 public class levelScreen implements Screen, SoundAndMusic {
+
+    // main game java class
     BirdsVoyage host;
+
+    // texture for the background
     private Texture background;
 
     // players touch input
@@ -51,13 +55,22 @@ public class levelScreen implements Screen, SoundAndMusic {
     private Rectangle level7Rec;
     private Rectangle level8Rec;
     private Rectangle level9Rec;
-
     private Rectangle enGBButtonRec;
     private Rectangle fiFIButtonRec;
 
+    /**
+     * Constructor for the level select screen
+     * @param host main game java class
+     */
     public levelScreen(BirdsVoyage host){
+
+        // gets the main class
         this.host = host;
+
+        // makes the vector
         touch = new Vector3(0,0,0);
+
+        // loads the background
         background = new Texture(Gdx.files.internal("menuBack3.png"));
 
         //return texture
@@ -166,6 +179,9 @@ public class levelScreen implements Screen, SoundAndMusic {
         );
     }
 
+    /**
+     * does nothing
+     */
     @Override
     public void show() {
 
@@ -173,40 +189,46 @@ public class levelScreen implements Screen, SoundAndMusic {
 
     @Override
     public void render(float delta) {
-        host.camera.update();
-        host.camera.setPos();
-        host.batch.setProjectionMatrix(host.camera.combined());
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        setCamera();
+        refreshScreen();
+        saveTouch();
+        drawButtons();
+        drawLevelButtons();
+        checkButton();
+    }
 
-        // saves touch location
-        if (Gdx.input.justTouched()){
-            touch.set(Gdx.input.getX(),Gdx.input.getY(),0);
-            host.camera.unproject(touch);
-        }
-
-        // draws the background and the level buttons
-        host.batch.begin();
-        host.batch.draw(background,0,0);
-        host.batch.draw(enGBButtonTex, enGBButtonRec.getX(), enGBButtonRec.getY());
-        host.batch.draw(fiFIButtonTex, fiFIButtonRec.getX(), fiFIButtonRec.getY());
-        host.batch.draw(returnButton, returnButtonRect.getX(), returnButtonRect.getY());
-        host.batch.draw(levelbox,host.camera.getPositionX() - 370, host.camera.getPositionY() - 207);
-        host.batch.draw(level1Tex,level1Rec.getX(),level1Rec.getY());
-        host.batch.draw(level2Tex,level2Rec.getX(),level2Rec.getY());
-        host.batch.draw(level3Tex,level3Rec.getX(),level3Rec.getY());
-        host.batch.draw(level4Tex,level4Rec.getX(),level4Rec.getY());
-        host.batch.draw(level5Tex,level5Rec.getX(),level5Rec.getY());
-        host.batch.draw(level6Tex,level6Rec.getX(),level6Rec.getY());
-        host.batch.draw(level7Tex,level7Rec.getX(),level7Rec.getY());
-        host.batch.draw(level8Tex,level8Rec.getX(),level8Rec.getY());
-        host.batch.draw(level9Tex,level9Rec.getX(),level9Rec.getY());
-        // listens if return is pressed
+    /**
+     * Checks if the buttons are pressed
+     *
+     * First the code checks if the return button is pressed
+     * If it is the screen goes back to the settings screen
+     * Next the code checks if the finnish button is pressed
+     * If it is the language changes to finnish
+     * Next the code checks if the english button is pressed
+     * If it is the language changes to english
+     * Next is checked if any of the level select buttons are pressed
+     * if one of them is the screen changes to the selected level
+     */
+    private void checkButton() {
         if (returnButtonRect.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
             }
             host.setScreen(new menuScreen(host));
+        }
+
+        // changes the language
+        if (fiFIButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched() && !host.mute) {
+                buttonSound.play();
+            }
+            host.setLang("fin");
+        }
+        if (enGBButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched() && !host.mute) {
+                buttonSound.play();
+            }
+            host.setLang("eng");
         }
 
         if (level1Rec.contains(touch.x,touch.y)){
@@ -280,21 +302,23 @@ public class levelScreen implements Screen, SoundAndMusic {
             host.loadMap();
             host.setScreen(new gameScreen(host));
         }
+    }
 
-        // changes the language
-        if (fiFIButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
-            }
-            host.setLang("fin");
-        }
-        if (enGBButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
-            }
-            host.setLang("eng");
-        }
-
+    /**
+     * Draws the level button
+     */
+    private void drawLevelButtons() {
+        host.batch.begin();
+        host.batch.draw(levelbox,host.camera.getPositionX() - 370, host.camera.getPositionY() - 207);
+        host.batch.draw(level1Tex,level1Rec.getX(),level1Rec.getY());
+        host.batch.draw(level2Tex,level2Rec.getX(),level2Rec.getY());
+        host.batch.draw(level3Tex,level3Rec.getX(),level3Rec.getY());
+        host.batch.draw(level4Tex,level4Rec.getX(),level4Rec.getY());
+        host.batch.draw(level5Tex,level5Rec.getX(),level5Rec.getY());
+        host.batch.draw(level6Tex,level6Rec.getX(),level6Rec.getY());
+        host.batch.draw(level7Tex,level7Rec.getX(),level7Rec.getY());
+        host.batch.draw(level8Tex,level8Rec.getX(),level8Rec.getY());
+        host.batch.draw(level9Tex,level9Rec.getX(),level9Rec.getY());
         // draws assets of used language bundle
         if (host.currentLang.equals("fin")){
             host.fontSmall.draw(host.batch,"Helppo", host.camera.getPositionX() - 300,host.camera.getPositionY() + 160);
@@ -308,26 +332,81 @@ public class levelScreen implements Screen, SoundAndMusic {
         host.batch.end();
     }
 
+    /**
+     * Draws the menu buttons
+     */
+    private void drawButtons() {
+        host.batch.begin();
+        host.batch.draw(background,0,0);
+        host.batch.draw(enGBButtonTex, enGBButtonRec.getX(), enGBButtonRec.getY());
+        host.batch.draw(fiFIButtonTex, fiFIButtonRec.getX(), fiFIButtonRec.getY());
+        host.batch.draw(returnButton, returnButtonRect.getX(), returnButtonRect.getY());
+        host.batch.end();
+    }
+
+    /**
+     * Saves the touch location
+     */
+    private void saveTouch() {
+        if (Gdx.input.justTouched()){
+            touch.set(Gdx.input.getX(),Gdx.input.getY(),0);
+            host.camera.unproject(touch);
+        }
+    }
+
+    /**
+     * Refreshes the screen
+     */
+    private void refreshScreen() {
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }
+
+    /**
+     * Updates and sets the camera to the correct position
+     */
+    private void setCamera() {
+        host.camera.update();
+        host.camera.setPos();
+        host.batch.setProjectionMatrix(host.camera.combined());
+    }
+
+    /**
+     * Does nothing
+     * @param width nothing
+     * @param height nothing
+     */
     @Override
     public void resize(int width, int height) {
 
     }
-
+    /**
+     * Pauses the screen
+     */
     @Override
     public void pause() {
 
     }
 
+    /**
+     * Resumes the screen
+     */
     @Override
     public void resume() {
 
     }
 
+    /**
+     * Does nothing
+     */
     @Override
     public void hide() {
 
     }
 
+    /**
+     * Disposes of textures
+     */
     @Override
     public void dispose() {
         background.dispose();
