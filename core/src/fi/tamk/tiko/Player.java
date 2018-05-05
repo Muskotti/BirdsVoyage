@@ -2,7 +2,6 @@ package fi.tamk.tiko;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -14,10 +13,15 @@ import com.badlogic.gdx.math.Rectangle;
 import java.util.ArrayList;
 
 /**
- * Class for the player
+ * Class for the player.
+ *
+ * @author Toni Vänttinen & Jimi Savola
+ * @version 1.8, 05/02/18
+ * @since 1.8
  */
 public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
 
+    // Sprite for the player
     private Sprite player;
 
     // flying animation
@@ -30,15 +34,17 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
     private Texture featherSheet;
     float featherTime;
 
+    // Players rectangle and rectangle for object currently overlapping with the player.
     private Rectangle boundingRectangle;
     private Rectangle playerRectangle;
 
+    // Movement speeds of the player
     float moveSpeedX = moveSpeedXog;
     float moveSpeedY = moveSpeedYog;
     float speedY = normalSpeed;
     float speedX = normalSpeed;
 
-    // These are determined in calibration, otherwise 0 and 0.
+    // Default tilt positions, these are determined by calibration
     float defaultPositionX;
     float defaultPositionY;
 
@@ -49,15 +55,19 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
     float leftSens;
 
     float playerRestTop;
-    float transTime;
+
+    // Timer for the slowdown, that occurs when player collides with an enemy bird
     float slowdownTimer;
 
+    // Boolean for movement
     boolean stopMove;
 
     // Timer for collision sound
     float collisionTimer;
 
-    // player constructor
+    /**
+     * Player constructor
+     */
     public Player(){
         flyingAnim();
         featherAnim();
@@ -153,28 +163,14 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
     public void move() {
         if (stopMove) {
             float delta = Gdx.graphics.getDeltaTime();
-            float moveAmount = 500f * delta;
 
-            // For testing only, remember to delete later
-            if (Gdx.input.isKeyPressed(Input.Keys.DPAD_UP)) {
-                player.translateY(moveAmount);
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.DPAD_DOWN)) {
-                player.translateY(-moveAmount);
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)) {
-                player.translateX(moveAmount);
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.DPAD_LEFT)) {
-                player.translateX(-moveAmount);
-            }
-
-            // Final movement code
+            // Leaning check and movement
             if (!Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
                 float x = 0, y = 0;
 
                 x = defaultPositionX - Gdx.input.getAccelerometerY();
                 y = defaultPositionY - Gdx.input.getAccelerometerZ();
+
                 // Move left
                 if (x > leftSens) {
                     if (notCollided() && slowdownTimer == 0) {
@@ -299,7 +295,7 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
     }
 
     /**
-     * Changes player and camera movement speed if player collides with an onject
+     * Changes player and camera movement speed if player collides with an object
      * @param enemies array for enemy objects
      * @param cloud cloud object
      * @param b spritebatch
@@ -316,6 +312,8 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
                 slowdownTimer += Gdx.graphics.getRawDeltaTime();
             }
         }
+
+        // Slowdown timer starts if player got hit by an enemy bird
         if (slowdownTimer > 0 && slowdownTimer < 5) {
             speedY = halfSpeed;
             speedX = halfSpeed;
@@ -370,20 +368,11 @@ public class Player implements MapProperties, PlayerProperties,SoundAndMusic{
     public float getSpeedY() {
         return speedY;
     }
-    public float getSpeedX() {
-        return speedX;
-    }
     public float getNormalSpeed() {
         return normalSpeed;
     }
     public float getHalfspeed() {
         return halfSpeed;
-    }
-    public float getPlayerWidth() {
-        return playerWidth;
-    }
-    public float getPlayerHeight() {
-        return playerHeight;
     }
 
     /**

@@ -2,16 +2,24 @@ package fi.tamk.tiko;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
+/**
+ * Menu is the games main screen and it holds access to level select, high scores and settings.
+ *
+ * @author Toni Vänttinen & Jimi Savola
+ * @version 1.8, 05/02/18
+ * @since 1.8
+ */
 public class menuScreen implements Screen, SoundAndMusic{
 
+    // Main java class as host
     private BirdsVoyage host;
 
+    // Texture for background image
     private Texture background;
 
     // Texture for English buttons
@@ -44,33 +52,40 @@ public class menuScreen implements Screen, SoundAndMusic{
     // players touch input
     private Vector3 touch;
 
-    // constructor
+    /**
+     * Constructor for the menu screen
+     * @param host main java class of the game
+     */
     public menuScreen(BirdsVoyage host){
+        // Initialization of the touch location
         touch = new Vector3(0,0,0);
+
+        // Main java class as host
         this.host = host;
 
+        // Loading the background image
         background = new Texture(Gdx.files.internal("menuBack.png"));
 
-        //loads english buttons
+        // Loads english buttons
         playButtonTexEN = new Texture(Gdx.files.internal("playENG.png"));
         highButtonTexEN = new Texture(Gdx.files.internal("highscoreENG.png"));
         settingsButtonTexEN = new Texture(Gdx.files.internal("settingsENG.png"));
         exitButtonTexEN = new Texture(Gdx.files.internal("exitENG.png"));
 
-        // loads finnish buttons
+        // Loads finnish buttons
         playButtonTexFI = new Texture(Gdx.files.internal("playFIN.png"));
         highButtonTexFI = new Texture(Gdx.files.internal("highscoreFIN.png"));
         settingsButtonTexFI = new Texture(Gdx.files.internal("settingsFIN.png"));
         exitButtonTexFI = new Texture(Gdx.files.internal("exitFIN.png"));
 
-        // loads flags
+        // Loads the flags
         enGBButtonTex = new Texture(Gdx.files.internal("eng.png"));
         fiFIButtonTex = new Texture(Gdx.files.internal("fin.png"));
 
-        //loads logo
+        // Loads the logo
         logoTex = new Texture(Gdx.files.internal("LOGOtransparent.png"));
 
-        // setting up rectangles
+        // Setting up rectangles
         playButtonRec = new Rectangle(
                 host.getCameraWidth()/2 - (playButtonTexEN.getWidth()/2),
                 317,
@@ -110,6 +125,7 @@ public class menuScreen implements Screen, SoundAndMusic{
                 fiFIButtonTex.getHeight()
         );
 
+        // Current screen to string
         host.currentScreen = "menu";
     }
 
@@ -119,28 +135,28 @@ public class menuScreen implements Screen, SoundAndMusic{
     }
 
     @Override
+    /**
+     * Renders the menu screen
+     */
     public void render(float delta) {
-        host.camera.update();
-        host.camera.setPos();
-        host.batch.setProjectionMatrix(host.camera.combined());
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        // saves touch location
-        if (Gdx.input.justTouched()){
-            touch.set(Gdx.input.getX(),Gdx.input.getY(),0);
-            host.camera.unproject(touch);
-        }
+        updateCamera();
+        refreshScreen();
+        saveTouchLocation();
 
         // draws language buttons
         host.batch.begin();
-        host.batch.draw(background,0,0);
-        host.batch.draw(enGBButtonTex, enGBButtonRec.getX(), enGBButtonRec.getY());
-        host.batch.draw(fiFIButtonTex, fiFIButtonRec.getX(), fiFIButtonRec.getY());
-        host.batch.draw(logoTex, host.camera.getPositionX() - logoTex.getWidth()/2,host.camera.getPositionY() + 60);
+        drawImages();
+        drawTextButtons();
         host.batch.end();
 
-        // checks if the buttons are touched
+        checkButtonPresses();
+    }
+
+    /**
+     * Checks if any of the buttons are touched and does actions according to the touch location.
+     */
+    private void checkButtonPresses() {
+        // Checks if the menus buttons are touched
         if (playButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
@@ -167,7 +183,7 @@ public class menuScreen implements Screen, SoundAndMusic{
             Gdx.app.exit();
         }
 
-        // changes the language
+        // Changes the language
         if (fiFIButtonRec.contains(touch.x,touch.y)){
             if (Gdx.input.justTouched() && !host.mute) {
                 buttonSound.play();
@@ -180,23 +196,65 @@ public class menuScreen implements Screen, SoundAndMusic{
             }
             host.setLang("eng");
         }
+    }
 
-        // draws assets of used language bundle
+    /**
+     * Draws all the buttons that has text based on the current language selected.
+     */
+    private void drawTextButtons() {
         if (host.currentLang.equals("fin")){
-            host.batch.begin();
             host.batch.draw(playButtonTexFI, playButtonRec.getX(), playButtonRec.getY());
             host.batch.draw(highButtonTexFI, highButtonRec.getX(), highButtonRec.getY());
             host.batch.draw(settingsButtonTexFI, settingsButtonRec.getX(), settingsButtonRec.getY());
             host.batch.draw(exitButtonTexFI, exitButtonRec.getX(), exitButtonRec.getY());
-            host.batch.end();
         } else {
-            host.batch.begin();
             host.batch.draw(playButtonTexEN, playButtonRec.getX(), playButtonRec.getY());
             host.batch.draw(highButtonTexEN, highButtonRec.getX(), highButtonRec.getY());
             host.batch.draw(settingsButtonTexEN, settingsButtonRec.getX(), settingsButtonRec.getY());
             host.batch.draw(exitButtonTexEN, exitButtonRec.getX(), exitButtonRec.getY());
-            host.batch.end();
         }
+    }
+
+    /**
+     * Draws the backround image, game logo and language buttons.
+     */
+    private void drawImages() {
+        // Background image
+        host.batch.draw(background,0,0);
+
+        // Language buttons
+        host.batch.draw(enGBButtonTex, enGBButtonRec.getX(), enGBButtonRec.getY());
+        host.batch.draw(fiFIButtonTex, fiFIButtonRec.getX(), fiFIButtonRec.getY());
+
+        // Logo picture
+        host.batch.draw(logoTex, host.camera.getPositionX() - logoTex.getWidth()/2,host.camera.getPositionY() + 60);
+    }
+
+    /**
+     * Saves the touch location to the last coordinates where user touched the screen.
+     */
+    private void saveTouchLocation() {
+        if (Gdx.input.justTouched()){
+            touch.set(Gdx.input.getX(),Gdx.input.getY(),0);
+            host.camera.unproject(touch);
+        }
+    }
+
+    /**
+     * Refreshes the screen and makes the background color.
+     */
+    private void refreshScreen() {
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }
+
+    /**
+     * Updates the camera position
+     */
+    private void updateCamera() {
+        host.camera.update();
+        host.camera.setPos();
+        host.batch.setProjectionMatrix(host.camera.combined());
     }
 
     @Override

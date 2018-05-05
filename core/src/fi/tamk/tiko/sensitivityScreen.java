@@ -2,29 +2,34 @@ package fi.tamk.tiko;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-
-import java.awt.TextArea;
 
 /**
- * Created by Jimi on 12.4.2018.
+ * Sensitivity screen where user can adjust the accelerometer sensitivities. Each 4 direction
+ * can be adjusted.
+ *
+ * @author Toni Vänttinen & Jimi Savola
+ * @version 1.8, 05/02/18
+ * @since 1.8
  */
-
 public class sensitivityScreen implements Screen, SoundAndMusic {
 
+    // Main game java-class as host
     BirdsVoyage host;
 
+    // Backround for the screen
     private Texture background;
 
+    // Users touch location
     private Vector3 touch;
+
+    // Boolean if the slider bar was just touched
     boolean tap;
+
+    // Boolean if user released the touch from slider bar
     boolean sliderRelease;
 
     // Textures for sliders
@@ -48,10 +53,17 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
     private Rectangle sliderBarRec1, sliderBarRec2, sliderBarRec3, sliderBarRec4;
     private Rectangle sliderButtonRec1, sliderButtonRec2, sliderButtonRec3, sliderButtonRec4;
 
+    /**
+     * Constructor for the sensitivity screen
+     * @param host main java class of the game
+     */
     public sensitivityScreen(BirdsVoyage host) {
+        // Last location of the users touch
         touch = new Vector3(0,0,0);
         tap = false;
         this.host = host;
+
+        // Loads the backround image
         background = new Texture(Gdx.files.internal("menuBack2.png"));
 
         //loads menu button
@@ -84,6 +96,7 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
                 menuButtonTex.getWidth(),
                 menuButtonTex.getHeight()
         );
+
         // Rectangles for sliders
         sliderBarRec1 = new Rectangle(190, 590, sliderBar.getWidth()+10,sliderBar.getHeight()+10);
         sliderButtonRec1 = new Rectangle(host.preferences.getFloat("button1", sliderBarRec1.getX()+250)
@@ -108,89 +121,28 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
     }
 
     @Override
+    /**
+     * Renders the game
+     */
     public void render(float delta) {
-        host.camera.update();
-        host.camera.setPos();
-        host.batch.setProjectionMatrix(host.camera.combined());
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        updateCamera();
+        refreshScreen();
+        saveTouchLocation();
 
-        // saves touch location
-        if (Gdx.input.justTouched()){
-            touch.set(Gdx.input.getX(),Gdx.input.getY(),0);
-            host.camera.unproject(touch);
-        }
-
-        // draws language buttons
         host.batch.begin();
-        host.batch.draw(background,0,0);
-        host.batch.draw(enGBButtonTex, enGBButtonRec.getX(), enGBButtonRec.getY());
-        host.batch.draw(fiFIButtonTex, fiFIButtonRec.getX(), fiFIButtonRec.getY());
-
-        // Draws sliders and buttons
-        host.batch.draw(sliderBar,200, 600);
-        host.batch.draw(sliderButton,sliderButtonRec1.getX(), sliderButtonRec1.getY());
-
-        host.batch.draw(sliderBar,200, 500);
-        host.batch.draw(sliderButton,sliderButtonRec2.getX(), sliderButtonRec2.getY());
-
-        host.batch.draw(sliderBar,200, 400);
-        host.batch.draw(sliderButton,sliderButtonRec3.getX(), sliderButtonRec3.getY());
-
-        host.batch.draw(sliderBar,200, 300);
-        host.batch.draw(sliderButton,sliderButtonRec4.getX(), sliderButtonRec4.getY());
-
-        // Draws back button
-        host.batch.draw(menuButtonTex, menuButtonRec.getX(), menuButtonRec.getY());
-
-        // Draws sensitivity texts
-        if (host.currentLang.equals("fin")) {
-            host.fontSmall.draw(host.batch, "Ylös",
-                    sliderBarRec1.getX()+sliderBarRec1.getWidth()+sliderButton.getWidth(),
-                    sliderBarRec1.getY()+sliderButton.getHeight()
-            );
-            host.fontSmall.draw(host.batch, "Alas",
-                    sliderBarRec2.getX()+sliderBarRec2.getWidth()+sliderButton.getWidth(),
-                    sliderBarRec2.getY()+sliderButton.getHeight()
-            );
-            host.fontSmall.draw(host.batch, "Vasen",
-                    sliderBarRec3.getX()+sliderBarRec3.getWidth()+sliderButton.getWidth(),
-                    sliderBarRec3.getY()+sliderButton.getHeight()
-            );
-            host.fontSmall.draw(host.batch, "Oikea",
-                    sliderBarRec4.getX()+sliderBarRec4.getWidth()+sliderButton.getWidth(),
-                    sliderBarRec4.getY()+sliderButton.getHeight()
-            );
-        }
-        else {
-            host.fontSmall.draw(host.batch, "Up",
-                    sliderBarRec1.getX()+sliderBarRec1.getWidth()+sliderButton.getWidth(),
-                    sliderBarRec1.getY()+sliderButton.getHeight()
-            );
-            host.fontSmall.draw(host.batch, "Down",
-                    sliderBarRec2.getX()+sliderBarRec2.getWidth()+sliderButton.getWidth(),
-                    sliderBarRec2.getY()+sliderButton.getHeight()
-            );
-            host.fontSmall.draw(host.batch, "Left",
-                    sliderBarRec3.getX()+sliderBarRec3.getWidth()+sliderButton.getWidth(),
-                    sliderBarRec3.getY()+sliderButton.getHeight()
-            );
-            host.fontSmall.draw(host.batch, "Right",
-                    sliderBarRec4.getX()+sliderBarRec4.getWidth()+sliderButton.getWidth(),
-                    sliderBarRec4.getY()+sliderButton.getHeight()
-            );
-        }
-
+        drawImages();
+        drawTextButtons();
         host.batch.end();
 
-        if (menuButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
-            }
-            host.setScreen(new settingsScreen(host));
-        }
+        checkButtonPresses();
+        adjustSensitivity();
+    }
 
-        // Adjusts sensitivity
+    /**
+     * Adjusts movement sensitivity on each direction, the amount is stored in preferences.
+     * All four sliders uses the same code.
+     */
+    private void adjustSensitivity() {
         for (int i=0; i<4; i++) {
             Rectangle sliderRec = sliderBarRec1;
             Rectangle buttonRec = sliderButtonRec1;
@@ -225,6 +177,8 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
                     break;
             }
 
+            // When user presses on the slider rectangle, button is moved to that position and then
+            // it follows users touch sliding until released.
             if (sliderRec.contains(touch.x,touch.y)) {
                 if (Gdx.input.justTouched() && !host.mute) {
                     sliderPressSound.play();
@@ -306,7 +260,7 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
                 host.preferences.flush();
             }
 
-            // Draws sensitivity value
+            // Draws sensitivity values and sensitivity info
             host.batch.begin();
             host.fontSmall.draw(host.batch, String.valueOf(printSens), sliderRec.getX()-30, sliderRec.getY());
             if (host.currentLang.equals("fin")) {
@@ -315,6 +269,19 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
                 host.fontSmall.draw(host.batch,"The higher the value the more sensitive movement",host.camera.getPositionX() - 600,host.camera.getPositionY() - 150);
             }
             host.batch.end();
+        }
+    }
+
+    /**
+     * Checks if any of the buttons are touched and does actions according to the touch location.
+     */
+    private void checkButtonPresses() {
+        // Goes back to previous screen
+        if (menuButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched() && !host.mute) {
+                buttonSound.play();
+            }
+            host.setScreen(new settingsScreen(host));
         }
 
         // changes the language
@@ -330,6 +297,102 @@ public class sensitivityScreen implements Screen, SoundAndMusic {
             }
             host.setLang("eng");
         }
+    }
+
+    /**
+     * Draws all the buttons that has text based on the current language selected.
+     */
+    private void drawTextButtons() {
+        // Draws sensitivity texts
+        if (host.currentLang.equals("fin")) {
+            host.fontSmall.draw(host.batch, "Ylös",
+                    sliderBarRec1.getX()+sliderBarRec1.getWidth()+sliderButton.getWidth(),
+                    sliderBarRec1.getY()+sliderButton.getHeight()
+            );
+            host.fontSmall.draw(host.batch, "Alas",
+                    sliderBarRec2.getX()+sliderBarRec2.getWidth()+sliderButton.getWidth(),
+                    sliderBarRec2.getY()+sliderButton.getHeight()
+            );
+            host.fontSmall.draw(host.batch, "Vasen",
+                    sliderBarRec3.getX()+sliderBarRec3.getWidth()+sliderButton.getWidth(),
+                    sliderBarRec3.getY()+sliderButton.getHeight()
+            );
+            host.fontSmall.draw(host.batch, "Oikea",
+                    sliderBarRec4.getX()+sliderBarRec4.getWidth()+sliderButton.getWidth(),
+                    sliderBarRec4.getY()+sliderButton.getHeight()
+            );
+        }
+        else {
+            host.fontSmall.draw(host.batch, "Up",
+                    sliderBarRec1.getX()+sliderBarRec1.getWidth()+sliderButton.getWidth(),
+                    sliderBarRec1.getY()+sliderButton.getHeight()
+            );
+            host.fontSmall.draw(host.batch, "Down",
+                    sliderBarRec2.getX()+sliderBarRec2.getWidth()+sliderButton.getWidth(),
+                    sliderBarRec2.getY()+sliderButton.getHeight()
+            );
+            host.fontSmall.draw(host.batch, "Left",
+                    sliderBarRec3.getX()+sliderBarRec3.getWidth()+sliderButton.getWidth(),
+                    sliderBarRec3.getY()+sliderButton.getHeight()
+            );
+            host.fontSmall.draw(host.batch, "Right",
+                    sliderBarRec4.getX()+sliderBarRec4.getWidth()+sliderButton.getWidth(),
+                    sliderBarRec4.getY()+sliderButton.getHeight()
+            );
+        }
+    }
+
+    /**
+     * Draws the backround image, mute button and language buttons.
+     */
+    private void drawImages() {
+        // draws language buttons
+        host.batch.draw(background,0,0);
+        host.batch.draw(enGBButtonTex, enGBButtonRec.getX(), enGBButtonRec.getY());
+        host.batch.draw(fiFIButtonTex, fiFIButtonRec.getX(), fiFIButtonRec.getY());
+
+        // Draws sliders and buttons
+        host.batch.draw(sliderBar,200, 600);
+        host.batch.draw(sliderButton,sliderButtonRec1.getX(), sliderButtonRec1.getY());
+
+        host.batch.draw(sliderBar,200, 500);
+        host.batch.draw(sliderButton,sliderButtonRec2.getX(), sliderButtonRec2.getY());
+
+        host.batch.draw(sliderBar,200, 400);
+        host.batch.draw(sliderButton,sliderButtonRec3.getX(), sliderButtonRec3.getY());
+
+        host.batch.draw(sliderBar,200, 300);
+        host.batch.draw(sliderButton,sliderButtonRec4.getX(), sliderButtonRec4.getY());
+
+        // Draws back button
+        host.batch.draw(menuButtonTex, menuButtonRec.getX(), menuButtonRec.getY());
+    }
+
+    /**
+     * Saves the touch location to the last coordinates where user touched the screen.
+     */
+    private void saveTouchLocation() {
+        if (Gdx.input.justTouched()){
+            touch.set(Gdx.input.getX(),Gdx.input.getY(),0);
+            host.camera.unproject(touch);
+        }
+    }
+
+    /**
+     * Refreshes the screen and makes the background color.
+     */
+    private void refreshScreen() {
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }
+
+    /**
+     * Updates the camera position.
+     */
+    private void updateCamera() {
+        host.camera.update();
+        host.camera.setPos();
+        host.batch.setProjectionMatrix(host.camera.combined());
     }
 
     @Override
