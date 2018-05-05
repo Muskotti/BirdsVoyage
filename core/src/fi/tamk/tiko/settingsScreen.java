@@ -137,6 +137,9 @@ public class settingsScreen implements Screen{
     }
 
     @Override
+    /**
+     * Does nothing
+     */
     public void show() {
 
     }
@@ -246,7 +249,7 @@ public class settingsScreen implements Screen{
     }
 
     /**
-     * Draws the backround image, mute button and language buttons.
+     * Draws the background image, mute button and language buttons.
      */
     private void drawImages() {
         host.batch.draw(background,0,0);
@@ -295,26 +298,41 @@ public class settingsScreen implements Screen{
     }
 
     @Override
+    /**
+     * Does nothing
+     */
     public void resize(int width, int height) {
 
     }
 
     @Override
+    /**
+     * Does nothing
+     */
     public void pause() {
 
     }
 
     @Override
+    /**
+     * Does nothing
+     */
     public void resume() {
 
     }
 
     @Override
+    /**
+     * Does nothing
+     */
     public void hide() {
 
     }
 
     @Override
+    /**
+     * Does nothing
+     */
     public void dispose() {
 
     }

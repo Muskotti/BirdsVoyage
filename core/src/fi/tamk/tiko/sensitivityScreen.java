@@ -250,6 +250,7 @@ public class sensitivityScreen implements Screen {
                 sensitivity = 0.2f;
                 printSens = 2f;
             }
+
             // Sensitivity negative values, if up/right. Positive if down/left
             if (direction == "upSens" || direction == "rightSens") {
                 host.preferences.putFloat(direction, -sensitivity);
@@ -300,7 +301,7 @@ public class sensitivityScreen implements Screen {
     }
 
     /**
-     * Draws all the buttons that has text based on the current language selected.
+     * Draws all the buttons that has text, based on the current language selected.
      */
     private void drawTextButtons() {
         // Draws sensitivity texts

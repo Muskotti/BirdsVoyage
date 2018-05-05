@@ -83,6 +83,7 @@ public class Player implements MapProperties, PlayerProperties{
         collisionTimer = 0;
         stopMove = true;
 
+        // Loads collision sound
         collisionSound = Gdx.audio.newSound(Gdx.files.internal("BirdCollision.wav"));
     }
 
@@ -164,7 +165,7 @@ public class Player implements MapProperties, PlayerProperties{
 
     /**
      * Moves the player around using accelerometers. Movement speed, deadzones and
-     * default zero position is based on sensitivity and calibration settings on preferences
+     * default zero position is based on sensitivity and calibration settings on preferences.
      */
     public void move() {
         if (stopMove) {
@@ -301,13 +302,14 @@ public class Player implements MapProperties, PlayerProperties{
     }
 
     /**
-     * Changes player and camera movement speed if player collides with an object
+     * Changes player and camera movement speed if player collides with an object.
+     *
      * @param enemies array for enemy objects
      * @param cloud cloud object
      * @param b spritebatch
      * @param mute boolean that checks if game is muted
      * @param gamePause boolean that checks if game is currently paused, used in collision sound
-     * @param mapWin
+     * @param mapWin boolean for ending of the map. If true, goes to victory screen
      */
     public void changeSpeed(ArrayList<Enemy> enemies, StormCloud cloud, SpriteBatch b, Boolean mute, boolean gamePause, boolean mapWin) {
         // Enemy collision
@@ -350,6 +352,7 @@ public class Player implements MapProperties, PlayerProperties{
                 collisionTimer = 0;
             }
 
+            // Vibrates the device if player hits an object
             if (stopMove){
                 Gdx.input.vibrate(50);
             }
@@ -371,17 +374,35 @@ public class Player implements MapProperties, PlayerProperties{
         b.draw(currentFrame, player.getX(), player.getY());
     }
 
+    /**
+     * Returns current speed
+     *
+     * @return players vertical speed
+     */
     public float getSpeedY() {
         return speedY;
     }
+
+    /**
+     * Returns normal speed, when not colliding
+     *
+     * @return default speed
+     */
     public float getNormalSpeed() {
         return normalSpeed;
     }
+
+    /**
+     * Speed when colliding with something
+     *
+     * @return speed when colliding
+     */
     public float getHalfspeed() {
         return halfSpeed;
     }
 
     /**
+     * Used to return players bounding rectangle
      *
      * @return player's bounding rectangle
      */
@@ -389,10 +410,16 @@ public class Player implements MapProperties, PlayerProperties{
         return playerRectangle;
     }
 
+    /**
+     * Stops the movement, this is used when the game pauses.
+     */
     public void stop() {
         stopMove = false;
     }
 
+    /**
+     * Resumes the movement.
+     */
     public void resume() {
         stopMove = true;
     }
@@ -418,6 +445,7 @@ public class Player implements MapProperties, PlayerProperties{
     /**
      * Updates the sensitivities for each direction. Sensitivities come from preferences, which are
      * determined in sensitivity screen.
+     *
      * @param up sensitivity for up/forward direction
      * @param down sensitivity for down/backwards direction
      * @param left sensitivity for left direction
@@ -433,6 +461,7 @@ public class Player implements MapProperties, PlayerProperties{
     /**
      * Sets default position/calibration for the player. This is stored in preferences and determined in
      * calibration screen.
+     *
      * @param x default X position
      * @param y default Y position
      */

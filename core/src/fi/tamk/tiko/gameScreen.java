@@ -387,14 +387,14 @@ public class gameScreen implements Screen {
         //Moves cloud to the screen
         if (host.map.cloudSpawn(host.camera)) {
             cloudMove = true;
-            cloud.compliteMove = false;
+            cloud.completeMove = false;
         }
         if (cloudMove){
             cloud.moveUp(host.camera);
         } else {
             cloud.move(host.camera);
         }
-        if (cloud.compliteMove){
+        if (cloud.completeMove){
             cloudMove = false;
         }
         cloud.draw(host);
