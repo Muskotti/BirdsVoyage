@@ -6,13 +6,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
- * Stormcloud object, that spawns below the camera and moves with it.
+ * Stormcloud object, that spawns below the camera and moves with the camera.
+ * Rises up and goes back down when called.
  */
 public class StormCloud {
     private Sprite stormCloud;
     private Rectangle cloudRectangle;
     boolean moveStop;
-    boolean compliteMove = false;
+    boolean completeMove = false;
     boolean moveBack = false;
 
     /**
@@ -61,7 +62,7 @@ public class StormCloud {
                 stormCloud.translateY(-.5f);
                 if (stormCloud.getY() < camera.getPositionY() - 387 * 2) {
                     moveBack = false;
-                    compliteMove = true;
+                    completeMove = true;
                 }
             }
         }

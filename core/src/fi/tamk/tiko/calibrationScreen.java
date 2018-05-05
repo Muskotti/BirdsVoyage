@@ -156,9 +156,8 @@ public class calibrationScreen implements Screen {
      * Calibrates a new position if the button is pressed and prints a confirmation message
      *
      * First the the code checks if the calibration button is pressed
-     * If it is the code plays the confirmation sound if the mute is not activated
+     * If it is, the code plays the confirmation sound if the mute is not activated
      * next the code sets the new default position for player class and the preferences
-     * ----JIMI----
      * Next the code prints out a confirmation text either in finnish or english
      */
     private void calibrate() {

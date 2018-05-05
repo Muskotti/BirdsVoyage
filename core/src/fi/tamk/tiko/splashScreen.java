@@ -16,6 +16,7 @@ public class splashScreen implements Screen {
     private Texture tiko;
     private Texture team;
 
+    // Timer for how long the logos will be displayed
     float timer;
 
     /**
@@ -31,11 +32,17 @@ public class splashScreen implements Screen {
     }
 
     @Override
+    /**
+     * Does nothing.
+     */
     public void show() {
 
     }
 
     @Override
+    /**
+     * Rendering of the game
+     */
     public void render(float delta) {
         addTime();
         refreshScreen();
@@ -75,26 +82,41 @@ public class splashScreen implements Screen {
     }
 
     @Override
+    /**
+     * Does nothing
+     */
     public void resize(int width, int height) {
 
     }
 
     @Override
+    /**
+     * Does nothing
+     */
     public void pause() {
 
     }
 
     @Override
+    /**
+     * Does nothing
+     */
     public void resume() {
 
     }
 
     @Override
+    /**
+     * Does nothing
+     */
     public void hide() {
 
     }
 
     @Override
+    /**
+     * Disposes every logo
+     */
     public void dispose() {
         tiko.dispose();
         team.dispose();

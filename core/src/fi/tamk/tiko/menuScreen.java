@@ -53,7 +53,8 @@ public class menuScreen implements Screen {
     private Vector3 touch;
 
     /**
-     * Constructor for the menu screen
+     * Constructor for the menu screen.
+     *
      * @param host main java class of the game
      */
     public menuScreen(BirdsVoyage host){
@@ -130,6 +131,9 @@ public class menuScreen implements Screen {
     }
 
     @Override
+    /**
+     * Does nothing.
+     */
     public void show() {
 
     }
@@ -216,7 +220,7 @@ public class menuScreen implements Screen {
     }
 
     /**
-     * Draws the backround image, game logo and language buttons.
+     * Draws the background image, game logo and language buttons.
      */
     private void drawImages() {
         // Background image
@@ -258,26 +262,41 @@ public class menuScreen implements Screen {
     }
 
     @Override
+    /**
+     * Does nothing.
+     */
     public void resize(int width, int height) {
 
     }
 
     @Override
+    /**
+     * Does nothing.
+     */
     public void pause() {
 
     }
 
     @Override
+    /**
+     * Does nothing.
+     */
     public void resume() {
 
     }
 
     @Override
+    /**
+     * Does nothing.
+     */
     public void hide() {
 
     }
 
     @Override
+    /**
+     * Disposes everything.
+     */
     public void dispose() {
         playButtonTexEN.dispose();
         highButtonTexEN.dispose();

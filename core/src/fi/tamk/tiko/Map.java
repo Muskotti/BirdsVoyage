@@ -41,6 +41,7 @@ public class Map {
 
     /**
      * Constructor for map
+     *
      * @param currentLevel level currently selected by the player, file will be loaded accordingly
      */
     public Map(String currentLevel){
@@ -86,6 +87,7 @@ public class Map {
 
     /**
      * Sets the camera to the beginning of the level.
+     *
      * @param camera games camera
      */
     public void setMap(OrthographicCamera camera) {
@@ -94,7 +96,8 @@ public class Map {
     }
 
     /**
-     * Checks if player collides with a tree
+     * Checks if player collides with a tree.
+     *
      * @param player player
      */
     public void checkCollision(Player player) {
@@ -109,6 +112,7 @@ public class Map {
 
     /**
      * Checks if camera rectangle hits the bird spawn rectangle in tiled map.
+     *
      * @param camera games camera
      * @return boolean for enemy bird spawning. If true, enemy bird will spawn on the map
      */
@@ -129,6 +133,7 @@ public class Map {
 
     /**
      * Checks if camera rectangle hits the cloud spawn rectangle in tiled map.
+     *
      * @param camera games camera
      * @return boolean for cloud spawning. If true, cloud will come up from under the camera
      */
@@ -149,6 +154,7 @@ public class Map {
 
     /**
      * Checks if camera rectangle hits the clock spawn rectangle in tiled map.
+     *
      * @param camera games camera
      * @return boolean for clock spawning. If true, clock will spawn on the level
      */
@@ -170,6 +176,8 @@ public class Map {
     }
 
     /**
+     * Clocks X location
+     *
      * @return clocks X location
      */
     public float getClockRecLocX() {
@@ -177,6 +185,8 @@ public class Map {
     }
 
     /**
+     * Clocks Y location
+     *
      * @return clocks Y location
      */
     public float getClockRecLocY() {
@@ -185,6 +195,7 @@ public class Map {
 
     /**
      * Checks if player hits the finish line on the map
+     *
      * @param player player
      * @return boolean for map finish. If true, map will finish
      */
