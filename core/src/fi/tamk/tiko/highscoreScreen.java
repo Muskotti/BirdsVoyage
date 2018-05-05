@@ -4,14 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g3d.particles.ResourceData;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
-import java.awt.TextArea;
-
 /**
- * class for the enemy bird
+ * class for the high score screen
  *
  * @author Toni Vänttinen & Jimi Savola
  * @version 1.8, 05/02/18
@@ -19,10 +16,13 @@ import java.awt.TextArea;
  */
 public class highscoreScreen implements Screen, SoundAndMusic {
 
+    // the main class
     BirdsVoyage host;
 
+    // background texture
     private Texture background;
 
+    // Vector3 for touching
     private Vector3 touch;
 
     // Texture fot menu button
@@ -37,9 +37,19 @@ public class highscoreScreen implements Screen, SoundAndMusic {
     private Rectangle fiFIButtonRec;
     private Rectangle menuButtonRec;
 
+    /**
+     * Constructor for the high score screen
+     * @param host main game java class
+     */
     public highscoreScreen(BirdsVoyage host) {
+
+        // makes the vector
         touch = new Vector3(0,0,0);
+
+        // gets the main class
         this.host = host;
+
+        // loads the background image
         background = new Texture(Gdx.files.internal("menuBack4.png"));
 
         //loads menu button
@@ -70,42 +80,66 @@ public class highscoreScreen implements Screen, SoundAndMusic {
         );
     }
 
+    /**
+     * does nothing
+     */
     @Override
     public void show() {
 
     }
 
+    /**
+     * Renders the highscore screen
+     * @param delta gets the delta time
+     */
     @Override
     public void render(float delta) {
+        setCamera();
+        refreshScreen();
+        saveTouch();
+        drawButtons();
+        drawHighScore();
+        checkButton();
+    }
 
-        //updates camera
-        host.camera.update();
-
-        // sets camera position
-        host.camera.setPos();
-        host.batch.setProjectionMatrix(host.camera.combined());
-
-        //draws background
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        // saves touch location
-        if (Gdx.input.justTouched()){
-            touch.set(Gdx.input.getX(),Gdx.input.getY(),0);
-            host.camera.unproject(touch);
+    /**
+     * Checks if the buttons are pressed
+     *
+     * First the code checks if the menu button is pressed
+     * If it is the screen goes back to the main menu screen
+     * Next the code checks if the finnish button is pressed
+     * If it is the language changes to finnish
+     * Next the code checks if the english button is pressed
+     * If it is the language changes to english
+     */
+    private void checkButton() {
+        // Goes back to main menu
+        if (menuButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched() && !host.mute) {
+                buttonSound.play();
+            }
+            host.setScreen(new menuScreen(host));
         }
 
-        // draws language buttons
-        host.batch.begin();
-        host.batch.draw(background,0,0);
-        host.batch.draw(enGBButtonTex, enGBButtonRec.getX(), enGBButtonRec.getY());
-        host.batch.draw(fiFIButtonTex, fiFIButtonRec.getX(), fiFIButtonRec.getY());
-
-        // Draws back button
-        if (!host.gameRun){
-            host.batch.draw(menuButtonTex, menuButtonRec.getX(), menuButtonRec.getY());
+        // changes the language
+        if (fiFIButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched() && !host.mute) {
+                buttonSound.play();
+            }
+            host.setLang("fin");
         }
+        if (enGBButtonRec.contains(touch.x,touch.y)){
+            if (Gdx.input.justTouched() && !host.mute) {
+                buttonSound.play();
+            }
+            host.setLang("eng");
+        }
+    }
 
+    /**
+     * Draws the high scores to specific locations and checks if the time value is 10 or smaller
+     */
+    private void drawHighScore() {
         // High scores location variables
         int left = 550;
         int middle = 100;
@@ -117,6 +151,7 @@ public class highscoreScreen implements Screen, SoundAndMusic {
 
         int score = 50;
 
+        host.batch.begin();
         // draws english or finnish text
         if (host.currentLang == "eng"){
             // easy levels
@@ -151,8 +186,6 @@ public class highscoreScreen implements Screen, SoundAndMusic {
             host.fontSmall.draw(host.batch,"Taso 9:", host.camera.getPositionX() + right,host.camera.getPositionY() - low);
         }
 
-
-        // draws easy level times
         String minZero1 = "";
         String secZero1 = "";
         String minZero2 = "";
@@ -172,8 +205,8 @@ public class highscoreScreen implements Screen, SoundAndMusic {
         String minZero9 = "";
         String secZero9 = "";
 
+        // generates 0 if the value is smaller then 10
         for (int i = 0; i < 10; i++) {
-
             int min = host.preferences.getInteger("highscoreMinlevel" + i);
             int sec = host.preferences.getInteger("highscoreSeclevel" + i);
             String levelMin = "highscoreMinlevel" + i;
@@ -238,6 +271,7 @@ public class highscoreScreen implements Screen, SoundAndMusic {
             }
         }
 
+        // draws the times
         host.fontSmall.draw(host.batch, minZero1 + host.preferences.getInteger( "highscoreMinlevel1") + ":" + secZero1 + host.preferences.getInteger("highscoreSeclevel1"),
                 host.camera.getPositionX() - left, host.camera.getPositionY() + high - score);
         host.fontSmall.draw(host.batch, minZero2 + host.preferences.getInteger("highscoreMinlevel2") + ":" + secZero2 + host.preferences.getInteger("highscoreSeclevel2"),
@@ -261,52 +295,94 @@ public class highscoreScreen implements Screen, SoundAndMusic {
         host.fontSmall.draw(host.batch, minZero9 + host.preferences.getInteger("highscoreMinlevel9") + ":" + secZero9 + host.preferences.getInteger("highscoreSeclevel9"),
                 host.camera.getPositionX() + right, host.camera.getPositionY() - low - score);
         host.batch.end();
+    }
 
-        // Goes back to main menu
-        if (menuButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
-            }
-            host.setScreen(new menuScreen(host));
-        }
+    /**
+     * draws the buttons
+     */
+    private void drawButtons() {
+        // draws language buttons
+        host.batch.begin();
+        host.batch.draw(background,0,0);
+        host.batch.draw(enGBButtonTex, enGBButtonRec.getX(), enGBButtonRec.getY());
+        host.batch.draw(fiFIButtonTex, fiFIButtonRec.getX(), fiFIButtonRec.getY());
 
-        // changes the language
-        if (fiFIButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
-            }
-            host.setLang("fin");
+        // Draws back button
+        if (!host.gameRun){
+            host.batch.draw(menuButtonTex, menuButtonRec.getX(), menuButtonRec.getY());
         }
-        if (enGBButtonRec.contains(touch.x,touch.y)){
-            if (Gdx.input.justTouched() && !host.mute) {
-                buttonSound.play();
-            }
-            host.setLang("eng");
+        host.batch.end();
+    }
+
+    /**
+     * saves touch location
+     */
+    private void saveTouch() {
+        if (Gdx.input.justTouched()){
+            touch.set(Gdx.input.getX(),Gdx.input.getY(),0);
+            host.camera.unproject(touch);
         }
     }
 
+    /**
+     * Refreshes the screen
+     */
+    private void refreshScreen() {
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }
+
+    /**
+     * Updates and sets the camera to the correct position
+     */
+    private void setCamera() {
+        host.camera.update();
+        host.camera.setPos();
+        host.batch.setProjectionMatrix(host.camera.combined());
+    }
+
+    /**
+     * does nothing
+     * @param width nothing
+     * @param height nothing
+     */
     @Override
     public void resize(int width, int height) {
 
     }
 
+    /**
+     * Pauses the screen
+     */
     @Override
     public void pause() {
 
     }
 
+    /**
+     * Resumes the screen
+     */
     @Override
     public void resume() {
 
     }
 
+    /**
+     * does nothing
+     */
     @Override
     public void hide() {
 
     }
 
+    /**
+     * Disposes of textures
+     */
     @Override
     public void dispose() {
-
+        enGBButtonTex.dispose();
+        fiFIButtonTex.dispose();
+        menuButtonTex.dispose();
+        background.dispose();
     }
 }

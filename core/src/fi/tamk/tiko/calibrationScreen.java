@@ -106,7 +106,7 @@ public class calibrationScreen implements Screen, SoundAndMusic {
     }
 
     /**
-     * Renders the calibration screen refresh
+     * Renders the calibration screen
      * @param delta gets the delta time
      */
     @Override
@@ -259,7 +259,6 @@ public class calibrationScreen implements Screen, SoundAndMusic {
     /**
      * Pauses the screen
      */
-
     @Override
     public void pause() {
 
