@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 /**
- * Class for the came camera
+ * Class for the camera
  *
  * @author Toni Vänttinen & Jimi Savola
  * @version 1.8, 05/02/18
