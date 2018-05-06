@@ -98,7 +98,7 @@ public class gameScreen implements Screen {
 
     /**
      * Constructor for the game screen
-     * @param host
+     * @param host games main java class
      */
     public gameScreen(BirdsVoyage host){
         // font
