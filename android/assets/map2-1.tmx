@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="20" height="300" tilewidth="64" tileheight="64" infinite="0" nextobjectid="53">
+<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="20" height="300" tilewidth="64" tileheight="64" infinite="0" nextobjectid="53">
  <tileset firstgid="1" source="tileset.tsx"/>
  <layer name="ground layer" width="20" height="300">
   <data encoding="csv">
@@ -934,8 +934,8 @@
   <object id="18" x="0" y="10624" width="320" height="896"/>
   <object id="19" x="320" y="10496" width="256" height="256"/>
   <object id="20" x="320" y="10880" width="64" height="256"/>
-  <object id="21" x="896" y="7744" width="384" height="640"/>
-  <object id="22" x="832" y="8128" width="64" height="256"/>
+  <object id="21" x="943.039" y="7744" width="300.989" height="252.618"/>
+  <object id="22" x="832" y="8128" width="274.293" height="256"/>
   <object id="23" x="960" y="8512" width="256" height="256"/>
   <object id="24" x="128" y="8256" width="256" height="256"/>
   <object id="25" x="64" y="7872" width="256" height="256"/>
@@ -944,7 +944,7 @@
   <object id="28" x="576" y="6592" width="256" height="256"/>
   <object id="29" x="960" y="6208" width="256" height="256"/>
   <object id="30" x="768" y="5824" width="256" height="256"/>
-  <object id="31" x="1088" y="5504" width="192" height="256"/>
+  <object id="31" x="1115.67" y="5504" width="164.33" height="308.573"/>
   <object id="32" x="64" y="5248" width="256" height="256"/>
   <object id="33" x="448" y="4864" width="256" height="256"/>
   <object id="34" x="64" y="4672" width="256" height="256"/>
