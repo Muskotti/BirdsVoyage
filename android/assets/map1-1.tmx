@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="20" height="200" tilewidth="64" tileheight="64" infinite="0" nextobjectid="29">
+<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="20" height="200" tilewidth="64" tileheight="64" infinite="0" nextobjectid="29">
  <tileset firstgid="1" source="tileset.tsx"/>
  <layer name="ground layer" width="20" height="200">
   <data encoding="csv">
@@ -422,13 +422,13 @@
   <object id="16" x="693.939" y="5309.09" width="284.848" height="230.303"/>
   <object id="17" x="300" y="5306.06" width="281.818" height="239.394"/>
   <object id="18" x="496.97" y="5703.03" width="290.909" height="242.424"/>
-  <object id="19" x="936.364" y="3154.55" width="306.061" height="330.303"/>
-  <object id="20" x="542.424" y="3360.61" width="315.152" height="330.303"/>
+  <object id="19" x="957.421" y="3200" width="263.947" height="284.853"/>
+  <object id="20" x="576" y="3392" width="281.576" height="256"/>
   <object id="21" x="569.697" y="3751.52" width="281.818" height="281.818"/>
   <object id="22" x="951.515" y="3551.52" width="269.697" height="284.848"/>
   <object id="23" x="930.303" y="3909.09" width="324.242" height="148.485"/>
   <object id="24" x="809.091" y="4121.21" width="303.03" height="130.303"/>
-  <object id="25" x="509.091" y="1566.67" width="281.818" height="290.909"/>
+  <object id="25" x="509.091" y="1600" width="258.909" height="257.579"/>
  </objectgroup>
  <objectgroup name="clockSpawn">
   <object id="1" x="1152" y="9408" width="64" height="64"/>
