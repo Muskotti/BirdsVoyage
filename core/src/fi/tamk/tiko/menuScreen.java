@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 /**
  * Menu is the games main screen and it holds access to level select, high scores and settings.
  *
- * @author Toni Vänttinen & Jimi Savola
+ * @author Toni Vänttinen and Jimi Savola
  * @version 1.8, 05/02/18
  * @since 1.8
  */

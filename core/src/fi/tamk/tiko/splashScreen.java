@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.Texture;
 
 /**
  * Displays the logos of the team, tiko and Exerium (client) when the game starts.
+ *
+ * @author Toni Vänttinen and Jimi Savola
+ * @version 1.8, 05/02/18
+ * @since 1.8
  */
 public class splashScreen implements Screen {
     BirdsVoyage host;

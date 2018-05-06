@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Array;
  * Map holds the .tmx files of all maps and loads them accordingly to user selection in level select screen.
  * Also hold methods that checks player and camera collisions with tiled map object layers.
  *
- * @author Toni Vänttinen & Jimi Savola
+ * @author Toni Vänttinen and Jimi Savola
  * @version 1.8, 05/02/18
  * @since 1.8
  */

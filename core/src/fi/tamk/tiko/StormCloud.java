@@ -8,6 +8,10 @@ import com.badlogic.gdx.math.Rectangle;
 /**
  * Stormcloud object, that spawns below the camera and moves with the camera.
  * Rises up and goes back down when called.
+ *
+ * @author Toni Vänttinen and Jimi Savola
+ * @version 1.8, 05/02/18
+ * @since 1.8
  */
 public class StormCloud {
     private Sprite stormCloud;

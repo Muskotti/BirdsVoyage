@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector3;
  * Sensitivity screen where user can adjust the accelerometer sensitivities. Each 4 direction
  * can be adjusted.
  *
- * @author Toni Vänttinen & Jimi Savola
+ * @author Toni Vänttinen and Jimi Savola
  * @version 1.8, 05/02/18
  * @since 1.8
  */
