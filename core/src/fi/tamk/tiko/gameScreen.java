@@ -300,9 +300,9 @@ public class gameScreen implements Screen {
         if (startTimerDefault > 0){
             host.fontBig.draw(host.batch, "" + startTimerDefault, host.camera.getPositionX() - 45,host.camera.getPositionY() + 90);
             if (host.currentLang.equals("eng")) {
-                host.fontSmall.draw(host.batch, "Dodge trees and other objects", host.camera.getPositionX() - 350,host.camera.getPositionY() - 80);
+                host.fontSmall.draw(host.batch, "Dodge trees, birds and clouds", host.camera.getPositionX() - 350,host.camera.getPositionY() - 80);
             } else {
-                host.fontSmall.draw(host.batch, "Väistä puita ja muita esineitä", host.camera.getPositionX() - 350,host.camera.getPositionY() - 80);
+                host.fontSmall.draw(host.batch, "Väistä puita, lintuja ja pilviä", host.camera.getPositionX() - 350,host.camera.getPositionY() - 80);
             }
         }
         host.batch.end();
