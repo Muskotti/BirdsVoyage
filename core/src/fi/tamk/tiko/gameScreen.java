@@ -75,9 +75,6 @@ public class gameScreen implements Screen {
     // boolean fot the cloud movement
     boolean cloudMove = false;
 
-    // Boolean for finish sound played to prevent overlapping
-    boolean finishSoundPlayed;
-
     // array for the enemies
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
@@ -162,9 +159,6 @@ public class gameScreen implements Screen {
 
         // boolean if there is a new high score set to false
         newHighscore = false;
-
-        //boolean to to play win sound one time
-        finishSoundPlayed = false;
     }
 
     /**
@@ -181,9 +175,6 @@ public class gameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        System.out.println("mapwin: " + mapWin);
-        System.out.println("finishsoundplayed: " + finishSoundPlayed);
-
         refreshScreen();
         update();
         setSensitivity();
@@ -235,11 +226,6 @@ public class gameScreen implements Screen {
      */
     private void checkMapWin() {
         if (mapWin){
-            // Plays map finish sound only once
-            if (!finishSoundPlayed && !host.mute) {
-                host.mapFinishSound.play();
-                finishSoundPlayed = true;
-            }
             host.time.stop();
             host.player.stop();
             host.camera.stop();
@@ -300,11 +286,8 @@ public class gameScreen implements Screen {
             if (Gdx.input.justTouched() && !host.mute) {
                 host.buttonSound.play();
             }
-            finishSoundPlayed = false;
-            mapWin = false;
             touch.set(0,0,0);
             host.gameRun = false;
-            host.player.setStart();
             host.setScreen(new menuScreen(host));
         }
     }

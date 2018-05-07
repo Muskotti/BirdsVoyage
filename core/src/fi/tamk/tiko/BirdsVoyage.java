@@ -31,7 +31,6 @@ public class BirdsVoyage extends Game implements MapProperties {
     // Sound effects
     Sound buttonSound;
     Sound clockSound;
-    Sound mapFinishSound;
     Sound sliderPressSound;
     Sound sliderReleaseSound;
 
@@ -100,7 +99,6 @@ public class BirdsVoyage extends Game implements MapProperties {
         // Loads Sound effects
         buttonSound = Gdx.audio.newSound(Gdx.files.internal("ButtonClick.wav"));
         clockSound = Gdx.audio.newSound(Gdx.files.internal("ClockSound.wav"));
-        mapFinishSound = Gdx.audio.newSound(Gdx.files.internal("MapFinishSound.wav"));
         sliderPressSound = Gdx.audio.newSound(Gdx.files.internal("SliderPress.wav"));
         sliderReleaseSound = Gdx.audio.newSound(Gdx.files.internal("SliderRelease.wav"));
 
