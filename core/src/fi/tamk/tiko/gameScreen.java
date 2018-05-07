@@ -67,7 +67,7 @@ public class gameScreen implements Screen {
     boolean gamePause = false;
 
     // boolean for a win
-    boolean mapWin = false;
+    boolean mapWin;
 
     // boolean for the map start
     boolean mapStart = true;
@@ -101,6 +101,9 @@ public class gameScreen implements Screen {
      * @param host games main java class
      */
     public gameScreen(BirdsVoyage host){
+        // Mapwin to false by default
+        mapWin = false;
+
         // font
         font = new BitmapFont();
 
@@ -178,6 +181,9 @@ public class gameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        System.out.println("mapwin: " + mapWin);
+        System.out.println("finishsoundplayed: " + finishSoundPlayed);
+
         refreshScreen();
         update();
         setSensitivity();
@@ -294,8 +300,11 @@ public class gameScreen implements Screen {
             if (Gdx.input.justTouched() && !host.mute) {
                 host.buttonSound.play();
             }
+            finishSoundPlayed = false;
+            mapWin = false;
             touch.set(0,0,0);
             host.gameRun = false;
+            host.player.setStart();
             host.setScreen(new menuScreen(host));
         }
     }
